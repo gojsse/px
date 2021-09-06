@@ -1,0 +1,26 @@
+.spriteEditorActionbar {
+    display: grid;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    grid-template-columns: repeat(8, 12.5%);
+}
+
+.spriteEditorActionbar > button {
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+}
+
+.spriteEditorActionbar > button:nth-child(8n) {
+    border-right: none;
+}
+
+.spriteEditorActionbar > button::before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: 0;
+    padding-bottom: 100%;
+}

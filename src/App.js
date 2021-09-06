@@ -1,22 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 // import logo from './logo.svg';
 // import { Counter } from './features/counter/Counter';
 
 import { Switch, Route } from "react-router-dom";
 
-import SiteMenu from './components/layout/NavBar.component'
-import Dashboard from '@views/Dashboard/Dashboard.component'
-import Projects from '@views/Projects/Projects.component'
-import Settings from '@views/Settings/Settings.component'
+import SiteMenu from '@components/layout/NavBar.component';
+import Dashboard from '@views/Dashboard/Dashboard.component';
+import Projects from '@views/Projects/Projects.component';
+import Project from '@views/Project/Project.component';
+import Settings from '@views/Settings/Settings.component';
+
+import { initializeProjectState } from '@store/currentProject/currentProject.slice';
+
+import mockProjects from './__mocks__/MOCK_PROJECTS.json';
 
 import './App.css';
+import './styles/styles.scss';
+
+const routes = [
+  // { path: '/project/:projectKey/scene/:sceneId/edit', component: SceneEditor },
+  // { path: '/project/:projectKey/scene/:sceneId/export', component: SceneExporter },
+  { path: '/project/:projectId', component: Project },
+  { path: '/projects', component: Projects },
+  { path: '/settings', component: Settings },
+  { path: '/', component: Dashboard },
+]
 
 function App() {
-  return (
-    <div className="App">
-      <div className="min-h-screen bg-gray-100">
-        <SiteMenu />
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(initializeProjectState({project: mockProjects[0]}));
+    // return () => {
+    //   cleanup
+    // }
+  }, [dispatch])
+
+  return (
+    <div className="App bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300">
+      <div className="min-h-screen">
+        <SiteMenu />
         <div className="py-10">
           {/* <header>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,88 +49,15 @@ function App() {
           </header> */}
           <main>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-              {/* Replace with your content */}
-              <div className="px-4 py-8 sm:px-0">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
-                  <div className="app">
-                    {/* <Menu classList="menu--nav" /> */}
-                    <div className="page">
-                      <Switch>
-                        <Route path="/project/:projectKey/scene/:sceneId/edit">
-                          {/* <SceneEditorProvider>
-                              <SceneEditor />
-                          </SceneEditorProvider> */}
-                        </Route>
-                        <Route path="/project/:projectKey/scene/:sceneId/export">
-                          {/* <SceneExporter /> */}
-                        </Route>
-                        <Route path="/project/:projectKey">
-                          {/* <Project /> */}
-                        </Route>
-                        <Route path="/projects">
-                          <Projects />
-                        </Route>
-                        <Route path="/settings">
-                          <Settings />
-                        </Route>
-                        <Route path="/">
-                          <Dashboard />
-                        </Route>
-                      </Switch>
-                    </div>
-                  </div>
-                </div>
+              <div className="px-4 sm:px-0">
+                <Switch>
+                  {routes.map(route => <Route path={route.path} component={route.component} />)}
+                </Switch>
               </div>
-              {/* /End replace */}
             </div>
           </main>
         </div>
       </div>
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header> */}
     </div>
   );
 }

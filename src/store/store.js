@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
+import currentProjectReducer from '@store/currentProject/currentProject.slice'
+import spriteEditorSlice from '@store/spriteEditor/spriteEditor.slice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    currentProject: currentProjectReducer,
+    spriteEditor: spriteEditorSlice,
   },
 });

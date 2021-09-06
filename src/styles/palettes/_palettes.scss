@@ -1,0 +1,68 @@
+@import './palette_default';
+@import './palette_ff-nes';
+@import './palette_sky-high';
+@import './palette_brinstar';
+@import './palette_brinstar-2';
+
+$palettes: (
+    $default,
+    $ff-nes,
+    $sky-high,
+    $brinstar,
+    $brinstar-2
+);
+
+$default-colors: (
+    #02525b,
+    #155861,
+    #2a636b,
+    #3c6e75,
+    #4a777e,
+    #578087,
+    #648a90,
+    #74969b,
+    #83a1a6,
+    #93adb1,
+    #a5bbbe,
+    #b7c8cb,
+    #cad6d8,
+    #dfe6e8,
+    #f4f7f7,
+    #ffffff,
+);
+
+.palette {
+
+    @for $i from 1 through length($default-colors) {
+        @if $i < 11 {
+            .color--0#{$i - 1} {
+                background-color: #{nth($default-colors, $i)};
+            }
+        } @else {
+            .color--#{$i - 1} {
+                background-color: #{nth($default-colors, $i)};
+            }
+        }
+    }
+}
+
+@each $palette in $palettes {
+    $id: map-get($palette, "id");
+    $name: map-get($palette, "name");
+    $colors: map-get($palette, "colors");
+
+    .palette--#{$id} {
+
+        @for $i from 1 through length($colors) {
+            @if $i < 11 {
+                .color--0#{$i - 1} {
+                    background-color: #{nth($colors, $i)};
+                }
+            } @else {
+                .color--#{$i - 1} {
+                    background-color: #{nth($colors, $i)};
+                }
+            }
+        }
+    }
+}
