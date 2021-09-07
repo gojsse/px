@@ -4,8 +4,8 @@ export const emptyUser = {
   createdDate: new Date(),
   updatedDate: new Date(),
   settings: {
-    theme: 'default'
-  }
+    theme: 'default',
+  },
 }
 
 export const paletteList = [
@@ -13,11 +13,11 @@ export const paletteList = [
   'ff-nes',
   'sky-high',
   'brinstar',
-  'brinstar-2'
+  'brinstar-2',
 ];
 
 export const colorKeys = [
-  '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15'
+  '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
 ]
 
 export const spriteTools = {
@@ -38,8 +38,15 @@ export const spriteActions = {
   MOVE_DOWN: 'move-down',
 }
 
+export const sceneActions = {
+  MOVE_LEFT: 'move-left',
+  MOVE_UP: 'move-up',
+  MOVE_RIGHT: 'move-right',
+  MOVE_DOWN: 'move-down',
+}
+
 export const emptyScene = {
-  name: 'scene',
+  name: 'new scene',
   height: 8,
   width: 8,
   spriteSheet: [
@@ -51,7 +58,7 @@ export const emptyScene = {
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
-  ]
+  ],
 }
 
 export const emptySprite = [
@@ -75,7 +82,7 @@ export const spriteList = new Array(128)
     ["00", "00", "00", "00", "00", "00", "00", "00"],
     ["00", "00", "00", "00", "00", "00", "00", "00"],
     ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"]
+    ["00", "00", "00", "00", "00", "00", "00", "00"],
   ]);
 
 export const emptyProject = {
@@ -86,16 +93,7 @@ export const emptyProject = {
   updatedDate: 'date2',//new Date(),
   palette: 'default',
   scenes: [
-    {...emptyScene}
+    {...emptyScene},
   ],
-  sprites: spriteList
+  sprites: spriteList,
 }
-
-// const defaults = {
-//   emptyUser,
-//   emptySprite,
-//   emptyScene,
-//   emptyProject,
-// }
-
-// export default defaults;

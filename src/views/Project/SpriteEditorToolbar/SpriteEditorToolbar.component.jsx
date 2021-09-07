@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { PencilIcon, XIcon, BeakerIcon, EyeIcon } from '@heroicons/react/outline';
 
-
 import { spriteTools } from '@/App.constants';
 import { getSelectedTool, setSelectedTool } from '@store/spriteEditor/spriteEditor.slice';
 

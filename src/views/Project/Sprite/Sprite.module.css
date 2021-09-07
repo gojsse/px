@@ -9,19 +9,14 @@
     grid-template-columns: repeat(8, 12.5%);
 }
 
-.spriteGridRow button {
+.spriteGridRow > div {
     align-items: center;
-    border-bottom: 1px solid #ccc;
-    border-right: 1px solid #ccc;
+    border: none;
     display: flex;
     justify-content: center;
 }
 
-.spriteGridRow button:nth-child(8n) {
-    border-right: none;
-}
-
-.spriteGridRow button::before {
+.spriteGridRow > div::before {
     content: '';
     display: inline-block;
     width: 1px;

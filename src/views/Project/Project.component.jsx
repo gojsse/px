@@ -7,12 +7,14 @@ import { getProjectName } from '@store/currentProject/currentProject.slice';
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component';
 
+import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component';
+import SpriteList from '@views/Project/SpriteList/SpriteList.component';
 import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditorToolbar.component';
 import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEditorActionbar.component';
 import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component';
 
 const Project = (props) => {
-  const { projectId } = useParams();
+  const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams();
 
   const projectName = useSelector(getProjectName);
 
@@ -32,13 +34,13 @@ const Project = (props) => {
             <PaletteSelector />
         </div>
         <div>
-            {/* scene editor */}
-            Scene Editor
+            <SceneEditor sceneIndex={sceneIndex} />
+            <SpriteList />
         </div>
         <div>
             <SpriteEditorToolbar />
             <SpriteEditorActionbar />
-            <SpriteEditor />
+            <SpriteEditor spriteIndex={spriteIndex} />
         </div>
       </div>
 

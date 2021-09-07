@@ -26,14 +26,14 @@ const SpriteEditor = (props) => {
             return (
               <button
                 key={index}
-                className={`color--${key}`}
+                className={`color color--${key}`}
                 onClick={() => handleColorClick(key)}
               />
             )
           })}
         </div>
       </div>
-      <div className={`p-2 color--${selectedColor}`}>Color: color--{selectedColor}</div>
+      <div className={`p-2 color color--${selectedColor}`}>Color: color--{selectedColor}</div>
     </div>
   );
 }

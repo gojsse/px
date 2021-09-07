@@ -33,6 +33,10 @@ $default-colors: (
 
 .palette {
 
+    // .color {
+    //     transition: background-color .15s ease;
+    // }
+
     @for $i from 1 through length($default-colors) {
         @if $i < 11 {
             .color--0#{$i - 1} {

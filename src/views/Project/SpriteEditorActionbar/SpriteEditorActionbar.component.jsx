@@ -19,6 +19,8 @@ const buttonAttributes = {
 const SpriteEditorActionbar = (props) => {
   const dispatch = useDispatch();
 
+  // TODO in here we need to update the main store after each action is run
+
   return (
     <div className={styles.spriteEditorActionbar + ' shadow-sm bg-gray-50 mb-2 w-full'}>
       <button {...buttonAttributes} onClick={() => dispatch(moveSpriteUp())}>

@@ -61,11 +61,17 @@ export const {
 // Selectors
 export const getProject = (state) => state.currentProject;
 export const getProjectName = (state) => state.currentProject.name;
-export const getProjectSprite = (index) => (state) => state.currentProject.sprites[index];
+export const getProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index];
+export const getProjectSpritesPaged = (page = 1, amount = 16) => (state) => {
+  return state.currentProject.sprites
+    .filter((sprite, index) => {
+      return index >= 0 && index <= (page * amount) - 1
+    })
+}
 export const getProjectScene = (index) => (state) => state.currentProject.scenes[index];
 export const getSelectedPalette = (state) => state.currentProject.palette;
 export const getProjectPaletteClass = (state) => {
-  return `palette--${!state.currentProject.palette ? "default" : state.currentProject.palette}`
+  return `palette palette--${!state.currentProject.palette ? "default" : state.currentProject.palette}`
 }
 
 export default currentProjectSlice.reducer;

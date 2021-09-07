@@ -11,13 +11,12 @@ const PaletteSelector = (props) => {
   const selectedPallete = useSelector(getSelectedPalette);
 
   const handlePaletteClick = palette => {
-      dispatch(selectProjectPalette({palette}));
+    dispatch(selectProjectPalette({palette}));
   }
 
   return (
     <div className=''>
-      Palette: {selectedPallete}
-      <br />
+      c: {selectedPallete}
       <br />
       {paletteList.map(palette => {
         return (

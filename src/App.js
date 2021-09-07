@@ -21,6 +21,7 @@ import './styles/styles.scss';
 const routes = [
   // { path: '/project/:projectKey/scene/:sceneId/edit', component: SceneEditor },
   // { path: '/project/:projectKey/scene/:sceneId/export', component: SceneExporter },
+  { path: '/project/:projectId/:sceneIndex/:spriteIndex', component: Project },
   { path: '/project/:projectId', component: Project },
   { path: '/projects', component: Projects },
   { path: '/settings', component: Settings },
