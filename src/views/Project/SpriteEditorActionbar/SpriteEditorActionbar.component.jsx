@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { SwitchHorizontalIcon, SwitchVerticalIcon, ArrowSmUpIcon, ArrowSmRightIcon, ArrowSmDownIcon, ArrowSmLeftIcon, ReplyIcon } from '@heroicons/react/outline';
 
 import { moveSpriteUp,moveSpriteRight, moveSpriteDown, moveSpriteLeft, flipSpriteVertical, flipSpriteHorizontal, rotateSpriteRight, rotateSpriteLeft } from '@store/spriteEditor/spriteEditor.slice';
+import { handleSpriteActionButton } from '@store/actions';
 
 import styles from './SpriteEditorActionbar.module.css';
 
@@ -19,32 +20,34 @@ const buttonAttributes = {
 const SpriteEditorActionbar = (props) => {
   const dispatch = useDispatch();
 
-  // TODO in here we need to update the main store after each action is run
+  const handleClick = (buttonAction) => {
+    dispatch(handleSpriteActionButton(buttonAction));
+  }
 
   return (
     <div className={styles.spriteEditorActionbar + ' shadow-sm bg-gray-50 mb-2 w-full'}>
-      <button {...buttonAttributes} onClick={() => dispatch(moveSpriteUp())}>
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteUp)} >
         <ArrowSmUpIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(moveSpriteRight())}>
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteRight)}>
         <ArrowSmRightIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(moveSpriteDown())}>
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteDown)}>
         <ArrowSmDownIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(moveSpriteLeft())}>
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteLeft)}>
         <ArrowSmLeftIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(flipSpriteVertical())}>
+      <button {...buttonAttributes} onClick={() => handleClick(flipSpriteVertical)}>
         <SwitchVerticalIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(flipSpriteHorizontal())}>
+      <button {...buttonAttributes} onClick={() => handleClick(flipSpriteHorizontal)}>
         <SwitchHorizontalIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(rotateSpriteLeft())}>
+      <button {...buttonAttributes} onClick={() => handleClick(rotateSpriteLeft)}>
         <ReplyIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => dispatch(rotateSpriteRight())}>
+      <button {...buttonAttributes} onClick={() => handleClick(rotateSpriteRight)}>
         <ReplyIcon className={iconClasses} style={{transform: 'scaleX(-1)'}} /> 
       </button>
     </div>

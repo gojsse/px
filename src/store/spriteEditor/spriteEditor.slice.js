@@ -5,7 +5,8 @@ import { spriteTools, colorKeys } from '@/App.constants';
 const initialState = {
   selectedTool: spriteTools.PENCIL,
   selectedColor: colorKeys[0],
-  selectedSprite: []
+  selectedSprite: [],
+  selectedSpriteIndex: 0,
 };
 
 export const spriteEditorSlice = createSlice({
@@ -23,6 +24,10 @@ export const spriteEditorSlice = createSlice({
     setSelectedSprite(state, action) {
       const { sprite } = action.payload;
       state.selectedSprite = sprite;
+    },
+    setSelectedSpriteIndex(state, action) {
+      const { spriteIndex } = action.payload;
+      state.selectedSpriteIndex = spriteIndex;
     },
     flipSpriteHorizontal(state) {
       state.selectedSprite.forEach((row, index) => {
@@ -78,6 +83,7 @@ export const {
   setSelectedTool,
   setSelectedColor,
   setSelectedSprite,
+  setSelectedSpriteIndex,
   flipSpriteHorizontal,
   flipSpriteVertical,
   moveSpriteLeft,
@@ -92,5 +98,6 @@ export const {
 export const getSelectedTool = (state) => state.spriteEditor.selectedTool;
 export const getSelectedColor = (state) => state.spriteEditor.selectedColor;
 export const getSelectedSprite = (state) => state.spriteEditor.selectedSprite;
+export const getSelectedSpriteIndex = (state) => state.spriteEditor.selectedSpriteIndex;
 
 export default spriteEditorSlice.reducer;

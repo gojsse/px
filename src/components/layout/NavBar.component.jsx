@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
 
-import { Disclosure, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 import { AdjustmentsIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
 const navigation = [
@@ -18,10 +18,6 @@ const navLinkClasses = {
 const navLinkClassesMobile = {
   activeClassName: 'bg-indigo-50 border-indigo-500 text-indigo-700',
   className: 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium'
-}
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
 }
 
 const SiteMenu = (props) => {

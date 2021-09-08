@@ -19,8 +19,6 @@ const SpriteList = (props) => {
     history.push(`/project/${projectId}/${sceneIndex}/${spriteIndex}`);
   }
 
-  console.log('sprites', sprites);
-
   return (
     <div className={paletteClass}>
       <div className={styles.spriteList}>

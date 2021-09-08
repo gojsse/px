@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { spriteTools } from '@/App.constants';
 import { getProjectSpriteByIndex, updateProjectSprite, getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
-import { getSelectedSprite, setSelectedSprite, getSelectedTool, getSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
+import { getSelectedSprite, setSelectedSprite, setSelectedSpriteIndex, getSelectedTool, getSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
 import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component';
 import Cell from './Cell.component';
 
@@ -18,10 +18,16 @@ const SpriteEditor = ({ spriteIndex }) => {
   const paletteClass = useSelector(getProjectPaletteClass);
 
   const [mouseDown, setMouseDown] = useState(false);
+  const [labeledGrid, updateLabeledGrid] = useState([]);
 
   useEffect(() => {
     dispatch(setSelectedSprite({ sprite: projectSprite }));
-  }, [dispatch, projectSprite]);
+    dispatch(setSelectedSpriteIndex({ spriteIndex }));
+  }, [dispatch, projectSprite, spriteIndex]);
+
+  useEffect(() => {
+    scanForGridRegions();
+  }, [selectedSprite]);
 
   const updateCellValues = (rowIndex, colIndex) => {
     const updatedGrid = selectedSprite.map(row => ([ ...row.map(cell => cell) ]));
@@ -29,16 +35,16 @@ const SpriteEditor = ({ spriteIndex }) => {
     if (selectedTool === spriteTools.PENCIL) {
       updatedGrid[rowIndex][colIndex] = selectedColor;
     } else if (selectedTool === spriteTools.FILL) {
-      // const cellLabelValue = labeledGrid[rowIndex][colIndex];
-      // labeledGrid.forEach((row, labeledRowIndex) => {
-      //     row.forEach((colValue, labeledColIndex) => {                   
-      //         if (colValue === cellLabelValue) {
-      //             updatedGrid[labeledRowIndex][labeledColIndex] = cellValue;
-      //         }
-      //     });
-      // })
+      const cellLabelValue = labeledGrid[rowIndex][colIndex];
+      labeledGrid.forEach((row, labeledRowIndex) => {
+        row.forEach((colValue, labeledColIndex) => {                   
+          if (colValue === cellLabelValue) {
+            updatedGrid[labeledRowIndex][labeledColIndex] = selectedColor;
+          }
+        });
+      })
     } else if (selectedTool === spriteTools.ERASER) {
-    //   updatedGrid[rowIndex][colIndex] = null;
+      updatedGrid[rowIndex][colIndex] = null;
     } else {
       return;
     }
@@ -46,6 +52,64 @@ const SpriteEditor = ({ spriteIndex }) => {
     dispatch(setSelectedSprite({ sprite: updatedGrid }));
   }
   
+  const scanForGridRegions = () => {
+    const labeledGrid = [];
+    const groups = [];
+
+    // Label cells in preliminary groups
+    selectedSprite.forEach((row, rowIndex) => {
+      labeledGrid[rowIndex] = [];
+
+      row.forEach((colValue, colIndex) => {
+        const westValue = colIndex > 0 ? selectedSprite[rowIndex][colIndex - 1] : -1;
+        const northValue = rowIndex > 0 ? selectedSprite[rowIndex - 1][colIndex] : -1;
+        const westLabel = colIndex > 0 ? labeledGrid[rowIndex][colIndex - 1] : -1;
+        const northLabel = rowIndex > 0 ? labeledGrid[rowIndex - 1][colIndex] : -1;
+
+        if (colValue === westValue) {
+          if (colValue === northValue && westLabel !== northLabel) {
+            const min = Math.min(westLabel, northLabel);
+            const max = Math.max(westLabel, northLabel);
+            // TODO revisit this as it is incomplete
+            const lowestMatchedIndex = groups.findIndex(subSet => subSet.has(min));
+            groups[lowestMatchedIndex].add(max);
+            groups[max] = groups[lowestMatchedIndex];
+            labeledGrid[rowIndex][colIndex] = min;
+          } else {
+            labeledGrid[rowIndex][colIndex] = westLabel;
+          }
+        }
+
+        if (colValue !== westValue) {
+          if (colValue === northValue) {
+            labeledGrid[rowIndex][colIndex] = northLabel;
+          } else {
+            const newGroup = new Set();
+            newGroup.add(groups.length);
+            groups.push(newGroup);
+            labeledGrid[rowIndex][colIndex] = groups.length - 1;
+          }
+        }
+      });
+    });
+
+    // Group equivalents
+    const processedLabeledGrid = labeledGrid.map(row => {
+      return row.map(colValue => {
+        const setArray = [];
+        groups[colValue].forEach(value => {
+          setArray.push(value);
+        });
+        const minValue = Math.min(...setArray);
+        return minValue;
+      });
+    });
+
+    console.log('processedLabeledGrid', processedLabeledGrid);
+
+    updateLabeledGrid(processedLabeledGrid);
+  }
+
   const Cells = selectedSprite
     .map((row, rowIndex) => {
       return (
