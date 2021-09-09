@@ -70,7 +70,7 @@ const SpriteEditor = ({ spriteIndex }) => {
           if (colValue === northValue && westLabel !== northLabel) {
             const min = Math.min(westLabel, northLabel);
             const max = Math.max(westLabel, northLabel);
-            // TODO revisit this as it is incomplete
+            // TODO revisit this as it is incomplete ???
             const lowestMatchedIndex = groups.findIndex(subSet => subSet.has(min));
             groups[lowestMatchedIndex].add(max);
             groups[max] = groups[lowestMatchedIndex];
@@ -104,8 +104,6 @@ const SpriteEditor = ({ spriteIndex }) => {
         return minValue;
       });
     });
-
-    console.log('processedLabeledGrid', processedLabeledGrid);
 
     updateLabeledGrid(processedLabeledGrid);
   }

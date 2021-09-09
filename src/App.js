@@ -52,7 +52,7 @@ function App() {
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div className="px-4 sm:px-0">
                 <Switch>
-                  {routes.map(route => <Route path={route.path} component={route.component} />)}
+                  {routes.map(route => <Route key={route.path} path={route.path} component={route.component} />)}
                 </Switch>
               </div>
             </div>

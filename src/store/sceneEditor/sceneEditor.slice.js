@@ -18,6 +18,10 @@ export const sceneEditorSlice = createSlice({
       const { scene } = action.payload;
       state.selectedScene = scene;
     },
+    updateSelectedSceneCell(state, action) {
+      const { row, column, value } = action.payload;
+      state.selectedScene.spriteSheet[row][column] = value;
+    }
     // moveSceneLeft(state) {
     //   const firstRow = state.selectedScene.spriteSheet.shift();
     //   state.selectedScene.spriteSheet.push(firstRow);
@@ -45,6 +49,7 @@ export const sceneEditorSlice = createSlice({
 export const {
   // setSelectedTool,
   setSelectedScene,
+  updateSelectedSceneCell
   // moveSceneLeft,
   // moveSceneUp,
   // moveSceneRight,

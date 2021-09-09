@@ -13,7 +13,7 @@ const Grid = ({ scene }) => {
 
           return (
             <Cell
-              key={`r${rowIndex}_c${colIndex}`}
+              key={colIndex}
               rowIndex={rowIndex}
               colIndex={colIndex}
               sprite={cellValue}

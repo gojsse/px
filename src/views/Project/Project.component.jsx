@@ -30,17 +30,17 @@ const Project = (props) => {
 
       <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-            {/* scene setting, palette, etc. can be shrunken */}
-            <PaletteSelector />
+          {/* scene setting, palette, etc. can be shrunken */}
+          <PaletteSelector />
         </div>
         <div>
-            <SceneEditor sceneIndex={sceneIndex} />
-            <SpriteList />
+          <SceneEditor sceneIndex={sceneIndex} />
+          <SpriteList />
         </div>
         <div>
-            <SpriteEditorToolbar />
-            <SpriteEditorActionbar />
-            <SpriteEditor spriteIndex={spriteIndex} />
+          <SpriteEditorToolbar />
+          <SpriteEditorActionbar />
+          <SpriteEditor spriteIndex={spriteIndex} />
         </div>
       </div>
 
