@@ -7,6 +7,7 @@ import { getProjectName } from '@store/currentProject/currentProject.slice';
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component';
 
+import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component';
 import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component';
 import SpriteList from '@views/Project/SpriteList/SpriteList.component';
 import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditorToolbar.component';
@@ -34,6 +35,7 @@ const Project = (props) => {
           <PaletteSelector />
         </div>
         <div>
+          <SceneEditorActionbar />
           <SceneEditor sceneIndex={sceneIndex} />
           <SpriteList />
         </div>

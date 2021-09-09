@@ -23,9 +23,9 @@ const Cell = ({ sprite, rowIndex, colIndex }) => {
       column: colIndex,
       value: {
         id: passedData.spritePoolIndex,
-        r: 0 //passedData.spriteRotation ?? 0,
+        r: passedData.spriteRotation ?? 0,
       },
-    }));// then update main project list
+    }));// then update main project list? use action thunk
 
     // Remove sprite from grid if dropped outside of grid
     // if (passedData.spriteGridRow && passedData.spriteGridColumn) {
@@ -40,23 +40,30 @@ const Cell = ({ sprite, rowIndex, colIndex }) => {
   }
 
   const handleDoubleClick = (spriteIndex) => {
-    
+    // TODO removed rotation, it was buggy. update spriteSheet to be simple array of index values vs objects
+    // dispatch(updateSelectedSceneCell({
+    //   row: rowIndex,
+    //   column: colIndex,
+    //   value: {
+    //     id: sprite.id,
+    //     r: sprite.r === 3 ? 0 : sprite.r + 1,
+    //   },
+    // }));
   }
 
   return (
     <div
-      className=''
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
     >
       {sprite !== null && (
-        // <Sprite spriteIndex={sprite.id} />
         <Sprite
           key={sprite.id}
           spriteIndex={sprite.id}
+          spriteRotation={sprite.r}
           isDraggable={isDraggable}
           // onClick={() => handleClick(sprite.id)}
-          // onDoubleClick={() => handleDoubleClick(sprite.id)}
+          onDoubleClick={() => handleDoubleClick(sprite.id)}
         />
       )}
     </div>

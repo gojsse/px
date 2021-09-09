@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux';
 import { getProjectSpriteByIndex } from '@store/currentProject/currentProject.slice';
 
 import styles from './Sprite.module.css';
+import './SpriteTransform.css';
 
 const Sprite = props => {
   const {
     spriteIndex,
+    spriteRotation = 0,
     onClick = () => {},
     onDoubleClick = () => {},
     isDraggable = true,
@@ -49,9 +51,14 @@ const Sprite = props => {
       </div>
     ));
 
+  const classList = [
+    isDragging ? 'sprite sprite--dragging' : 'sprite',
+    `sprite--r${spriteRotation}`,
+  ].join(' ');
+
   return (
     <div
-      className={styles.spriteGrid}
+      className={styles.spriteGrid + ' ' + classList}
       draggable={isDraggable}
       onDragStart={dragStartHandler}
       onDragEnd={dragEndHandler}

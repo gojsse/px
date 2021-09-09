@@ -4,6 +4,7 @@ import { emptyScene } from '@/App.constants';
 
 const initialState = {
   selectedScene: { ...emptyScene },
+  selectedSceneIndex: 0,
 };
 
 export const sceneEditorSlice = createSlice({
@@ -18,30 +19,42 @@ export const sceneEditorSlice = createSlice({
       const { scene } = action.payload;
       state.selectedScene = scene;
     },
+    setSelectedSpriteIndex(state, action) {
+      const { sceneIndex } = action.payload;
+      state.selectedSceneIndex = sceneIndex;
+    },
     updateSelectedSceneCell(state, action) {
       const { row, column, value } = action.payload;
       state.selectedScene.spriteSheet[row][column] = value;
-    }
-    // moveSceneLeft(state) {
-    //   const firstRow = state.selectedScene.spriteSheet.shift();
-    //   state.selectedScene.spriteSheet.push(firstRow);
-    // },
-    // moveSceneUp(state) {
-    //   state.selectedScene.spriteSheet.forEach(row => {
-    //     const lastCell = row.pop();
-    //     row.unshift(lastCell);
-    //   });
-    // },
-    // moveSceneRight(state) {
-    //   const lastRow = state.selectedScene.spriteSheet.pop();
-    //   state.selectedScene.spriteSheet.unshift(lastRow);
-    // },
-    // moveSceneDown(state) {
-    //   state.selectedScene.spriteSheet.forEach(row => {
-    //     const firstCell = row.shift();
-    //     row.push(firstCell);
-    //   });
-    // },
+    },
+    flipSceneHorizontal(state) {
+      state.selectedScene.spriteSheet.forEach((row, index) => {
+        state.selectedScene.spriteSheet[index] = row.reverse();
+      });
+    },
+    flipSceneVertical(state) {
+      state.selectedScene.spriteSheet.reverse();
+    },
+    moveSceneLeft(state) {
+      state.selectedScene.spriteSheet.forEach(row => {
+        const firstCell = row.shift();
+        row.push(firstCell);
+      });
+    },
+    moveSceneUp(state) {
+      const firstRow = state.selectedScene.spriteSheet.shift();
+      state.selectedScene.spriteSheet.push(firstRow);
+    },
+    moveSceneRight(state) {
+      state.selectedScene.spriteSheet.forEach(row => {
+        const lastCell = row.pop();
+        row.unshift(lastCell);
+      });
+    },
+    moveSceneDown(state) {
+      const lastRow = state.selectedScene.spriteSheet.pop();
+      state.selectedScene.spriteSheet.unshift(lastRow);
+    },
   },
 })
 
@@ -49,14 +62,18 @@ export const sceneEditorSlice = createSlice({
 export const {
   // setSelectedTool,
   setSelectedScene,
-  updateSelectedSceneCell
-  // moveSceneLeft,
-  // moveSceneUp,
-  // moveSceneRight,
-  // moveSceneDown,
+  setSelectedSpriteIndex,
+  updateSelectedSceneCell,
+  flipSceneHorizontal,
+  flipSceneVertical,
+  moveSceneLeft,
+  moveSceneUp,
+  moveSceneRight,
+  moveSceneDown,
 } = sceneEditorSlice.actions;
 
 // Selectors
 export const getSelectedScene = (state) => state.sceneEditor.selectedScene;
+export const getSelectedSceneIndex = (state) => state.sceneEditor.selectedSceneIndex;
 
 export default sceneEditorSlice.reducer;

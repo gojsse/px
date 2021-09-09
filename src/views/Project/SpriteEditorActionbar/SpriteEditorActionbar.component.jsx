@@ -26,17 +26,17 @@ const SpriteEditorActionbar = (props) => {
 
   return (
     <div className={styles.spriteEditorActionbar + ' shadow-sm bg-gray-50 mb-4 w-full'}>
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteLeft)}>
+        <ArrowSmLeftIcon className={iconClasses} />
+      </button>
       <button {...buttonAttributes} onClick={() => handleClick(moveSpriteUp)} >
         <ArrowSmUpIcon className={iconClasses} />
-      </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteRight)}>
-        <ArrowSmRightIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(moveSpriteDown)}>
         <ArrowSmDownIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteLeft)}>
-        <ArrowSmLeftIcon className={iconClasses} />
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteRight)}>
+        <ArrowSmRightIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(flipSpriteVertical)}>
         <SwitchVerticalIcon className={iconClasses} />
