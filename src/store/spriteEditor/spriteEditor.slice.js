@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { spriteTools, colorKeys } from '@/App.constants';
+import { SPRITE_TOOLS, COLOR_KEYS } from '@/App.constants';
 
 const initialState = {
-  selectedTool: spriteTools.PENCIL,
-  selectedColor: colorKeys[0],
+  selectedTool: SPRITE_TOOLS.PENCIL,
+  selectedColor: COLOR_KEYS[0],
   selectedSprite: [],
   selectedSpriteIndex: 0,
 };

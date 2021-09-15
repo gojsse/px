@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getSelectedPalette, selectProjectPalette } from '@store/currentProject/currentProject.slice';
 
-// TODO this should be passed down via context so it is available to all where needed
-import { paletteList } from '@/App.constants.js';
+import { PALETTE_LIST, COLOR_KEYS } from '@/App.constants.js';
 
 const PaletteSelector = (props) => {
   const dispatch = useDispatch();
@@ -15,18 +14,23 @@ const PaletteSelector = (props) => {
   }
 
   return (
-    <div className=''>
-      c: {selectedPallete}
-      <br />
-      {paletteList.map(palette => {
-        return (
-          <div key={palette}>
-            <button onClick={() => handlePaletteClick(palette)}>
-              {palette}
-            </button>
-          </div>
-        )
-      })}
+    <div className='palette-preview'>
+      <div className='flex content-center justify-between p-2 text-xs'>Palette: {selectedPallete}</div>
+      <div className='p-2 grid grid-cols-8 gap-2'>
+        {PALETTE_LIST.map(palette => {
+          return (
+            <div key={palette} className={`palette palette--${palette}`}>
+              <button onClick={() => handlePaletteClick(palette)} className='grid grid-cols-4 gap-0 w-full'>
+                {COLOR_KEYS.map(color => {
+                  return (
+                    <div className={`color color--${color}`}></div>
+                  )
+                })}
+              </button>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 }

@@ -7,7 +7,6 @@ import { AdjustmentsIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react
 const navigation = [
   { name: 'Dashboard', href: ''},
   { name: 'Projects', href: '/projects'},
-  { name: 'Project 1', href: '/project/1'},
 ]
 
 const navLinkClasses = {

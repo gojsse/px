@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { emptyScene } from '@/App.constants';
+import { SCENE_TOOLS, EMPTY_SCENE } from '@/App.constants';
 
 const initialState = {
-  selectedScene: { ...emptyScene },
+  selectedTool: SCENE_TOOLS.MOVE,
+  selectedScene: { ...EMPTY_SCENE },
   selectedSceneIndex: 0,
 };
 
@@ -11,10 +12,10 @@ export const sceneEditorSlice = createSlice({
   name: 'sceneEditor',
   initialState: { ...initialState },
   reducers: {
-    // setSelectedTool(state, action) {
-    //   const { tool } = action.payload;
-    //   state.selectedTool = tool;
-    // },
+    setSelectedTool(state, action) {
+      const { tool } = action.payload;
+      state.selectedTool = tool;
+    },
     setSelectedScene(state, action) {
       const { scene } = action.payload;
       state.selectedScene = scene;
@@ -60,7 +61,7 @@ export const sceneEditorSlice = createSlice({
 
 // Actions
 export const {
-  // setSelectedTool,
+  setSelectedTool,
   setSelectedScene,
   setSelectedSpriteIndex,
   updateSelectedSceneCell,
@@ -73,7 +74,9 @@ export const {
 } = sceneEditorSlice.actions;
 
 // Selectors
+export const getSelectedTool = (state) => state.sceneEditor.selectedTool;
 export const getSelectedScene = (state) => state.sceneEditor.selectedScene;
+export const getSelectedSceneName = (state) => state.sceneEditor.selectedScene.name;
 export const getSelectedSceneIndex = (state) => state.sceneEditor.selectedSceneIndex;
 
 export default sceneEditorSlice.reducer;

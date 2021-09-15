@@ -7,12 +7,16 @@ import { getProjectName } from '@store/currentProject/currentProject.slice';
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component';
 
+import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component';
+import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component';
 import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component';
 import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component';
 import SpriteList from '@views/Project/SpriteList/SpriteList.component';
+import SpriteInfoBar from '@views/Project/SpriteInfoBar/SpriteInfoBar.component';
 import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditorToolbar.component';
 import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEditorActionbar.component';
 import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component';
+import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component';
 
 const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams();
@@ -21,7 +25,7 @@ const Project = (props) => {
 
   return (
     <div>
-      <div className="mt-2 grid grid-cols-1 gap-5">
+      <div className="mt-2 grid grid-cols-1 gap-5 mb-5">
         <div className="bg-white overflow-hidden shadow">
           <div className="bg-gray-50 px-5 py-3">
             projectId: {projectId} - "{projectName}"
@@ -29,20 +33,28 @@ const Project = (props) => {
         </div>
       </div>
 
-      <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        <div>
-          {/* scene setting, palette, etc. can be shrunken */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="bg-white overflow-hidden shadow">
+          {/* scene setting, palette, etc. can be minimized */}
           <PaletteSelector />
         </div>
-        <div>
-          <SceneEditorActionbar />
+        <div className="bg-white overflow-hidden">
+          <div className='shadow'>
+            <SceneInfoBar sceneIndex={sceneIndex} />
+            <SceneEditorToolbar />
+            <SceneEditorActionbar />
+          </div>
           <SceneEditor sceneIndex={sceneIndex} />
           <SpriteList />
         </div>
-        <div>
-          <SpriteEditorToolbar />
-          <SpriteEditorActionbar />
+        <div className="bg-white overflow-hidden">
+          <div className='shadow'>
+            <SpriteInfoBar sceneIndex={spriteIndex} />
+            <SpriteEditorToolbar />
+            <SpriteEditorActionbar />
+          </div>
           <SpriteEditor spriteIndex={spriteIndex} />
+          <ColorSelector />
         </div>
       </div>
 

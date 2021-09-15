@@ -11,6 +11,7 @@ import Projects from '@views/Projects/Projects.component';
 import Project from '@views/Project/Project.component';
 import Settings from '@views/Settings/Settings.component';
 
+import { setProjects } from '@store/projects/projects.slice';
 import { initializeProjectState } from '@store/currentProject/currentProject.slice';
 
 import mockProjects from './__mocks__/MOCK_PROJECTS.json';
@@ -33,6 +34,8 @@ function App() {
 
   useEffect(() => {
     dispatch(initializeProjectState({project: mockProjects[0]}));
+    // TODO any refs here???
+    dispatch(setProjects({projects: mockProjects}));
     // return () => {
     //   cleanup
     // }

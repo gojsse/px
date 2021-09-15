@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { colorKeys } from '@/App.constants';
+import { COLOR_KEYS } from '@/App.constants';
 import { getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
 import { getSelectedColor, setSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
 
-import styles from './ColorSelector.module.css';
+import styles from './ColorSelector.module.scss';
 
-const colorCells = [ ...colorKeys ];
+const colorCells = [ ...COLOR_KEYS ];
 
 const SpriteEditor = (props) => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const SpriteEditor = (props) => {
 
   return (
     <div className={paletteClass}>
-      <div className="bg-white overflow-hidden shadow mt-2">
+      <div className="h-3/4 bg-white overflow-hidden shadow">
         <div className={styles.colorGrid}>
           {colorCells.map((key, index) => {
             return (
@@ -33,7 +33,7 @@ const SpriteEditor = (props) => {
           })}
         </div>
       </div>
-      <div className={`p-2 color color--${selectedColor}`}>Color: color--{selectedColor}</div>
+      <div className={`flex items-center h-1/4 p-2 text-xs color color--${selectedColor}`}>Color: color--{selectedColor}</div>
     </div>
   );
 }

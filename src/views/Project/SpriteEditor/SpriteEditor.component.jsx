@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { spriteTools } from '@/App.constants';
+import { SPRITE_TOOLS } from '@/App.constants';
 import { getProjectSpriteByIndex, updateProjectSprite, getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
 import { getSelectedSprite, setSelectedSprite, setSelectedSpriteIndex, getSelectedTool, getSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
-import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component';
 import Cell from './Cell.component';
 
-import styles from './SpriteEditor.module.css';
+import styles from './SpriteEditor.module.scss';
 
 const SpriteEditor = ({ spriteIndex }) => {
   const dispatch = useDispatch();
@@ -20,21 +19,12 @@ const SpriteEditor = ({ spriteIndex }) => {
   const [mouseDown, setMouseDown] = useState(false);
   const [labeledGrid, updateLabeledGrid] = useState([]);
 
-  useEffect(() => {
-    dispatch(setSelectedSprite({ sprite: projectSprite }));
-    dispatch(setSelectedSpriteIndex({ spriteIndex }));
-  }, [dispatch, projectSprite, spriteIndex]);
-
-  useEffect(() => {
-    scanForGridRegions();
-  }, [selectedSprite]);
-
   const updateCellValues = (rowIndex, colIndex) => {
     const updatedGrid = selectedSprite.map(row => ([ ...row.map(cell => cell) ]));
 
-    if (selectedTool === spriteTools.PENCIL) {
+    if (selectedTool === SPRITE_TOOLS.PENCIL) {
       updatedGrid[rowIndex][colIndex] = selectedColor;
-    } else if (selectedTool === spriteTools.FILL) {
+    } else if (selectedTool === SPRITE_TOOLS.FILL) {
       const cellLabelValue = labeledGrid[rowIndex][colIndex];
       labeledGrid.forEach((row, labeledRowIndex) => {
         row.forEach((colValue, labeledColIndex) => {                   
@@ -43,7 +33,7 @@ const SpriteEditor = ({ spriteIndex }) => {
           }
         });
       })
-    } else if (selectedTool === spriteTools.ERASER) {
+    } else if (selectedTool === SPRITE_TOOLS.ERASER) {
       updatedGrid[rowIndex][colIndex] = null;
     } else {
       return;
@@ -51,8 +41,8 @@ const SpriteEditor = ({ spriteIndex }) => {
 
     dispatch(setSelectedSprite({ sprite: updatedGrid }));
   }
-  
-  const scanForGridRegions = () => {
+
+  const scanForGridRegions = useCallback(() => {
     const labeledGrid = [];
     const groups = [];
 
@@ -106,7 +96,16 @@ const SpriteEditor = ({ spriteIndex }) => {
     });
 
     updateLabeledGrid(processedLabeledGrid);
-  }
+  }, [selectedSprite]);
+
+  useEffect(() => {
+    dispatch(setSelectedSprite({ sprite: projectSprite }));
+    dispatch(setSelectedSpriteIndex({ spriteIndex }));
+  }, [dispatch, projectSprite, spriteIndex]);
+
+  useEffect(() => {
+    scanForGridRegions();
+  }, [scanForGridRegions, selectedSprite]);
 
   const Cells = selectedSprite
     .map((row, rowIndex) => {
@@ -131,22 +130,17 @@ const SpriteEditor = ({ spriteIndex }) => {
     });
 
   return (
-    <div>
-      <div className="bg-white overflow-hidden shadow">
-        <div className={paletteClass}>
-          <div
-            className={styles.spriteGrid}
-            onMouseLeave={() => setMouseDown(false)}
-            onMouseDown={() => setMouseDown(true)}
-            onMouseUp={() => {
-              setMouseDown(false);
-              dispatch(updateProjectSprite({index: spriteIndex, sprite: selectedSprite}))
-            }}
-          >
-            {Cells}
-          </div>
-        </div>
-        <ColorSelector />
+    <div className={paletteClass + ' mb-2'}>
+      <div
+        className={styles.spriteGrid}
+        onMouseLeave={() => setMouseDown(false)}
+        onMouseDown={() => setMouseDown(true)}
+        onMouseUp={() => {
+          setMouseDown(false);
+          dispatch(updateProjectSprite({index: spriteIndex, sprite: selectedSprite}))
+        }}
+      >
+        {Cells}
       </div>
     </div>
   );

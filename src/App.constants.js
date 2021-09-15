@@ -1,4 +1,4 @@
-export const emptyUser = {
+export const EMPTY_USER = {
   name: '',
   email: '',
   createdDate: new Date(),
@@ -8,7 +8,7 @@ export const emptyUser = {
   },
 }
 
-export const paletteList = [
+export const PALETTE_LIST = [
   'default',
   'ff-nes',
   'sky-high',
@@ -16,18 +16,30 @@ export const paletteList = [
   'brinstar-2',
 ];
 
-export const colorKeys = [
+export const COLOR_KEYS = [
   '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
 ]
 
-export const spriteTools = {
+export const SCENE_TOOLS = {
+  MOVE: 'move',
+  STAMP: 'stamp',
+}
+
+export const SCENE_ACTIONS = {
+  MOVE_LEFT: 'move-left',
+  MOVE_UP: 'move-up',
+  MOVE_RIGHT: 'move-right',
+  MOVE_DOWN: 'move-down',
+}
+
+export const SPRITE_TOOLS = {
   PENCIL: 'pencil',
   ERASER: 'eraser',
   FILL: 'fill',
   COLOR_SAMPLE: 'color-sample',
 }
 
-export const spriteActions = {
+export const SPRITE_ACTIONS = {
   MOVE_COLORS_1: 'move-colors-1',
   MOVE_COLORS_2: 'move-colors-2',
   FLIP_HORIZONTAL: 'flip-horizontal',
@@ -38,14 +50,7 @@ export const spriteActions = {
   MOVE_DOWN: 'move-down',
 }
 
-export const sceneActions = {
-  MOVE_LEFT: 'move-left',
-  MOVE_UP: 'move-up',
-  MOVE_RIGHT: 'move-right',
-  MOVE_DOWN: 'move-down',
-}
-
-export const emptyScene = {
+export const EMPTY_SCENE = {
   name: 'new scene',
   height: 8,
   width: 8,
@@ -61,7 +66,7 @@ export const emptyScene = {
   ],
 }
 
-export const emptySprite = [
+export const EMPTY_SPRITE = [
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
   [null, null, "03", null, null, null, null, null],
@@ -72,7 +77,7 @@ export const emptySprite = [
   [null, null, null, null, null, null, null, null],
 ];
 
-export const spriteList = new Array(128)
+export const SPRITE_LIST = new Array(128)
   .fill(null)
   .map(() => [
     ["00", "00", "00", "00", "00", "00", "00", "00"],
@@ -85,7 +90,7 @@ export const spriteList = new Array(128)
     ["00", "00", "00", "00", "00", "00", "00", "00"],
   ]);
 
-export const emptyProject = {
+export const EMPTY_PROJECT = {
   id: '',
   name: 'My Project',
   author: '',
@@ -93,7 +98,7 @@ export const emptyProject = {
   updatedDate: 'date2',//new Date(),
   palette: 'default',
   scenes: [
-    {...emptyScene},
+    { ...EMPTY_SCENE },
   ],
-  sprites: spriteList,
+  sprites: SPRITE_LIST,
 }

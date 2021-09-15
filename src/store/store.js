@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger'
 
-import currentProjectReducer from '@store/currentProject/currentProject.slice';
+import projectsSlice from '@store/projects/projects.slice';
+import currentProjectSlice from '@store/currentProject/currentProject.slice';
 import sceneEditorSlice from '@store/sceneEditor/sceneEditor.slice';
 import spriteEditorSlice from '@store/spriteEditor/spriteEditor.slice';
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   reducer: {
-    currentProject: currentProjectReducer,
+    projects: projectsSlice,
+    currentProject: currentProjectSlice,
     sceneEditor: sceneEditorSlice,
     spriteEditor: spriteEditorSlice,
   },

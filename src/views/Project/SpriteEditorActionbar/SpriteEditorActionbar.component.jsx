@@ -6,7 +6,7 @@ import { SwitchHorizontalIcon, SwitchVerticalIcon, ArrowSmUpIcon, ArrowSmRightIc
 import { moveSpriteUp,moveSpriteRight, moveSpriteDown, moveSpriteLeft, flipSpriteVertical, flipSpriteHorizontal, rotateSpriteRight, rotateSpriteLeft } from '@store/spriteEditor/spriteEditor.slice';
 import { handleSpriteActionButton } from '@store/actions';
 
-import styles from './SpriteEditorActionbar.module.css';
+import styles from './SpriteEditorActionbar.module.scss';
 
 const buttonClassesBase = 'relative inline-flex items-center px-4 py-2 text-sm font-medium';
 const buttonClasses = `${buttonClassesBase} text-gray-800 bg-white hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500`;
@@ -25,9 +25,12 @@ const SpriteEditorActionbar = (props) => {
   }
 
   return (
-    <div className={styles.spriteEditorActionbar + ' shadow-sm bg-gray-50 mb-4 w-full'}>
+    <div className={styles.spriteEditorActionbar + ' shadow-sm bg-gray-50 mb-2 w-full'}>
       <button {...buttonAttributes} onClick={() => handleClick(moveSpriteLeft)}>
         <ArrowSmLeftIcon className={iconClasses} />
+      </button>
+      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteRight)}>
+        <ArrowSmRightIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(moveSpriteUp)} >
         <ArrowSmUpIcon className={iconClasses} />
@@ -35,14 +38,11 @@ const SpriteEditorActionbar = (props) => {
       <button {...buttonAttributes} onClick={() => handleClick(moveSpriteDown)}>
         <ArrowSmDownIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteRight)}>
-        <ArrowSmRightIcon className={iconClasses} />
+      <button {...buttonAttributes} onClick={() => handleClick(flipSpriteHorizontal)}>
+        <SwitchHorizontalIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(flipSpriteVertical)}>
         <SwitchVerticalIcon className={iconClasses} />
-      </button>
-      <button {...buttonAttributes} onClick={() => handleClick(flipSpriteHorizontal)}>
-        <SwitchHorizontalIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(rotateSpriteLeft)}>
         <ReplyIcon className={iconClasses} />

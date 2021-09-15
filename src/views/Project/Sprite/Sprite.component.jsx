@@ -1,31 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { getProjectSpriteByIndex } from '@store/currentProject/currentProject.slice';
 
-import styles from './Sprite.module.css';
-import './SpriteTransform.css';
+import styles from './Sprite.module.scss';
 
 const Sprite = props => {
   const {
     spriteIndex,
-    spriteRotation = 0,
     onClick = () => {},
     onDoubleClick = () => {},
     isDraggable = true,
+    rowIndex,
+    colIndex,
   } = props;
 
   const sprite = useSelector(getProjectSpriteByIndex(spriteIndex));
-  const [isDragging, setIsDragging] = useState(false);
 
   const dragStartHandler = event => {
-    setIsDragging(true);
-
     const draggingData = {
+      rowIndex,
+      colIndex,
       sprite,
       spritePoolIndex: spriteIndex
     }
-
     event.dataTransfer.setData('text/plain', JSON.stringify(draggingData));
   }
 
@@ -34,12 +32,7 @@ const Sprite = props => {
   }
 
   const dropHandler = event => {
-    setIsDragging(false);
     event.preventDefault();
-  }
-
-  const dragEndHandler = () => {
-    setIsDragging(false);
   }
 
   const spriteHtml = sprite
@@ -51,17 +44,11 @@ const Sprite = props => {
       </div>
     ));
 
-  const classList = [
-    isDragging ? 'sprite sprite--dragging' : 'sprite',
-    `sprite--r${spriteRotation}`,
-  ].join(' ');
-
   return (
     <div
-      className={styles.spriteGrid + ' ' + classList}
+      className={styles.spriteGrid}
       draggable={isDraggable}
       onDragStart={dragStartHandler}
-      onDragEnd={dragEndHandler}
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
       onDoubleClick={onDoubleClick}

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { emptyProject } from '@/App.constants.js';
+import { EMPTY_PROJECT } from '@/App.constants.js';
 
 // TODO this could cause a reference issue but here goes...
 
 const initialState = {
-  ...emptyProject,
+  ...EMPTY_PROJECT,
   // id: null,
   // name: 'DefaultText',
   // palette: 'default',

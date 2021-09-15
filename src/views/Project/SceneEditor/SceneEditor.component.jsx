@@ -5,7 +5,7 @@ import { getProjectScene, getProjectPaletteClass } from '@store/currentProject/c
 import { getSelectedScene, setSelectedScene } from '@store/sceneEditor/sceneEditor.slice';
 import Grid from './Grid.component';
 
-import styles from './SceneEditor.module.css';
+import styles from './SceneEditor.module.scss';
 
 const SceneEditor = ({ sceneIndex }) => {
   const dispatch = useDispatch();
@@ -13,12 +13,14 @@ const SceneEditor = ({ sceneIndex }) => {
   const selectedScene = useSelector(getSelectedScene);
   const paletteClass = useSelector(getProjectPaletteClass);
 
+    console.log('projectScene', projectScene);
+
   useEffect(() => {
     dispatch(setSelectedScene({ scene: projectScene }));
   }, [dispatch, projectScene]);
 
   return (
-    <div className={styles.sceneGrid}>
+    <div className={styles.sceneGrid + ' mb-2'}>
       <div className={paletteClass}>
         <Grid scene={selectedScene} />
       </div>

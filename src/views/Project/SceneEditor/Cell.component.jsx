@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { updateSelectedSceneCell } from '@store/sceneEditor/sceneEditor.slice';
+import { SCENE_TOOLS } from '@/App.constants';
+import { updateScene } from '@store/actions';
 
 import Sprite from '@views/Project/Sprite/Sprite.component';
 
-const Cell = ({ sprite, rowIndex, colIndex }) => {
+const Cell = (props) => {
+  const {
+    sprite,
+    rowIndex,
+    colIndex,
+    selectedTool,
+  } = props;
+
   const dispatch = useDispatch();
-  const [isDraggable, setIsDraggable] = useState(true);
 
   const dragOverHandler = event => {
     event.preventDefault();
@@ -15,40 +22,28 @@ const Cell = ({ sprite, rowIndex, colIndex }) => {
 
   const dropHandler = event => {
     event.preventDefault(); 
-
     const passedData = JSON.parse(event.dataTransfer.getData('text'));
 
-    dispatch(updateSelectedSceneCell({
+    dispatch(updateScene({
       row: rowIndex,
       column: colIndex,
-      value: {
-        id: passedData.spritePoolIndex,
-        r: passedData.spriteRotation ?? 0,
-      },
-    }));// then update main project list? use action thunk
+      value: {id: passedData.spritePoolIndex},
+    }));
 
-    // Remove sprite from grid if dropped outside of grid
-    // if (passedData.spriteGridRow && passedData.spriteGridColumn) {
-    //   if (rowIndex != passedData.spriteGridRow || colIndex != passedData.spriteGridColumn) {
-    //     updatedScene.spriteSheet[passedData.spriteGridRow][passedData.spriteGridColumn] = null;
-    //   }
-    // }
+    // Remove sprite from grid
+    if (passedData?.rowIndex && passedData?.colIndex) {
+      if (rowIndex !== passedData.rowIndex || colIndex !== passedData.colIndex) {
+        dispatch(updateScene({
+          row: passedData.rowIndex,
+          column: passedData.colIndex,
+          value: null,
+        }));
+      }
+    }
 
-    // setSelectedScene(updatedScene);
+    // TODO Remove sprite from grid if dropped outside of grid
     // setShowDeleteZone(false);
     event.dataTransfer.clearData();
-  }
-
-  const handleDoubleClick = (spriteIndex) => {
-    // TODO removed rotation, it was buggy. update spriteSheet to be simple array of index values vs objects
-    // dispatch(updateSelectedSceneCell({
-    //   row: rowIndex,
-    //   column: colIndex,
-    //   value: {
-    //     id: sprite.id,
-    //     r: sprite.r === 3 ? 0 : sprite.r + 1,
-    //   },
-    // }));
   }
 
   return (
@@ -60,10 +55,9 @@ const Cell = ({ sprite, rowIndex, colIndex }) => {
         <Sprite
           key={sprite.id}
           spriteIndex={sprite.id}
-          spriteRotation={sprite.r}
-          isDraggable={isDraggable}
-          // onClick={() => handleClick(sprite.id)}
-          onDoubleClick={() => handleDoubleClick(sprite.id)}
+          rowIndex={rowIndex}
+          colIndex={colIndex}
+          isDraggable={selectedTool === SCENE_TOOLS.MOVE}
         />
       )}
     </div>

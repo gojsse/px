@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
@@ -6,7 +6,7 @@ import { getProjectSpritesPaged } from '@store/currentProject/currentProject.sli
 import { getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
 import Sprite from '@views/Project/Sprite/Sprite.component';
 
-import styles from './SpriteList.module.css';
+import styles from './SpriteList.module.scss';
 
 const SpriteList = props => {
   const history = useHistory();
@@ -15,16 +15,49 @@ const SpriteList = props => {
   const sprites = useSelector(getProjectSpritesPaged(1, 32));
   const paletteClass = useSelector(getProjectPaletteClass);
   const [page, setPage] = useState(1);
+  const [isMouseOver, setMouseIsOver] = useState(false);
+  const [isHoveringAwhile, setIsHoveringAwhile] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    if (isMouseOver) {
+      timer = setTimeout(() => {
+        // console.log('This will run after 2 second2!')
+        setIsHoveringAwhile(true);
+      }, 1000);
+    } else {
+      clearTimeout(timer);
+      setIsHoveringAwhile(false);
+    }
+
+    return () => clearTimeout(timer);
+  }, [isMouseOver]);
+
+  const dragOverHandler = event => {
+    setMouseIsOver(true);
+    event.preventDefault();
+    // console.log('dragging over', rowIndex, colIndex);
+  }
+
+  const dragLeaveHandler = () => {
+    setMouseIsOver(false);
+    setIsHoveringAwhile(false);
+  }
 
   const handleClick = (spriteIndex) => {
-    console.log('do we need to do anything?')
+    
   }
 
   const handleDoubleClick = (spriteIndex) => {
     history.push(`/project/${projectId}/${sceneIndex}/${spriteIndex}`);
-    // setSelectedSprite([ ...props.sprite ]);
-    // setSelectedSpriteIndex(props.spriteIndex);
   }
+
+  // TODO I guess we need to make 'cells' for this to drop things into?
+  //   onDragLeave={dragLeaveHandler}
+  //   onDragEnd={dragLeaveHandler}
+  //   onMouseOut={dragLeaveHandler}
+
+  // isHoveringAwhile ? 'border-dashed border-4 border-light-blue-500' : ''
 
   return (
     <div className={paletteClass}>

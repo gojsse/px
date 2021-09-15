@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { spriteTools } from '@/App.constants';
+import { SPRITE_TOOLS } from '@/App.constants';
 import { setSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
 
-const Cell = props => {
+const Cell = (props) => {
   const {
     rowIndex,
     colIndex,
@@ -17,7 +17,7 @@ const Cell = props => {
   const dispatch = useDispatch();
 
   const cellClickHandler = () => {
-    if (selectedTool === spriteTools.COLOR_SAMPLE) {
+    if (selectedTool === SPRITE_TOOLS.COLOR_SAMPLE) {
       dispatch(setSelectedColor({color: colorKey}));
       return;
     }
@@ -25,7 +25,7 @@ const Cell = props => {
   }
 
   const mouseEnterHandler = () => {
-    if (selectedTool === spriteTools.COLOR_SAMPLE && mouseIsDown) {
+    if (selectedTool === SPRITE_TOOLS.COLOR_SAMPLE && mouseIsDown) {
       dispatch(setSelectedColor({color: colorKey}));
       return;
     }

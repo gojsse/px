@@ -7,17 +7,17 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
     grid-template-columns: repeat(8, 12.5%);
-}
 
-.sceneGridRow > div {
-    align-items: center;
-    border: none;
-    display: flex;
-    justify-content: center;
-}
+    & > div {
+        align-items: center;
+        /* border: none; */
+        display: flex;
+        justify-content: center;
 
-.sceneGridRow > div:hover {
-    opacity: .8;
+        &:hover {
+            opacity: .8;
+        }
+    }
 }
 
 /* GRID LINES */
