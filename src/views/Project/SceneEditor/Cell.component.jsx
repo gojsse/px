@@ -64,6 +64,16 @@ const Cell = (props) => {
     // clickHandler(rowIndex, colIndex);
   }
 
+  const cursor = () => {
+    let cursorType = 'default';
+    if (selectedTool === SCENE_TOOLS.MOVE) {
+      cursorType = 'grab';
+    } else if (selectedTool === SCENE_TOOLS.STAMP) {
+      cursorType = 'cell';
+    }
+    return cursorType;
+  }
+
   return (
     <div
       onDragOver={dragOverHandler}
@@ -76,6 +86,7 @@ const Cell = (props) => {
           spriteIndex={sprite.id}
           rowIndex={rowIndex}
           colIndex={colIndex}
+          cursor={cursor()}
           isDraggable={selectedTool === SCENE_TOOLS.MOVE}
         />
       )}

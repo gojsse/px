@@ -12,6 +12,7 @@ const Sprite = props => {
     isDraggable = true,
     onClick = () => {},
     onDoubleClick = () => {},
+    cursor = 'default',
     rowIndex,
     colIndex,
   } = props;
@@ -48,6 +49,7 @@ const Sprite = props => {
   return (
     <div
       className={styles.sprite + (isSelected ? ' ' + styles.spriteSelected : '')}
+      style={{ cursor: cursor }}
       draggable={isDraggable}
       onDragStart={dragStartHandler}
       onDragOver={dragOverHandler}

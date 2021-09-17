@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
@@ -18,40 +18,35 @@ const SpriteList = props => {
   const paletteClass = useSelector(getProjectPaletteClass);
   const selectedSpriteIndex = useSelector(getSelectedSpriteIndex);
   const selectedTool = useSelector(getSelectedTool);
-  const [isMouseOver, setMouseIsOver] = useState(false);
-  const [isHoveringAwhile, setIsHoveringAwhile] = useState(false);
+  // const [isMouseOver, setMouseIsOver] = useState(false);
+  // const [isHoveringAwhile, setIsHoveringAwhile] = useState(false);
 
-  useEffect(() => {
-    let timer;
-    if (isMouseOver) {
-      timer = setTimeout(() => {
-        // console.log('This will run after 1 second!')
-        setIsHoveringAwhile(true);
-      }, 1000);
-    } else {
-      clearTimeout(timer);
-      setIsHoveringAwhile(false);
-    }
+  // useEffect(() => {
+  //   let timer;
+  //   if (isMouseOver) {
+  //     timer = setTimeout(() => {
+  //       // console.log('This will run after 1 second!')
+  //       setIsHoveringAwhile(true);
+  //     }, 1000);
+  //   } else {
+  //     clearTimeout(timer);
+  //     setIsHoveringAwhile(false);
+  //   }
 
-    return () => clearTimeout(timer);
-  }, [isMouseOver]);
+  //   return () => clearTimeout(timer);
+  // }, [isMouseOver]);
 
-  const dragOverHandler = event => {
-    setMouseIsOver(true);
-    event.preventDefault();
-    // console.log('dragging over', rowIndex, colIndex);
-  }
+  // const dragOverHandler = event => {
+  //   setMouseIsOver(true);
+  //   event.preventDefault();
+  // }
 
-  const dragLeaveHandler = () => {
-    setMouseIsOver(false);
-    setIsHoveringAwhile(false);
-  }
+  // const dragLeaveHandler = () => {
+  //   setMouseIsOver(false);
+  //   setIsHoveringAwhile(false);
+  // }
 
   const handleClick = (spriteIndex) => {
-    
-  }
-
-  const handleDoubleClick = (spriteIndex) => {
     history.push(`/project/${projectId}/${sceneIndex}/${spriteIndex}`);
   }
 
@@ -70,10 +65,10 @@ const SpriteList = props => {
             <Sprite
               key={spriteIndex}
               spriteIndex={spriteIndex}
+              cursor={'pointer'}
               isSelected={parseInt(spriteIndex) === parseInt(selectedSpriteIndex)}
               isDraggable={selectedTool === SCENE_TOOLS.MOVE}
               onClick={() => handleClick(spriteIndex)}
-              onDoubleClick={() => handleDoubleClick(spriteIndex)}
             />
           ))}
         </div>

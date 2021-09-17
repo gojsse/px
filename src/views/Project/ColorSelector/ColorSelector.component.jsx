@@ -19,7 +19,7 @@ const SpriteEditor = (props) => {
   }
 
   return (
-    <div className={paletteClass}>
+    <div className={paletteClass + ' flex-1 flex flex-col'}>
       <div className='bg-white'>
         <div className={styles.colorGrid}>
           {COLOR_KEYS.map((key, index) => {

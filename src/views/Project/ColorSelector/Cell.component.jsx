@@ -11,7 +11,7 @@ const Cell = (props) => {
 
   return (
     <button
-      className={`color color--${value}` + ' ' + styles.cell + (isSelected ? ' ' + styles.cellSelected : '')}
+      className={`color color--${value} ${styles.cell}` + (isSelected ? ' ' + styles.cellSelected : '')}
       onClick={() => onClick(value)}
     />
   );

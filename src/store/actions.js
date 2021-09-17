@@ -1,4 +1,4 @@
-import { getProject, updateProjectSprite, updateProjectScene } from '@store/currentProject/currentProject.slice';
+import { updateProjectSprite, updateProjectScene } from '@store/currentProject/currentProject.slice';
 import { getSelectedSprite, getSelectedSpriteIndex } from '@store/spriteEditor/spriteEditor.slice';
 import { getSelectedScene, getSelectedSceneIndex, updateSelectedSceneCell } from '@store/sceneEditor/sceneEditor.slice';
 

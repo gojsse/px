@@ -13,8 +13,6 @@ const SceneEditor = ({ sceneIndex }) => {
   const selectedScene = useSelector(getSelectedScene);
   const paletteClass = useSelector(getProjectPaletteClass);
 
-    console.log('projectScene', projectScene);
-
   useEffect(() => {
     dispatch(setSelectedScene({ scene: projectScene }));
   }, [dispatch, projectScene]);

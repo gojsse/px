@@ -25,7 +25,7 @@ const InfoBar = ({ selectedColor, paletteClass }) => {
 
   return (
     <div
-      className={`flex items-center h-1/4 p-2 text-xs font-mono color color--${selectedColor} ${textColorClass}`}
+      className={`flex flex-1 items-start h-1/4 p-2 text-xs font-mono color color--${selectedColor} ${textColorClass}`}
       ref={cellRef}
     >
       <ColorSwatchIcon className='block h-5 w-5 mr-2' /> c{selectedColor} | {colorHex} | {colorRgb}
