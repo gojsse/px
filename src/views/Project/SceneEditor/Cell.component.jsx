@@ -51,17 +51,12 @@ const Cell = (props) => {
 
   const cellClickHandler = () => {
     if (selectedTool === SCENE_TOOLS.STAMP) {
-      console.log('do the stamp! update this cell with sprite list selected item')
-      // TODO
-      // dispatch(setSelectedColor({color: colorKey}));
-      // return;
       dispatch(updateScene({
         row: rowIndex,
         column: colIndex,
         value: {id: selectedSpriteIndex},
       }));
     }
-    // clickHandler(rowIndex, colIndex);
   }
 
   const cursor = () => {

@@ -32,5 +32,14 @@ export const {
 
 // Selectors
 export const getProjects = (state) => state.projects;
+export const getProject = (projectId) => (state) => state.projects.find(project => project.id === projectId);
+export const getProjectScene = (projectId, sceneIndex) => (state) => {
+  const project = state.projects.find(project => project.id === projectId);
+  return project.scenes[sceneIndex];
+}
+export const getProjectSprite = (projectId, spriteIndex) => (state) => {
+  const project = state.projects.find(project => project.id === projectId);
+  return project.sprites[spriteIndex];
+}
 
 export default projectsSlice.reducer;
