@@ -23,7 +23,7 @@ const PaletteSelector = (props) => {
               <button onClick={() => handlePaletteClick(palette)} className='grid grid-cols-4 gap-0 w-full'>
                 {COLOR_KEYS.map(color => {
                   return (
-                    <div className={`color color--${color}`}></div>
+                    <div key={color} className={`color color--${color}`} />
                   )
                 })}
               </button>

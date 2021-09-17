@@ -11,7 +11,7 @@ const SceneInfoBar = ({ sceneIndex }) => {
   return (
     <div className='flex content-center justify-between p-2 text-xs'>
       <span>{sceneName} [{sceneIndex}/?]</span>
-      <span>{selectedTool}</span>
+      <span>{selectedTool} tool</span>
     </div>
   );
 }

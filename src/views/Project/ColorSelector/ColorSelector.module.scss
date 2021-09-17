@@ -17,8 +17,9 @@
         }
 
         &:before {
-          content: '';
           display: block;
+          content: '';
+          height: 0;
           padding-bottom: 100%;
         }
     }

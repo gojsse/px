@@ -27,7 +27,7 @@ const SpriteEditorToolbar = (props) => {
   const handleToolClick = tool => dispatch(setSelectedTool({tool}));
 
   return (
-    <div className={styles.spriteEditorToolbar + ' shadow-sm bg-gray-50 w-full'}>
+    <div className={styles.spriteEditorToolbar + ' w-full'}>
       {buttons.map(button => {
         return (
           <button

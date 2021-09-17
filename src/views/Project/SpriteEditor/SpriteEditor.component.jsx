@@ -129,11 +129,18 @@ const SpriteEditor = ({ spriteIndex }) => {
       );
     });
 
+  const handleMouseLeave = () => {
+    if (mouseDown) {
+      dispatch(updateProjectSprite({index: spriteIndex, sprite: selectedSprite}));
+    }
+    setMouseDown(false);
+  }
+
   return (
     <div className={paletteClass + ' mb-2'}>
       <div
         className={styles.spriteGrid}
-        onMouseLeave={() => setMouseDown(false)}
+        onMouseLeave={handleMouseLeave}
         onMouseDown={() => setMouseDown(true)}
         onMouseUp={() => {
           setMouseDown(false);

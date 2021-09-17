@@ -25,7 +25,7 @@ const SpriteEditorActionbar = (props) => {
   }
 
   return (
-    <div className={styles.spriteEditorActionbar + ' shadow-sm bg-gray-50 mb-2 w-full'}>
+    <div className={styles.spriteEditorActionbar + ' w-full mb-2'}>
       <button {...buttonAttributes} onClick={() => handleClick(moveSpriteLeft)}>
         <ArrowSmLeftIcon className={iconClasses} />
       </button>

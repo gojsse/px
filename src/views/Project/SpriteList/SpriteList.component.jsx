@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
-import { getProjectSpritesPaged } from '@store/currentProject/currentProject.slice';
-import { getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
+import { SCENE_TOOLS } from '@/App.constants';
+import { getProjectSpritesPaged, getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
+import { getSelectedSpriteIndex } from '@store/spriteEditor/spriteEditor.slice';
+import { getSelectedTool } from '@store/sceneEditor/sceneEditor.slice';
 import Sprite from '@views/Project/Sprite/Sprite.component';
 
 import styles from './SpriteList.module.scss';
@@ -14,7 +16,8 @@ const SpriteList = props => {
 
   const sprites = useSelector(getProjectSpritesPaged(1, 32));
   const paletteClass = useSelector(getProjectPaletteClass);
-  const [page, setPage] = useState(1);
+  const selectedSpriteIndex = useSelector(getSelectedSpriteIndex);
+  const selectedTool = useSelector(getSelectedTool);
   const [isMouseOver, setMouseIsOver] = useState(false);
   const [isHoveringAwhile, setIsHoveringAwhile] = useState(false);
 
@@ -22,7 +25,7 @@ const SpriteList = props => {
     let timer;
     if (isMouseOver) {
       timer = setTimeout(() => {
-        // console.log('This will run after 2 second2!')
+        // console.log('This will run after 1 second!')
         setIsHoveringAwhile(true);
       }, 1000);
     } else {
@@ -63,10 +66,12 @@ const SpriteList = props => {
     <div className={paletteClass}>
       <div className={styles.spriteList}>
         <div className={styles.spriteListRow}>
-          {sprites.map((sprite, spriteIndex) => (
+          {sprites.map((_, spriteIndex) => (
             <Sprite
               key={spriteIndex}
               spriteIndex={spriteIndex}
+              isSelected={parseInt(spriteIndex) === parseInt(selectedSpriteIndex)}
+              isDraggable={selectedTool === SCENE_TOOLS.MOVE}
               onClick={() => handleClick(spriteIndex)}
               onDoubleClick={() => handleDoubleClick(spriteIndex)}
             />

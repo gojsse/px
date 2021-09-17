@@ -8,9 +8,10 @@ import styles from './Sprite.module.scss';
 const Sprite = props => {
   const {
     spriteIndex,
+    isSelected = false,
+    isDraggable = true,
     onClick = () => {},
     onDoubleClick = () => {},
-    isDraggable = true,
     rowIndex,
     colIndex,
   } = props;
@@ -37,7 +38,7 @@ const Sprite = props => {
 
   const spriteHtml = sprite
     .map((row, rowIndex) => (
-      <div key={rowIndex} className={styles.spriteGridRow}>
+      <div key={rowIndex} className={styles.spriteRow}>
         {row.map((cell, colIndex) => (
           <div key={colIndex} className={`color color--${cell}`} onClick={() => onClick(spriteIndex)} />
         ))}
@@ -46,7 +47,7 @@ const Sprite = props => {
 
   return (
     <div
-      className={styles.spriteGrid}
+      className={styles.sprite + (isSelected ? ' ' + styles.spriteSelected : '')}
       draggable={isDraggable}
       onDragStart={dragStartHandler}
       onDragOver={dragOverHandler}

@@ -25,7 +25,7 @@ const SceneEditorActionbar = (props) => {
   }
 
   return (
-    <div className={styles.sceneEditorActionbar + ' shadow-sm bg-gray-50 mb-2 w-full'}>
+    <div className={styles.sceneEditorActionbar + ' mb-2 w-full'}>
       <button {...buttonAttributes} onClick={() => handleClick(moveSceneLeft)}>
         <ArrowSmLeftIcon className={iconClasses} />
       </button>

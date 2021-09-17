@@ -25,7 +25,7 @@ const SceneEditorToolbar = (props) => {
   const handleToolClick = tool => dispatch(setSelectedTool({tool}));
 
   return (
-    <div className={styles.sceneEditorToolbar + ' shadow-sm bg-gray-50 w-full'}>
+    <div className={styles.sceneEditorToolbar + ' w-full'}>
       {buttons.map(button => {
         return (
           <button

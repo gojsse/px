@@ -1,9 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { SCENE_TOOLS } from '@/App.constants';
 import { updateScene } from '@store/actions';
-
+import { getSelectedSpriteIndex } from '@store/spriteEditor/spriteEditor.slice';
 import Sprite from '@views/Project/Sprite/Sprite.component';
 
 const Cell = (props) => {
@@ -15,6 +15,9 @@ const Cell = (props) => {
   } = props;
 
   const dispatch = useDispatch();
+
+  // TODO get selected spriteIndex from sprite list
+  const selectedSpriteIndex = useSelector(getSelectedSpriteIndex);
 
   const dragOverHandler = event => {
     event.preventDefault();
@@ -46,10 +49,26 @@ const Cell = (props) => {
     event.dataTransfer.clearData();
   }
 
+  const cellClickHandler = () => {
+    if (selectedTool === SCENE_TOOLS.STAMP) {
+      console.log('do the stamp! update this cell with sprite list selected item')
+      // TODO
+      // dispatch(setSelectedColor({color: colorKey}));
+      // return;
+      dispatch(updateScene({
+        row: rowIndex,
+        column: colIndex,
+        value: {id: selectedSpriteIndex},
+      }));
+    }
+    // clickHandler(rowIndex, colIndex);
+  }
+
   return (
     <div
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
+      onMouseDown={cellClickHandler}
     >
       {sprite !== null && (
         <Sprite
