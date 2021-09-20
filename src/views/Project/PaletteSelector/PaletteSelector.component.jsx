@@ -1,16 +1,18 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { getSelectedPalette, selectProjectPalette } from '@store/currentProject/currentProject.slice';
+import { updatePalette } from '@store/actions'
+import { getSelectedProjectPalette } from '@store/currentProject/currentProject.slice'
 
-import { PALETTE_LIST, COLOR_KEYS } from '@/App.constants.js';
+import { PALETTE_LIST, COLOR_KEYS } from '@/App.constants.js'
 
 const PaletteSelector = (props) => {
-  const dispatch = useDispatch();
-  const selectedPallete = useSelector(getSelectedPalette);
+  const dispatch = useDispatch()
+  const selectedPallete = useSelector(getSelectedProjectPalette)
 
   const handlePaletteClick = palette => {
-    dispatch(selectProjectPalette({palette}));
+    console.log('palette', palette)
+    dispatch(updatePalette({ palette }))
   }
 
   return (
@@ -32,7 +34,7 @@ const PaletteSelector = (props) => {
         })}
       </div>
     </div>
-  );
+  )
 }
 
-export default PaletteSelector;
+export default PaletteSelector

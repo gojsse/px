@@ -1,9 +1,9 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-import { getProjectSpriteByIndex } from '@store/currentProject/currentProject.slice';
+import { getSelectedProjectSpriteByIndex } from '@store/currentProject/currentProject.slice'
 
-import styles from './Sprite.module.scss';
+import styles from './Sprite.module.scss'
 
 const Sprite = props => {
   const {
@@ -15,9 +15,9 @@ const Sprite = props => {
     cursor = 'default',
     rowIndex,
     colIndex,
-  } = props;
+  } = props
 
-  const sprite = useSelector(getProjectSpriteByIndex(spriteIndex));
+  const sprite = useSelector(getSelectedProjectSpriteByIndex(spriteIndex))
 
   const dragStartHandler = event => {
     const draggingData = {
@@ -26,15 +26,15 @@ const Sprite = props => {
       sprite,
       spritePoolIndex: spriteIndex
     }
-    event.dataTransfer.setData('text/plain', JSON.stringify(draggingData));
+    event.dataTransfer.setData('text/plain', JSON.stringify(draggingData))
   }
 
   const dragOverHandler = event => {
-    event.preventDefault();
+    event.preventDefault()
   }
 
   const dropHandler = event => {
-    event.preventDefault();
+    event.preventDefault()
   }
 
   const spriteHtml = sprite
@@ -44,7 +44,7 @@ const Sprite = props => {
           <div key={colIndex} className={`color color--${cell}`} onClick={() => onClick(spriteIndex)} />
         ))}
       </div>
-    ));
+    ))
 
   return (
     <div
@@ -59,7 +59,7 @@ const Sprite = props => {
     >
       {spriteHtml}
     </div>
-  );
+  )
 }
 
-export default React.memo(Sprite);
+export default React.memo(Sprite)

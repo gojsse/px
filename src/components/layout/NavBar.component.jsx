@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from "react-router-dom";
+import React from 'react'
+import { NavLink } from "react-router-dom"
 
 import { Disclosure } from '@headlessui/react'
 import { AdjustmentsIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
@@ -93,7 +93,7 @@ const SiteMenu = (props) => {
         </>
       )}
     </Disclosure>
-  );
+  )
 }
 
-export default SiteMenu;
+export default SiteMenu

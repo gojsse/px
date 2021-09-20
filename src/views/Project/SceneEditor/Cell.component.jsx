@@ -33,8 +33,11 @@ const Cell = (props) => {
       value: {id: passedData.spritePoolIndex},
     }));
 
+    const hasValidRow = passedData.rowIndex !== null && passedData.rowIndex >= 0;
+    const hasValidColumn = passedData.colIndex !== null && passedData.colIndex >= 0;
+
     // Remove sprite from grid
-    if (passedData?.rowIndex && passedData?.colIndex) {
+    if (hasValidRow && hasValidColumn) {
       if (rowIndex !== passedData.rowIndex || colIndex !== passedData.colIndex) {
         dispatch(updateScene({
           row: passedData.rowIndex,

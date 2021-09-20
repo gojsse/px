@@ -1,34 +1,37 @@
-import React, { Fragment } from 'react';
-import { useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-// import ReactJson from 'react-json-view';
+import React, { useEffect, Fragment } from 'react'
+import { useParams } from 'react-router'
+import { useDispatch, useSelector } from 'react-redux'
+// import ReactJson from 'react-json-view'
 
-import { getProjectName } from '@store/currentProject/currentProject.slice';
+import { getProjectById } from '@store/projects/projects.slice'
+import { setSelectedProject, getSelectedProjectName } from '@store/currentProject/currentProject.slice'
 
-import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component';
+import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
+import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component'
+import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component'
+import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component'
+import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component'
+import SpriteList from '@views/Project/SpriteList/SpriteList.component'
+import SpriteInfoBar from '@views/Project/SpriteInfoBar/SpriteInfoBar.component'
+import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditorToolbar.component'
+import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEditorActionbar.component'
+import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component'
+import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 
-import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component';
-import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component';
-import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component';
-import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component';
-import SpriteList from '@views/Project/SpriteList/SpriteList.component';
-import SpriteInfoBar from '@views/Project/SpriteInfoBar/SpriteInfoBar.component';
-import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditorToolbar.component';
-import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEditorActionbar.component';
-import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component';
-import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component';
-
-import { Menu, Transition } from '@headlessui/react';
-import { CogIcon } from '@heroicons/react/solid';
-
-// function classNames(...classes) {
-//   return classes.filter(Boolean).join(' ')
-// }
+import { Menu, Transition } from '@headlessui/react'
+import { CogIcon } from '@heroicons/react/solid'
 
 const Project = (props) => {
-  const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams();
+  const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
+  const dispatch = useDispatch()
+  const project = useSelector(getProjectById(projectId))
 
-  const projectName = useSelector(getProjectName);
+  useEffect(() => {
+    dispatch(setSelectedProject({ project }))
+  }, [dispatch])
+
+  const projectName = useSelector(getSelectedProjectName)
+  // const selectedProject = useSelector()
 
   return (
     <div>
@@ -72,7 +75,7 @@ const Project = (props) => {
         <div className='flex flex-col bg-white'>
           <div className='shadow'>
             <SceneInfoBar sceneIndex={sceneIndex} />
-            <div className='bg-gray-200 bg-stripes bg-stripes-white shadow-sm'>
+            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm'>
               <SceneEditorToolbar />
               <SceneEditorActionbar />
             </div>
@@ -83,7 +86,7 @@ const Project = (props) => {
         <div className='flex flex-col bg-white'>
           <div className='shadow'>
             <SpriteInfoBar spriteIndex={spriteIndex} />
-            <div className='bg-gray-200 bg-stripes bg-stripes-white shadow-sm'>
+            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm'>
               <SpriteEditorToolbar />
               <SpriteEditorActionbar />
             </div>
@@ -100,4 +103,4 @@ const Project = (props) => {
   )
 }
 
-export default Project;
+export default Project

@@ -14,7 +14,7 @@ export const PALETTE_LIST = [
   'sky-high',
   'brinstar',
   'brinstar-2',
-];
+]
 
 export const COLOR_KEYS = [
   '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
@@ -75,7 +75,7 @@ export const EMPTY_SPRITE = [
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
-];
+]
 
 export const SPRITE_LIST = new Array(128)
   .fill(null)
@@ -88,12 +88,12 @@ export const SPRITE_LIST = new Array(128)
     ["00", "00", "00", "00", "00", "00", "00", "00"],
     ["00", "00", "00", "00", "00", "00", "00", "00"],
     ["00", "00", "00", "00", "00", "00", "00", "00"],
-  ]);
+  ])
 
 export const EMPTY_PROJECT = {
-  id: '',
-  name: 'My Project',
-  author: '',
+  id: 'init',
+  name: 'init',
+  author: 'init',
   createdDate: 'date1',//new Date(),
   updatedDate: 'date2',//new Date(),
   palette: 'default',

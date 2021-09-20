@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-// import logo from './logo.svg';
-// import { Counter } from './features/counter/Counter';
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom"
 
-import SiteMenu from '@components/layout/NavBar.component';
-import Dashboard from '@views/Dashboard/Dashboard.component';
-import Projects from '@views/Projects/Projects.component';
-import Project from '@views/Project/Project.component';
-import Settings from '@views/Settings/Settings.component';
+import { setProjects } from '@store/projects/projects.slice'
+import SiteMenu from '@components/layout/NavBar.component'
+import Dashboard from '@views/Dashboard/Dashboard.component'
+import Projects from '@views/Projects/Projects.component'
+import Project from '@views/Project/Project.component'
+import Settings from '@views/Settings/Settings.component'
 
-import { setProjects } from '@store/projects/projects.slice';
-import { initializeProjectState } from '@store/currentProject/currentProject.slice';
+import mockProjects from './__mocks__/MOCK_PROJECTS.json'
 
-import mockProjects from './__mocks__/MOCK_PROJECTS.json';
-
-import './App.css';
-import './styles/styles.scss';
+import './App.css'
+import './styles/styles.scss'
 
 const routes = [
   // { path: '/project/:projectKey/scene/:sceneId/edit', component: SceneEditor },
@@ -30,12 +26,11 @@ const routes = [
 ]
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initializeProjectState({project: mockProjects[0]}));
-    // TODO any refs here???
-    dispatch(setProjects({projects: mockProjects}));
+    // TODO clean this up
+    dispatch(setProjects({ projects: mockProjects }))
     // return () => {
     //   cleanup
     // }
@@ -46,11 +41,6 @@ function App() {
       <div className="min-h-screen">
         <SiteMenu />
         <div className="py-10">
-          {/* <header>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold leading-tight text-gray-900">Projects</h1>
-            </div>
-          </header> */}
           <main>
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div className="px-4 sm:px-0">
@@ -63,7 +53,7 @@ function App() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

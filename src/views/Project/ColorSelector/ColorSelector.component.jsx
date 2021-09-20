@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { COLOR_KEYS } from '@/App.constants';
-import { getProjectPaletteClass } from '@store/currentProject/currentProject.slice';
+import { getSelectedProjectPaletteClass } from '@store/currentProject/currentProject.slice';
 import { getSelectedColor, setSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
 import Cell from './Cell.component';
 import InfoBar from './InfoBar.component';
@@ -11,7 +11,7 @@ import styles from './ColorSelector.module.scss';
 
 const SpriteEditor = (props) => {
   const dispatch = useDispatch();
-  const paletteClass = useSelector(getProjectPaletteClass);
+  const paletteClass = useSelector(getSelectedProjectPaletteClass);
   const selectedColor = useSelector(getSelectedColor);
 
   const handleColorClick = (colorKey) => {

@@ -41,6 +41,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require('@tailwindcss/forms'),
     function ({ addUtilities, theme }) {
       const utilities = {
         '.bg-stripes': {

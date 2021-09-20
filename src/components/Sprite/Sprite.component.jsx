@@ -9,7 +9,7 @@ const Sprite = ({ projectId, spriteIndex }) => {
   const sprite = useSelector(getProjectSprite(projectId, spriteIndex));
 
   return (
-    <div className=''>
+    <div>
       {sprite.map((row, rowIndex) => (
         <div key={`${rowIndex}`} className={styles.row}>
           {row.map((cell, cellIndex) => (

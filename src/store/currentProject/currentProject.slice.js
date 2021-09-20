@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
 
-import { EMPTY_PROJECT } from '@/App.constants.js';
+import { EMPTY_PROJECT } from '@/App.constants.js'
 
 // TODO this could cause a reference issue but here goes...
 
@@ -16,62 +16,65 @@ const initialState = {
   // scenes: [], //1-128
   // // redoHistory: [], //in steps
   // // undoHistory: [], //in steps
-};
+}
 
 export const currentProjectSlice = createSlice({
   name: 'currentProject',
   initialState: { ...initialState },
   reducers: {
-    initializeProjectState(_, action) {
-      const { project } = action.payload;
-      return project;
+    setSelectedProject(_, action) {
+      const { project } = action.payload
+      console.log('action setting current project to...', action)
+      return project
     },
-    updateProjectName(state, action) {
-      const { value } = action.payload;
-      state.name = value;
-      state.dateUpdated = Date.now();
+    setSelectedProjectName(state, action) {
+      const { value } = action.payload
+      state.name = value
+      state.dateUpdated = Date.now()
     },
-    selectProjectPalette(state, action) {
-      const { palette } = action.payload;
-      state.palette = palette;
-      state.dateUpdated = Date.now();
+    setSelectedProjectPalette(state, action) {
+      const { value } = action.payload
+      console.log('setSelectedProjectPalette', value)
+      state.palette = value
+      state.dateUpdated = Date.now()
     },
-    updateProjectSprite(state, action) {
-      const { index, sprite } = action.payload;
-      state.sprites[index] = sprite;
-      state.dateUpdated = Date.now();
+    updateSelectedProjectSprite(state, action) {
+      const { index, sprite } = action.payload
+      state.sprites[index] = sprite
+      state.dateUpdated = Date.now()
     },
-    updateProjectScene(state, action) {
-      const { index, scene } = action.payload;
-      state.scenes[index] = scene;
-      state.dateUpdated = Date.now();
+    updateSelectedProjectScene(state, action) {
+      const { index, scene } = action.payload
+      state.scenes[index] = scene
+      state.dateUpdated = Date.now()
     },
   },
 })
 
 // Actions
 export const {
-  initializeProjectState,
-  updateProjectName,
-  selectProjectPalette,
-  updateProjectSprite,
-  updateProjectScene,
-} = currentProjectSlice.actions;
+  setSelectedProject,
+  setSelectedProjectName,
+  setSelectedProjectPalette,
+  updateSelectedProjectSprite,
+  updateSelectedProjectScene,
+} = currentProjectSlice.actions
 
 // Selectors
-export const getProject = (state) => state.currentProject;
-export const getProjectName = (state) => state.currentProject.name;
-export const getProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index];
-export const getProjectSpritesPaged = (page = 1, amount = 16) => (state) => {
+export const getSelectedProject = (state) => state.currentProject
+export const getSelectedProjectId = (state) => state.currentProject.id
+export const getSelectedProjectName = (state) => state.currentProject.name
+export const getSelectedProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index]
+export const getSelectedProjectSpritesPaged = (page = 1, amount = 16) => (state) => {
   return state.currentProject.sprites
     .filter((sprite, index) => {
       return index >= 0 && index <= (page * amount) - 1
     })
 }
-export const getProjectScene = (index) => (state) => state.currentProject.scenes[index];
-export const getSelectedPalette = (state) => state.currentProject.palette;
-export const getProjectPaletteClass = (state) => {
-  return `palette palette--${!state.currentProject.palette ? "default" : state.currentProject.palette}`
+export const getSelectedProjectScene = (index) => (state) => state.currentProject.scenes[index]
+export const getSelectedProjectPalette = (state) => state.currentProject.palette
+export const getSelectedProjectPaletteClass = (state) => {
+  return `palette palette--${!state.currentProject.palette ? 'default' : state.currentProject.palette}`
 }
 
-export default currentProjectSlice.reducer;
+export default currentProjectSlice.reducer

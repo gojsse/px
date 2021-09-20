@@ -1,10 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
 
-import projectsSlice from '@store/projects/projects.slice';
-import currentProjectSlice from '@store/currentProject/currentProject.slice';
-import sceneEditorSlice from '@store/sceneEditor/sceneEditor.slice';
-import spriteEditorSlice from '@store/spriteEditor/spriteEditor.slice';
+import projectsSlice from '@store/projects/projects.slice'
+import currentProjectSlice from '@store/currentProject/currentProject.slice'
+import sceneEditorSlice from '@store/sceneEditor/sceneEditor.slice'
+import spriteEditorSlice from '@store/spriteEditor/spriteEditor.slice'
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
@@ -14,4 +14,4 @@ export const store = configureStore({
     sceneEditor: sceneEditorSlice,
     spriteEditor: spriteEditorSlice,
   },
-});
+})
