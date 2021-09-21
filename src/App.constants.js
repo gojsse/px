@@ -30,6 +30,7 @@ export const SCENE_ACTIONS = {
   MOVE_UP: 'move-up',
   MOVE_RIGHT: 'move-right',
   MOVE_DOWN: 'move-down',
+  CLEAR_SCENE: 'clear-scene',
 }
 
 export const SPRITE_TOOLS = {
@@ -69,7 +70,7 @@ export const EMPTY_SCENE = {
 export const EMPTY_SPRITE = [
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
-  [null, null, "03", null, null, null, null, null],
+  [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],

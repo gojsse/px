@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { SwitchHorizontalIcon, SwitchVerticalIcon, ArrowSmUpIcon, ArrowSmRightIcon, ArrowSmDownIcon, ArrowSmLeftIcon } from '@heroicons/react/outline';
+import { SwitchHorizontalIcon, SwitchVerticalIcon, ArrowSmUpIcon, ArrowSmRightIcon, ArrowSmDownIcon, ArrowSmLeftIcon, LightningBoltIcon } from '@heroicons/react/outline';
 
-import { moveSceneUp, moveSceneRight, moveSceneDown, moveSceneLeft, flipSceneVertical, flipSceneHorizontal } from '@store/sceneEditor/sceneEditor.slice';
+import { moveSceneUp, moveSceneRight, moveSceneDown, moveSceneLeft, flipSceneVertical, flipSceneHorizontal, clearSceneSprites } from '@store/sceneEditor/sceneEditor.slice';
 import { handleSceneActionButton } from '@store/actions';
 
 import styles from './SceneEditorActionbar.module.scss';
@@ -43,6 +43,9 @@ const SceneEditorActionbar = (props) => {
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(flipSceneVertical)}>
         <SwitchVerticalIcon className={iconClasses} />
+      </button>
+      <button {...buttonAttributes} onClick={() => handleClick(clearSceneSprites)}>
+        <LightningBoltIcon className={iconClasses} />
       </button>
     </div>
   );

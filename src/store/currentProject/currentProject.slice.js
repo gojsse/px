@@ -24,7 +24,6 @@ export const currentProjectSlice = createSlice({
   reducers: {
     setSelectedProject(_, action) {
       const { project } = action.payload
-      console.log('action setting current project to...', action)
       return project
     },
     setSelectedProjectName(state, action) {
@@ -34,7 +33,6 @@ export const currentProjectSlice = createSlice({
     },
     setSelectedProjectPalette(state, action) {
       const { value } = action.payload
-      console.log('setSelectedProjectPalette', value)
       state.palette = value
       state.dateUpdated = Date.now()
     },
@@ -64,17 +62,20 @@ export const {
 export const getSelectedProject = (state) => state.currentProject
 export const getSelectedProjectId = (state) => state.currentProject.id
 export const getSelectedProjectName = (state) => state.currentProject.name
-export const getSelectedProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index]
-export const getSelectedProjectSpritesPaged = (page = 1, amount = 16) => (state) => {
-  return state.currentProject.sprites
-    .filter((sprite, index) => {
-      return index >= 0 && index <= (page * amount) - 1
-    })
-}
-export const getSelectedProjectScene = (index) => (state) => state.currentProject.scenes[index]
 export const getSelectedProjectPalette = (state) => state.currentProject.palette
 export const getSelectedProjectPaletteClass = (state) => {
   return `palette palette--${!state.currentProject.palette ? 'default' : state.currentProject.palette}`
 }
+export const getSelectedProjectSprites = (state) => state.currentProject.sprites
+export const getSelectedProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index]
+export const getSelectedProjectSpritesPaged = (page = 1, amount = 16) => (state) => {
+  return state.currentProject.sprites
+    .filter((_, index) => {
+      return index >= 0 && index <= (page * amount) - 1
+    })
+}
+export const getSelectedProjectScenes = (state) => state.currentProject.scenes
+export const getSelectedProjectScene = (index) => (state) => state.currentProject.scenes[index]
+
 
 export default currentProjectSlice.reducer

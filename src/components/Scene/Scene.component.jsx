@@ -1,24 +1,18 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 
-import { getProjectPaletteClass, getProjectScene } from '@store/projects/projects.slice'
 import Sprite from '@components/Sprite/Sprite.component'
 
 import styles from './Scene.module.scss'
 
-const Scene = ({ projectId, sceneIndex }) => {
-  const paletteClass = useSelector(getProjectPaletteClass(projectId))
-  const scene = useSelector(getProjectScene(projectId, sceneIndex))
+const Scene = ({ scene, sprites }) => {
 
   return (
-    <div className={paletteClass + ' w-full'}>
+    <div className='w-full'>
       {scene.spriteSheet.map((row, rowIndex) => (
         <div key={`${rowIndex}`} className={styles.row}>
           {row.map((cell, cellIndex) => {
-            if (cell === null) {
-              return null
-            }
-            return <Sprite key={`${rowIndex}_${cellIndex}`} projectId={projectId} spriteIndex={cell.id} />
+            const sprite = cell === null ? null : sprites[cell.id]
+            return <Sprite key={`${rowIndex}_${cellIndex}`} sprite={sprite} />
           })}
         </div>
       ))}
@@ -26,4 +20,4 @@ const Scene = ({ projectId, sceneIndex }) => {
   )
 }
 
-export default Scene
+export default React.memo(Scene)

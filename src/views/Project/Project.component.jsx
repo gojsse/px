@@ -7,6 +7,7 @@ import { getProjectById } from '@store/projects/projects.slice'
 import { setSelectedProject, getSelectedProjectName } from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
+import ScenesList from '@views/Project/ScenesList/ScenesList.component'
 import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component'
 import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component'
 import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component'
@@ -25,13 +26,11 @@ const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
   const dispatch = useDispatch()
   const project = useSelector(getProjectById(projectId))
+  const projectName = useSelector(getSelectedProjectName)
 
   useEffect(() => {
     dispatch(setSelectedProject({ project }))
-  }, [dispatch])
-
-  const projectName = useSelector(getSelectedProjectName)
-  // const selectedProject = useSelector()
+  }, [dispatch, project])
 
   return (
     <div>
@@ -71,6 +70,7 @@ const Project = (props) => {
       <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
         <div className='bg-white shadow hidden lg:block'>
           <PaletteSelector />
+          <ScenesList />
         </div>
         <div className='flex flex-col bg-white'>
           <div className='shadow'>

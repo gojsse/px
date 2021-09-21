@@ -8,6 +8,13 @@
     grid-row-gap: 0px;
     grid-template-columns: repeat(8, 12.5%);
 
+    &:last-child {
+
+        &::after {
+            display: none !important;
+        }
+    }
+
     & > div {
         align-items: center;
         display: flex;

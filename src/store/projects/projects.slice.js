@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+import { EMPTY_SCENE } from '@/App.constants.js'
+
 const initialState = []
 
 export const projectsSlice = createSlice({
@@ -26,6 +28,17 @@ export const projectsSlice = createSlice({
         state[projectIndex].scenes[sceneIndex] = scene
       } 
     },
+    insertProjectScene(state, action) {
+      const { projectId } = action.payload
+      const projectIndex = state.findIndex(p => p.id === projectId)
+      if (projectIndex > -1) {
+        state[projectIndex].scenes.push({
+          ...EMPTY_SCENE,
+          id: 'blah'
+        })
+      } 
+      console.log('state[projectIndex].scenes', EMPTY_SCENE)
+    },
     setProjectPalette(state, action) {
       const { projectId, value } = action.payload
       const projectIndex = state.findIndex(p => p.id === projectId)
@@ -47,6 +60,7 @@ export const {
   setProjects,
   updateProject,
   updateProjectScene,
+  insertProjectScene,
   setProjectPalette,
   createNewProject,
 } = projectsSlice.actions
@@ -68,6 +82,11 @@ export const getProjectPaletteClass = (projectId) => (state) => {
 export const getProjectScene = (projectId, sceneIndex) => (state) => {
   const project = state.projects.find(project => project.id === projectId)
   return project.scenes[sceneIndex]
+}
+export const getProjectSprites = (projectId) => (state) => {
+  console.log('project.id === projectId', projectId, state.projects[0].id)
+  const project = state.projects.find(project => project.id === projectId)
+  return project.sprites
 }
 export const getProjectSprite = (projectId, spriteIndex) => (state) => {
   const project = state.projects.find(project => project.id === projectId)

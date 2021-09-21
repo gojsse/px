@@ -1,19 +1,21 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import { getProjectSprite } from '@store/projects/projects.slice';
+import { EMPTY_SPRITE } from '@/App.constants'
 
 import styles from './Sprite.module.scss';
 
-const Sprite = ({ projectId, spriteIndex }) => {
-  const sprite = useSelector(getProjectSprite(projectId, spriteIndex));
+const Sprite = ({ sprite }) => {
+
+  if (sprite === null) {
+    sprite = [ ...EMPTY_SPRITE ]
+  }
 
   return (
     <div>
       {sprite.map((row, rowIndex) => (
         <div key={`${rowIndex}`} className={styles.row}>
           {row.map((cell, cellIndex) => (
-            <div key={`${rowIndex}_${cellIndex}`} className={`color color--${cell}`} />
+            <div key={`${rowIndex}_${cellIndex}`} className={`color color--${cell ?? 'none'}`} />
           ))}
         </div>
       ))}
@@ -21,4 +23,4 @@ const Sprite = ({ projectId, spriteIndex }) => {
   );
 }
 
-export default Sprite;
+export default React.memo(Sprite);

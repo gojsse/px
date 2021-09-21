@@ -1,10 +1,10 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { SCENE_TOOLS } from '@/App.constants';
-import { updateScene } from '@store/actions';
-import { getSelectedSpriteIndex } from '@store/spriteEditor/spriteEditor.slice';
-import Sprite from '@views/Project/Sprite/Sprite.component';
+import { SCENE_TOOLS } from '@/App.constants'
+import { updateScene } from '@store/actions'
+import { getSelectedSpriteIndex } from '@store/spriteEditor/spriteEditor.slice'
+import Sprite from '@views/Project/Sprite/Sprite.component'
 
 const Cell = (props) => {
   const {
@@ -12,29 +12,29 @@ const Cell = (props) => {
     rowIndex,
     colIndex,
     selectedTool,
-  } = props;
+  } = props
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   // TODO get selected spriteIndex from sprite list
-  const selectedSpriteIndex = useSelector(getSelectedSpriteIndex);
+  const selectedSpriteIndex = useSelector(getSelectedSpriteIndex)
 
   const dragOverHandler = event => {
-    event.preventDefault();
+    event.preventDefault()
   }
 
   const dropHandler = event => {
-    event.preventDefault(); 
-    const passedData = JSON.parse(event.dataTransfer.getData('text'));
+    event.preventDefault() 
+    const passedData = JSON.parse(event.dataTransfer.getData('text'))
 
     dispatch(updateScene({
       row: rowIndex,
       column: colIndex,
       value: {id: passedData.spritePoolIndex},
-    }));
+    }))
 
-    const hasValidRow = passedData.rowIndex !== null && passedData.rowIndex >= 0;
-    const hasValidColumn = passedData.colIndex !== null && passedData.colIndex >= 0;
+    const hasValidRow = passedData.rowIndex !== null && passedData.rowIndex >= 0
+    const hasValidColumn = passedData.colIndex !== null && passedData.colIndex >= 0
 
     // Remove sprite from grid
     if (hasValidRow && hasValidColumn) {
@@ -43,13 +43,13 @@ const Cell = (props) => {
           row: passedData.rowIndex,
           column: passedData.colIndex,
           value: null,
-        }));
+        }))
       }
     }
 
     // TODO Remove sprite from grid if dropped outside of grid
-    // setShowDeleteZone(false);
-    event.dataTransfer.clearData();
+    // setShowDeleteZone(false)
+    event.dataTransfer.clearData()
   }
 
   const cellClickHandler = () => {
@@ -58,18 +58,18 @@ const Cell = (props) => {
         row: rowIndex,
         column: colIndex,
         value: {id: selectedSpriteIndex},
-      }));
+      }))
     }
   }
 
   const cursor = () => {
-    let cursorType = 'default';
+    let cursorType = 'default'
     if (selectedTool === SCENE_TOOLS.MOVE) {
-      cursorType = 'grab';
+      cursorType = 'grab'
     } else if (selectedTool === SCENE_TOOLS.STAMP) {
-      cursorType = 'cell';
+      cursorType = 'cell'
     }
-    return cursorType;
+    return cursorType
   }
 
   return (
@@ -89,7 +89,7 @@ const Cell = (props) => {
         />
       )}
     </div>
-  );
+  )
 }
 
-export default React.memo(Cell);
+export default React.memo(Cell)
