@@ -27,8 +27,8 @@
     "redux-logger": "^3.0.6"
   },
   "scripts": {
-    "predeploy": "npm run main",
-    "deploy": "gh-pages -d main",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
