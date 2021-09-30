@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HandIcon, ArrowCircleDownIcon } from '@heroicons/react/outline';
 
 import { SCENE_TOOLS } from '@/App.constants';
-import { getSelectedTool, setSelectedTool } from '@store/sceneEditor/sceneEditor.slice';
+import { getCurrentTool, setCurrentTool } from '@store/sceneEditor/sceneEditor.slice';
 
 import styles from './SceneEditorToolbar.module.scss';
 
@@ -15,14 +15,14 @@ const iconClasses = 'block h-5 w-5';
 
 const SceneEditorToolbar = (props) => {
   const dispatch = useDispatch();
-  const selectedTool = useSelector(getSelectedTool);
+  const selectedTool = useSelector(getCurrentTool);
 
   const buttons = [
     {tool: SCENE_TOOLS.MOVE, icon: <HandIcon className={iconClasses} />},
     {tool: SCENE_TOOLS.STAMP, icon: <ArrowCircleDownIcon className={iconClasses} />},
   ];
 
-  const handleToolClick = tool => dispatch(setSelectedTool({tool}));
+  const handleToolClick = tool => dispatch(setCurrentTool({tool}));
 
   return (
     <div className={styles.sceneEditorToolbar + ' w-full'}>

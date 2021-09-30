@@ -2,22 +2,29 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { SPRITE_TOOLS } from '@/App.constants'
-import { getSelectedProjectSpriteByIndex, updateSelectedProjectSprite, getSelectedProjectPaletteClass } from '@store/currentProject/currentProject.slice'
-import { getSelectedSprite, setSelectedSprite, setSelectedSpriteIndex, getSelectedTool, getSelectedColor } from '@store/spriteEditor/spriteEditor.slice'
+import { updateSprite } from '@store/spriteEditor/spriteEditor.actions'
+import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
+import { getCurrentProjectSpriteByIndex, updateCurrentProjectSprite } from '@store/currentProject/currentProject.slice'
+import { getCurrentSprite, setCurrentSprite, setCurrentSpriteIndex, getCurrentTool, getCurrentColor } from '@store/spriteEditor/spriteEditor.slice'
 import Cell from './Cell.component'
 
 import styles from './SpriteEditor.module.scss'
 
 const SpriteEditor = ({ spriteIndex }) => {
   const dispatch = useDispatch()
-  const projectSprite = useSelector(getSelectedProjectSpriteByIndex(spriteIndex))
-  const selectedSprite = useSelector(getSelectedSprite)
-  const selectedTool = useSelector(getSelectedTool)
-  const selectedColor = useSelector(getSelectedColor)
-  const paletteClass = useSelector(getSelectedProjectPaletteClass)
+
+  const projectSprite = useSelector(getCurrentProjectSpriteByIndex(spriteIndex))
+  const selectedSprite = useSelector(getCurrentSprite)
+  const selectedTool = useSelector(getCurrentTool)
+  const selectedColor = useSelector(getCurrentColor)
 
   const [mouseDown, setMouseDown] = useState(false)
   const [labeledGrid, updateLabeledGrid] = useState([])
+
+  const [
+    updateProject, // This is the mutation trigger
+    // { isLoading: isUpdating }, // This is the destructured mutation result
+  ] = useUpdateProjectMutation()
 
   const updateCellValues = (rowIndex, colIndex) => {
     const updatedGrid = selectedSprite.map(row => ([ ...row.map(cell => cell) ]))
@@ -39,9 +46,13 @@ const SpriteEditor = ({ spriteIndex }) => {
       return
     }
 
-    dispatch(setSelectedSprite({ sprite: updatedGrid }))
+    dispatch(updateSprite({ sprite: updatedGrid }))
+      .then(({ projectId, updatedProject }) => {
+        updateProject({ projectId, updatedProject })
+      })
   }
 
+  // todo move to helper file?
   const scanForGridRegions = useCallback(() => {
     const labeledGrid = []
     const groups = []
@@ -60,7 +71,6 @@ const SpriteEditor = ({ spriteIndex }) => {
           if (colValue === northValue && westLabel !== northLabel) {
             const min = Math.min(westLabel, northLabel)
             const max = Math.max(westLabel, northLabel)
-            // TODO revisit this as it is incomplete ???
             const lowestMatchedIndex = groups.findIndex(subSet => subSet.has(min))
             groups[lowestMatchedIndex].add(max)
             groups[max] = groups[lowestMatchedIndex]
@@ -99,8 +109,8 @@ const SpriteEditor = ({ spriteIndex }) => {
   }, [selectedSprite])
 
   useEffect(() => {
-    dispatch(setSelectedSprite({ sprite: projectSprite }))
-    dispatch(setSelectedSpriteIndex({ spriteIndex }))
+    dispatch(setCurrentSprite({ sprite: projectSprite }))
+    dispatch(setCurrentSpriteIndex({ spriteIndex }))
   }, [dispatch, projectSprite, spriteIndex])
 
   useEffect(() => {
@@ -131,20 +141,20 @@ const SpriteEditor = ({ spriteIndex }) => {
 
   const handleMouseLeave = () => {
     if (mouseDown) {
-      dispatch(updateSelectedProjectSprite({index: spriteIndex, sprite: selectedSprite}))
+      dispatch(updateCurrentProjectSprite({index: spriteIndex, sprite: selectedSprite}))
     }
     setMouseDown(false)
   }
 
   return (
-    <div className={paletteClass + ' mb-2'}>
+    <div className={'mb-2'}>
       <div
         className={styles.spriteGrid}
         onMouseLeave={handleMouseLeave}
         onMouseDown={() => setMouseDown(true)}
         onMouseUp={() => {
           setMouseDown(false)
-          dispatch(updateSelectedProjectSprite({index: spriteIndex, sprite: selectedSprite}))
+          dispatch(updateCurrentProjectSprite({index: spriteIndex, sprite: selectedSprite}))
         }}
       >
         {Cells}

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import { SPRITE_TOOLS, COLOR_KEYS } from '@/App.constants'
+// import { currentProjectApi } from '../currentProject/currentProject.api'
 
 const initialState = {
   selectedTool: SPRITE_TOOLS.PENCIL,
@@ -13,19 +14,19 @@ export const spriteEditorSlice = createSlice({
   name: 'spriteEditor',
   initialState: { ...initialState },
   reducers: {
-    setSelectedTool(state, action) {
+    setCurrentTool(state, action) {
       const { tool } = action.payload
       state.selectedTool = tool
     },
-    setSelectedColor(state, action) {
+    setCurrentColor(state, action) {
       const { color } = action.payload
       state.selectedColor = color
     },
-    setSelectedSprite(state, action) {
+    setCurrentSprite(state, action) {
       const { sprite } = action.payload
       state.selectedSprite = sprite
     },
-    setSelectedSpriteIndex(state, action) {
+    setCurrentSpriteIndex(state, action) {
       const { spriteIndex } = action.payload
       state.selectedSpriteIndex = spriteIndex
     },
@@ -76,14 +77,24 @@ export const spriteEditorSlice = createSlice({
       state.selectedSprite = tempSprite
     },
   },
+  // extraReducers: (builder) => {
+  //   builder.addMatcher(
+  //     currentProjectApi.endpoints.readProjectById.matchFulfilled,
+  //     (state, { payload }) => {
+  //       console.log('should do magic here...', payload, state.selectedSpriteIndex)
+  //       // state.selectedSprite = payload.sprite
+  //       // state.selectedSpriteIndex = payload.spriteIndex
+  //     }
+  //   )
+  // },
 })
 
 // Actions
 export const {
-  setSelectedTool,
-  setSelectedColor,
-  setSelectedSprite,
-  setSelectedSpriteIndex,
+  setCurrentTool,
+  setCurrentColor,
+  setCurrentSprite,
+  setCurrentSpriteIndex,
   flipSpriteHorizontal,
   flipSpriteVertical,
   moveSpriteLeft,
@@ -95,9 +106,9 @@ export const {
 } = spriteEditorSlice.actions
 
 // Selectors
-export const getSelectedTool = (state) => state.spriteEditor.selectedTool
-export const getSelectedColor = (state) => state.spriteEditor.selectedColor
-export const getSelectedSprite = (state) => state.spriteEditor.selectedSprite
-export const getSelectedSpriteIndex = (state) => state.spriteEditor.selectedSpriteIndex
+export const getCurrentTool = (state) => state.spriteEditor.selectedTool
+export const getCurrentColor = (state) => state.spriteEditor.selectedColor
+export const getCurrentSprite = (state) => state.spriteEditor.selectedSprite
+export const getCurrentSpriteIndex = (state) => state.spriteEditor.selectedSpriteIndex
 
 export default spriteEditorSlice.reducer

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { SPRITE_TOOLS } from '@/App.constants';
-import { setSelectedColor } from '@store/spriteEditor/spriteEditor.slice';
+import { setCurrentColor } from '@store/spriteEditor/spriteEditor.slice';
 
 const Cell = (props) => {
   const {
@@ -18,7 +18,7 @@ const Cell = (props) => {
 
   const cellClickHandler = () => {
     if (selectedTool === SPRITE_TOOLS.COLOR_SAMPLE) {
-      dispatch(setSelectedColor({color: colorKey}));
+      dispatch(setCurrentColor({color: colorKey}));
       return;
     }
     clickHandler(rowIndex, colIndex);
@@ -26,7 +26,7 @@ const Cell = (props) => {
 
   const mouseEnterHandler = () => {
     if (selectedTool === SPRITE_TOOLS.COLOR_SAMPLE && mouseIsDown) {
-      dispatch(setSelectedColor({color: colorKey}));
+      dispatch(setCurrentColor({color: colorKey}));
       return;
     }
     if (mouseIsDown) {

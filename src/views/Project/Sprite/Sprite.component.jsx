@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { getSelectedProjectSpriteByIndex } from '@store/currentProject/currentProject.slice'
+import { getCurrentProjectSpriteByIndex } from '@store/currentProject/currentProject.slice'
 
 import styles from './Sprite.module.scss'
 
@@ -17,7 +17,7 @@ const Sprite = props => {
     colIndex,
   } = props
 
-  const sprite = useSelector(getSelectedProjectSpriteByIndex(spriteIndex))
+  const sprite = useSelector(getCurrentProjectSpriteByIndex(spriteIndex))
 
   const dragStartHandler = event => {
     const draggingData = {

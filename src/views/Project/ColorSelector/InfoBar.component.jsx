@@ -3,7 +3,7 @@ import chroma from 'chroma-js';
 
 import { ColorSwatchIcon } from '@heroicons/react/outline';
 
-const InfoBar = ({ selectedColor, paletteClass }) => {
+const InfoBar = ({ selectedColor, selectedPalette }) => {
   const cellRef = useRef(null);
   const [colorHex, setColorHex] = useState('');
   const [colorRgb, setColorRgb] = useState('');
@@ -19,7 +19,7 @@ const InfoBar = ({ selectedColor, paletteClass }) => {
     setColorHex(hex);
     setColorRgb(rgb);
     setIsDarkColor(lum < .45);
-  }, [selectedColor, paletteClass]);
+  }, [selectedColor, selectedPalette]);
 
   const textColorClass = isDarkColor ? 'text-white' : 'text-black';
 

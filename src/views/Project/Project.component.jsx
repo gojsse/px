@@ -1,13 +1,13 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 // import ReactJson from 'react-json-view'
 
-import { getProjectById } from '@store/projects/projects.slice'
-import { setSelectedProject, getSelectedProjectName } from '@store/currentProject/currentProject.slice'
+import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
+import { getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
-import ScenesList from '@views/Project/ScenesList/ScenesList.component'
+// import ScenesList from '@views/Project/ScenesList/ScenesList.component'
 import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component'
 import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component'
 import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component'
@@ -24,20 +24,32 @@ import { CogIcon } from '@heroicons/react/solid'
 
 const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
+  const { data } = useReadProjectByIdQuery(projectId)
+
   const dispatch = useDispatch()
-  const project = useSelector(getProjectById(projectId))
-  const projectName = useSelector(getSelectedProjectName)
+  const projectName = useSelector(getCurrentProjectName)
+  const projectUpdatedReadable = useSelector(getCurrentProjectUpdatedReadable)
+  const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
 
   useEffect(() => {
-    dispatch(setSelectedProject({ project }))
-  }, [dispatch, project])
+    dispatch(setCurrentProject({ project: data }))
+  }, [dispatch, data])
+
+  // const { data, error, isLoading } = useGetAllPokemonQuery(undefined, {
+  //   selectFromResult: ({ data, error, isLoading }) => ({
+  //     data: data?.filter((item: Pokemon) => item.name.endsWith("saur")),
+  //     error,
+  //     isLoading
+  //   }),
+  //   pollingInterval: 3000,
+  // });
 
   return (
     <div>
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
         <div className='bg-white shadow flex justify-between items-center'>
           <div className='bg-gray-50 px-5 py-3'>
-            '{projectName}' / ID:{projectId}
+            NAME: {projectName} / ID: {projectId} / Updated: {projectUpdatedReadable}
           </div>
 
           <Menu as='div' className='inline-block lg:hidden  text-left h-full'>
@@ -68,14 +80,14 @@ const Project = (props) => {
       </div>
 
       <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-        <div className='bg-white shadow hidden lg:block'>
+        <div className='bg-white hidden lg:block'>
           <PaletteSelector />
-          <ScenesList />
+          {/* <ScenesList /> */}
         </div>
-        <div className='flex flex-col bg-white'>
+        <div className={`flex flex-col bg-white ${projectPaletteClass}`}>
           <div className='shadow'>
             <SceneInfoBar sceneIndex={sceneIndex} />
-            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm'>
+            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
               <SceneEditorToolbar />
               <SceneEditorActionbar />
             </div>
@@ -83,10 +95,10 @@ const Project = (props) => {
           <SceneEditor sceneIndex={sceneIndex} />
           <SpriteList />
         </div>
-        <div className='flex flex-col bg-white'>
+        <div className={`flex flex-col bg-white ${projectPaletteClass}`}>
           <div className='shadow'>
             <SpriteInfoBar spriteIndex={spriteIndex} />
-            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm'>
+            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
               <SpriteEditorToolbar />
               <SpriteEditorActionbar />
             </div>

@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
-import { PencilAltIcon, CogIcon } from '@heroicons/react/solid'
+import { PencilAltIcon, DocumentRemoveIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
 
-import { getProjectPaletteClass, getProjectScene, getProjectSprites } from '@store/projects/projects.slice'
 import Scene from '@components/Scene/Scene.component'
+import Modal from '@components/Modal/Modal.component'
 
-const Project = ({ project }) => {
-  const paletteClass = useSelector(getProjectPaletteClass(project.id))
-  const scene = useSelector(getProjectScene(project.id, 0))
-  const sprites = useSelector(getProjectSprites(project.id))
+const buttonClass = 'relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-2 text-1xs font-medium border border-transparent hover:text-gray-500'
+const iconClass = 'w-5 h-5 mr-2'
+
+const Project = ({ project, onConfirmDelete }) => {
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+
+  const scene = project.scenes[0]
+  const sprites = project.sprites
+  const paletteClass = `palette palette--${!project.palette ? 'default' : project.palette}`
+
+  const confirmClickHandler = () => {
+    onConfirmDelete(project.id)
+    setIsDeleteOpen(false)
+  }
 
   return (
     <div className={`${paletteClass} col-span-1 flex flex-col text-center bg-white shadow overflow-hidden divide-y divide-gray-200`}>
@@ -30,24 +39,41 @@ const Project = ({ project }) => {
           <div className='w-0 flex-1 flex'>
             <NavLink
               exact
-              to={`/project/${project.id}/0/0`}
-              className='relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-bl-lg hover:text-gray-500'
+              to={`/projects/${project.id}/0/0`}
+              className={buttonClass + ' text-gray-700'}
             >
-              <PencilAltIcon className='w-5 h-5 text-gray-400' aria-hidden='true' />
-              <span className='ml-3'>Open</span>
+              <PencilAltIcon className={iconClass + ' text-gray-700'} aria-hidden='true' />
+              <span>Open</span>
             </NavLink>
           </div>
-          <div className='-ml-px w-0 flex-1 flex'>
-            {/* <a
-              href={`/`}
-              className='relative w-0 flex-1 inline-flex items-center justify-center py-4 text-sm text-gray-700 font-medium border border-transparent rounded-br-lg hover:text-gray-500'
+          <div className='w-0 flex-1 flex'>
+            <button
+              className={buttonClass + ' text-gray-400 cursor-not-allowed'}
+              onClick={() => console.log('add dupe function')}
             >
-              <CogIcon className='w-5 h-5 text-gray-400' aria-hidden='true' />
-              <span className='ml-3'>Settings</span>
-            </a> */}
+              <DocumentDuplicateIcon className={iconClass + ' text-gray-400'} aria-hidden='true' />
+              <span>Clone</span>
+            </button>
+          </div>
+          <div className='w-0 flex-1 flex'>
+            <button
+              className={buttonClass + ' text-gray-700'}
+              onClick={() => setIsDeleteOpen(true)}
+            >
+              <DocumentRemoveIcon className={iconClass + ' text-gray-700'} aria-hidden='true' />
+              <span>Delete</span>
+            </button>
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isDeleteOpen} setIsOpen={setIsDeleteOpen} confirmHandler={confirmClickHandler}>
+        <form className='bg-white mt-5 sm:flex'>
+          <div className='w-full sm:max-w-xs'>
+            Are you sure you want to delete {project.id}?
+          </div>
+        </form>
+      </Modal>
     </div>
   )
 }

@@ -1,12 +1,7 @@
-import { ID } from "./data.helpers"
-class Scene {
+class Sprite {
 
-  constructor(name, height = 8, width = 8, gridData = null) {
+  constructor(gridData = null) {
 
-    this.name = name
-    this.id = `sc_${ID()}`
-    this.height = height
-    this.width = width
     this.spriteSheet = gridData ?? [
       [null, null, null, null, null, null, null, null],
       [null, null, null, null, null, null, null, null],
@@ -19,8 +14,9 @@ class Scene {
     ]
   }
 
-
-
+  get data() {
+    return this.spriteSheet
+  }
 }
 
-export default Scene
+export default Sprite

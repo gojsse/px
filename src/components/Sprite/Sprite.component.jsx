@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 import { EMPTY_SPRITE } from '@/App.constants'
 
-import styles from './Sprite.module.scss';
+import styles from './Sprite.module.scss'
 
 const Sprite = ({ sprite }) => {
 
@@ -20,7 +20,7 @@ const Sprite = ({ sprite }) => {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default React.memo(Sprite);
+export default React.memo(Sprite)

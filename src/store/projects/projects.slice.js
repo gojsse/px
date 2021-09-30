@@ -1,6 +1,8 @@
+// TODO I don't think we are using this slice anymore...
+
 import { createSlice } from '@reduxjs/toolkit'
 
-import { EMPTY_SCENE } from '@/App.constants.js'
+import Scene from '../../data/Scene'
 
 const initialState = []
 
@@ -9,7 +11,6 @@ export const projectsSlice = createSlice({
   initialState,
   reducers: {
     setProjects(_, action) {
-      console.log('calling setProjects', action)
       const { projects } = action.payload
       return [ ...projects ]
     },
@@ -21,24 +22,6 @@ export const projectsSlice = createSlice({
         state[projectIndex] = project
       } 
     },
-    updateProjectScene(state, action) {
-      const { projectId, sceneIndex, scene } = action.payload
-      const projectIndex = state.findIndex(p => p.id === projectId)
-      if (projectIndex > -1) {
-        state[projectIndex].scenes[sceneIndex] = scene
-      } 
-    },
-    insertProjectScene(state, action) {
-      const { projectId } = action.payload
-      const projectIndex = state.findIndex(p => p.id === projectId)
-      if (projectIndex > -1) {
-        state[projectIndex].scenes.push({
-          ...EMPTY_SCENE,
-          id: 'blah'
-        })
-      } 
-      console.log('state[projectIndex].scenes', EMPTY_SCENE)
-    },
     setProjectPalette(state, action) {
       const { projectId, value } = action.payload
       const projectIndex = state.findIndex(p => p.id === projectId)
@@ -46,12 +29,43 @@ export const projectsSlice = createSlice({
         state[projectIndex].palette = value
       } 
     },
+    insertProjectScene(state, action) {
+      const { projectId } = action.payload
+      const projectIndex = state.findIndex(p => p.id === projectId)
+      if (projectIndex > -1) {
+        state[projectIndex].scenes.push({ ...new Scene('Empty Init Scene') })
+      } 
+    },
+    updateProjectScene(state, action) {
+      const { projectId, sceneIndex, scene } = action.payload
+      const projectIndex = state.findIndex(p => p.id === projectId)
+      if (projectIndex > -1) {
+        state[projectIndex].scenes[sceneIndex] = scene
+      } 
+    },
+    // TODO: Delete Project Scene
+    // TODO: this one too
+    updateProjectSprite(state, action) {
+      // const { projectId, spriteIndex, sprite } = action.payload
+      // const projectIndex = state.findIndex(p => p.id === projectId)
+      // if (projectIndex > -1) {
+      //   state[projectIndex].scenes[sceneIndex] = scene
+      // }
+    },
     createNewProject(state, action) {
       const { project } = action.payload
       state.push(project)
+    },
+    deleteProject(state, action) {
+      const { projectId } = action.payload
+      const projectIndex = state.findIndex((project) => project.id === projectId)
+      state.splice(projectIndex, 1)
+    },
+    // TODO
+    cloneProject(state, action) {
+      // const { project } = action.payload
+      // state = state.push(project)
     }
-    // TODO deleteProject
-    // TODO cloneProject
   },
 })
 
@@ -59,15 +73,17 @@ export const projectsSlice = createSlice({
 export const {
   setProjects,
   updateProject,
+  updateProjectSprite,
   updateProjectScene,
   insertProjectScene,
   setProjectPalette,
   createNewProject,
+  deleteProject,
+  cloneProject,
 } = projectsSlice.actions
 
 // Selectors
 export const getProjects = (state) => state.projects
-export const getProject = (projectId) => (state) => state.projects.find(project => project.id === projectId)
 export const getProjectById = (projectId) => (state) => state.projects.find(project => project.id === projectId)
 export const getProjectByIndex = (projectIndex) => (state) => state.projects.find((_, index) => index === projectIndex)
 export const getProjectPalette = (projectId) => (state) => {
@@ -79,12 +95,19 @@ export const getProjectPaletteClass = (projectId) => (state) => {
   const palette = project.palette || 'default'
   return `palette palette--${!palette ? 'default' : palette}`
 }
+export const getProjectScenesCount = (projectId) => (state) => {
+  const project = state.projects.find(project => project.id === projectId)
+  return project.scenes.length
+} 
+export const getProjectScenes = (projectId) => (state) => {
+  const project = state.projects.find(project => project.id === projectId)
+  return project.scenes
+}
 export const getProjectScene = (projectId, sceneIndex) => (state) => {
   const project = state.projects.find(project => project.id === projectId)
   return project.scenes[sceneIndex]
 }
 export const getProjectSprites = (projectId) => (state) => {
-  console.log('project.id === projectId', projectId, state.projects[0].id)
   const project = state.projects.find(project => project.id === projectId)
   return project.sprites
 }

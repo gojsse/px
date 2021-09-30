@@ -12,22 +12,25 @@ export const sceneEditorSlice = createSlice({
   name: 'sceneEditor',
   initialState: { ...initialState },
   reducers: {
-    setSelectedTool(state, action) {
+    setCurrentTool(state, action) {
       const { tool } = action.payload
       state.selectedTool = tool
     },
-    setSelectedScene(state, action) {
+    setCurrentScene(state, action) {
       const { scene } = action.payload
       state.selectedScene = scene
     },
-    setSelectedSceneIndex(state, action) {
+    // TODO do we need? this is handled via params, right?
+    setCurrentSceneIndex(state, action) {
       const { sceneIndex } = action.payload
       state.selectedSceneIndex = sceneIndex
     },
-    updateSelectedSceneCell(state, action) {
+    updateCurrentSceneCell(state, action) {
       const { row, column, value } = action.payload
       state.selectedScene.spriteSheet[row][column] = value
     },
+
+
     flipSceneHorizontal(state) {
       state.selectedScene.spriteSheet.forEach((row, index) => {
         state.selectedScene.spriteSheet[index] = row.reverse()
@@ -69,10 +72,10 @@ export const sceneEditorSlice = createSlice({
 
 // Actions
 export const {
-  setSelectedTool,
-  setSelectedScene,
-  setSelectedSceneIndex,
-  updateSelectedSceneCell,
+  setCurrentTool,
+  setCurrentScene,
+  setCurrentSceneIndex,
+  updateCurrentSceneCell,
   flipSceneHorizontal,
   flipSceneVertical,
   moveSceneLeft,
@@ -83,9 +86,9 @@ export const {
 } = sceneEditorSlice.actions
 
 // Selectors
-export const getSelectedTool = (state) => state.sceneEditor.selectedTool
-export const getSelectedScene = (state) => state.sceneEditor.selectedScene
-export const getSelectedSceneName = (state) => state.sceneEditor.selectedScene.name
-export const getSelectedSceneIndex = (state) => state.sceneEditor.selectedSceneIndex
+export const getCurrentTool = (state) => state.sceneEditor.selectedTool
+export const getCurrentScene = (state) => state.sceneEditor.selectedScene
+export const getCurrentSceneName = (state) => state.sceneEditor.selectedScene.name
+export const getCurrentSceneIndex = (state) => state.sceneEditor.selectedSceneIndex
 
 export default sceneEditorSlice.reducer

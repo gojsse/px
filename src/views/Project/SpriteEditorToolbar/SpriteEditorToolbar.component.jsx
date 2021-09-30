@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PencilIcon, XIcon, BeakerIcon, EyeIcon } from '@heroicons/react/outline';
 
 import { SPRITE_TOOLS } from '@/App.constants';
-import { getSelectedTool, setSelectedTool } from '@store/spriteEditor/spriteEditor.slice';
+import { getCurrentTool, setCurrentTool } from '@store/spriteEditor/spriteEditor.slice';
 
 import styles from './SpriteEditorToolbar.module.scss';
 
@@ -15,7 +15,7 @@ const iconClasses = 'block h-5 w-5';
 
 const SpriteEditorToolbar = (props) => {
   const dispatch = useDispatch();
-  const selectedTool = useSelector(getSelectedTool);
+  const selectedTool = useSelector(getCurrentTool);
 
   const buttons = [
     {tool: SPRITE_TOOLS.PENCIL, icon: <PencilIcon className={iconClasses} />},
@@ -24,7 +24,7 @@ const SpriteEditorToolbar = (props) => {
     {tool: SPRITE_TOOLS.COLOR_SAMPLE, icon: <EyeIcon className={iconClasses} />},
   ];
 
-  const handleToolClick = tool => dispatch(setSelectedTool({tool}));
+  const handleToolClick = tool => dispatch(setCurrentTool({tool}));
 
   return (
     <div className={styles.spriteEditorToolbar + ' w-full'}>

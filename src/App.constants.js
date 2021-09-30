@@ -1,13 +1,3 @@
-export const EMPTY_USER = {
-  name: '',
-  email: '',
-  createdDate: new Date(),
-  updatedDate: new Date(),
-  settings: {
-    theme: 'default',
-  },
-}
-
 export const PALETTE_LIST = [
   'default',
   'ff-nes',

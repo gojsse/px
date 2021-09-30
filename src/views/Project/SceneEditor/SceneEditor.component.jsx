@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getSelectedProjectScene, getSelectedProjectPaletteClass } from '@store/currentProject/currentProject.slice'
-import { getSelectedScene, setSelectedScene, setSelectedSceneIndex } from '@store/sceneEditor/sceneEditor.slice'
+import { getCurrentProjectScene } from '@store/currentProject/currentProject.slice'
+import { getCurrentScene, setCurrentScene, setCurrentSceneIndex } from '@store/sceneEditor/sceneEditor.slice'
 import Grid from './Grid.component'
 
 import styles from './SceneEditor.module.scss'
@@ -10,21 +10,17 @@ import styles from './SceneEditor.module.scss'
 const SceneEditor = ({ sceneIndex }) => {
   const dispatch = useDispatch()
   // TODO this is really confusing. Make it simpler?
-  const projectScene = useSelector(getSelectedProjectScene(sceneIndex))
-  const selectedScene = useSelector(getSelectedScene)
-  const paletteClass = useSelector(getSelectedProjectPaletteClass)
+  const projectScene = useSelector(getCurrentProjectScene(sceneIndex))
+  const selectedScene = useSelector(getCurrentScene)
 
   useEffect(() => {
-    console.log('is this happening like it should bew?')
-    dispatch(setSelectedScene({ scene: projectScene }))
-    dispatch(setSelectedSceneIndex({ sceneIndex }))
+    dispatch(setCurrentScene({ scene: projectScene }))
+    dispatch(setCurrentSceneIndex({ sceneIndex }))
   }, [dispatch, projectScene, sceneIndex])
 
   return (
     <div className={styles.sceneGrid + ' bg-gray-100 bg-stripes bg-stripes-white mb-2'}>
-      <div className={paletteClass}>
-        <Grid scene={selectedScene} />
-      </div>
+      <Grid scene={selectedScene} />
     </div>
   )
 }

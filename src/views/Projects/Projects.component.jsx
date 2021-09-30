@@ -1,61 +1,81 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+
+import { DocumentAddIcon } from '@heroicons/react/solid'
 
 import NewProject from '../../data/Project'
-
-import { getProjects, createNewProject } from '@store/projects/projects.slice'
+import { useGetAllProjectsQuery } from '@store/projects/allProjects.api'
+import { useCreateNewProjectMutation, useDeleteProjectMutation } from '@store/projects/allProjects.api'
 import Project from './Project.component'
 import Modal from '@components/Modal/Modal.component'
+import Select from '@components/forms/Select.component'
+
+const templates = [
+  {name: 'Empty', id: '001'},
+  {name: 'Basic', id: '002'},
+  {name: 'Faces', id: '003'},
+  {name: 'Board', id: '004'},
+]
 
 const Projects = (props) => {
-  const dispatch = useDispatch()
-  const projects = useSelector(getProjects)
+  const { data = [] } = useGetAllProjectsQuery()
+
+  const [
+    createNewProject,
+    // { isLoading: isUpdating }, // This is the destructured mutation result
+  ] = useCreateNewProjectMutation()
+
+  const [
+    deleteProject,
+    // { isLoading: isUpdating }, // This is the destructured mutation result
+  ] = useDeleteProjectMutation()
+
   const [isOpen, setIsOpen] = useState(false)
   const [newProjectName, setNewProjectName] = useState('')
 
   const handleCreateNewProjectConfirm = () => {
-    const newProject = new NewProject(newProjectName)
-    dispatch(createNewProject({ project: { ...newProject } }))
+    const { data } = new NewProject(newProjectName)
+    const project = data
+    createNewProject({ project })
     setNewProjectName('')
+  }
+
+  const handleDeleteProjectConfirm = (projectId) => {
+    deleteProject({ projectId })
   }
 
   return (
     <div>
-      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-4'>
-        {projects.map((project) => (
-          <Project key={project.id} project={project} />
+      <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10'>
+        {data.map((project) => (
+          <Project key={project.id} project={project} onConfirmDelete={handleDeleteProjectConfirm} />
         ))}
       </div>
 
       <button
-        onClick={() => setIsOpen(true)}
+        className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
         type='button'
-        className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+        onClick={() => setIsOpen(true)}
       >
-        New
+        <DocumentAddIcon className='w-5 h-5 text-white mr-3' aria-hidden='true' />
+        <span>New</span>
       </button>
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} confirmHandler={handleCreateNewProjectConfirm}>
-        <form className='bg-white shadow mt-5 sm:flex sm:items-center'>
+        <form className='bg-white mt-5 sm:flex'>
           <div className='w-full sm:max-w-xs'>
-            <label htmlFor='email' className='sr-only'>
-              Name
+            <label htmlFor='new-project-name' className='block text-sm font-medium text-gray-700'>
+              New Project Name
             </label>
             <input
-              type='text'
               name='new-project-name'
-              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
-              placeholder='Something COoOl'
+              className='shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 mb-2'
+              type='text'
+              placeholder='New Project Name'
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
             />
+            <Select label={'New Project Template'} items={templates} onChange={() => {console.log('changed')}} />
           </div>
-          {/* <button
-            type='submit'
-            className='mt-3 w-full inline-flex items-center justify-center px-4 py-2 border border-transparent shadow-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
-          >
-            Save
-          </button> */}
         </form>
       </Modal>
     </div>

@@ -1,40 +1,36 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
+import React from 'react'
 import { Switch, Route } from "react-router-dom"
 
-import { setProjects } from '@store/projects/projects.slice'
+// import { useGetAllProjectsQuery } from '@store/projects/allProjects.api'
+
 import SiteMenu from '@components/layout/NavBar.component'
 import Dashboard from '@views/Dashboard/Dashboard.component'
 import Projects from '@views/Projects/Projects.component'
 import Project from '@views/Project/Project.component'
 import Settings from '@views/Settings/Settings.component'
 
-import mockProjects from './__mocks__/MOCK_PROJECTS.json'
-
 import './App.css'
 import './styles/styles.scss'
 
 const routes = [
-  // { path: '/project/:projectKey/scene/:sceneId/edit', component: SceneEditor },
-  // { path: '/project/:projectKey/scene/:sceneId/export', component: SceneExporter },
-  { path: '/project/:projectId/:sceneIndex/:spriteIndex', component: Project },
-  { path: '/project/:projectId', component: Project },
+  { path: '/projects/:projectId/:sceneIndex/:spriteIndex', component: Project },
   { path: '/projects', component: Projects },
   { path: '/settings', component: Settings },
   { path: '/', component: Dashboard },
 ]
 
 function App() {
-  const dispatch = useDispatch()
+  // const { data, error, isLoading } = useGetAllProjectsQuery()
+  // console.log('data, error, isLoading', data, error, isLoading)
 
-  useEffect(() => {
-    // TODO clean this up
-    dispatch(setProjects({ projects: mockProjects }))
-    // return () => {
-    //   cleanup
-    // }
-  }, [dispatch])
+  // const { data, error, isLoading } = useGetAllProjectsQuery(undefined, {
+  //   selectFromResult: ({ data, error, isLoading }) => ({
+  //     data: data,
+  //     error,
+  //     isLoading
+  //   }),
+  //   pollingInterval: 3000,
+  // })
 
   return (
     <div className="App bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300">
@@ -45,7 +41,13 @@ function App() {
             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
               <div className="px-4 sm:px-0">
                 <Switch>
-                  {routes.map(route => <Route key={route.path} path={route.path} component={route.component} />)}
+                  {routes.map(route => (
+                    <Route
+                      key={route.path}
+                      path={route.path}
+                      component={route.component}
+                    />
+                  ))}
                 </Switch>
               </div>
             </div>

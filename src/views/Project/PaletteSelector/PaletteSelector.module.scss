@@ -1,0 +1,26 @@
+.grid {
+  display: grid;
+  grid-column-gap: 6px;
+  grid-row-gap: 6px;
+  // grid-template-columns: repeat(16, 6.25%);
+  grid-template-columns: repeat(8, 12.5%);
+  height: 100%;
+
+  & > button {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      height: 100%;
+  
+      &:nth-child(8n) {
+        border-right: none;
+      }
+
+      &:before {
+        display: block;
+        content: '';
+        height: 0;
+        padding-bottom: 100%;
+      }
+  }
+}

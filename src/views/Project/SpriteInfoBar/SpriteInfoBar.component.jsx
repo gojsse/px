@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { getSelectedTool } from '@store/spriteEditor/spriteEditor.slice';
+import { getCurrentTool } from '@store/spriteEditor/spriteEditor.slice';
 import { parseString } from 'loader-utils';
 
 const SpriteInfoBar = ({ spriteIndex }) => {
-  const selectedTool = useSelector(getSelectedTool);
+  const selectedTool = useSelector(getCurrentTool);
 
   const formattedIndex = () => {
     const numericValue = parseInt(spriteIndex) + 1;
@@ -22,7 +22,7 @@ const SpriteInfoBar = ({ spriteIndex }) => {
 
   return (
     <div className='flex content-center justify-between p-2 text-xs'>
-      <span>[{formattedIndex()}/128]</span>
+      <span>[{formattedIndex()}/256]</span>
       <span>{selectedTool} tool</span>
     </div>
   );

@@ -2,15 +2,15 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { getSelectedProjectId, getSelectedProjectScenes, getSelectedProjectSprites, getSelectedProjectPaletteClass } from '@store/currentProject/currentProject.slice'
+import { getCurrentProjectId, getCurrentProjectScenes, getCurrentProjectSprites, getCurrentProjectPaletteClass } from '@store/currentProject/currentProject.slice'
 import Scene from '@components/Scene/Scene.component'
 import NewSceneButton from './NewSceneButton.component'
 
 const ScenesList = (props) => {
-  const projectId = useSelector(getSelectedProjectId)
-  const scenes = useSelector(getSelectedProjectScenes)
-  const sprites = useSelector(getSelectedProjectSprites)
-  const paletteClass = useSelector(getSelectedProjectPaletteClass)
+  const projectId = useSelector(getCurrentProjectId)
+  const scenes = useSelector(getCurrentProjectScenes)
+  const sprites = useSelector(getCurrentProjectSprites)
+  const paletteClass = useSelector(getCurrentProjectPaletteClass)
 
   return (
     <div className={paletteClass}>

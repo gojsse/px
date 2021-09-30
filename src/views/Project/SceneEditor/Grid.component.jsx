@@ -1,13 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { getSelectedTool } from '@store/sceneEditor/sceneEditor.slice';
+import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice';
 import Cell from './Cell.component';
 
 import styles from './SceneEditor.module.scss';
 
 const Grid = ({ scene }) => {
-  const selectedTool = useSelector(getSelectedTool);
+  const selectedTool = useSelector(getCurrentTool);
 
   return (
     <div>
