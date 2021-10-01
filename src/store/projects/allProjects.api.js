@@ -2,21 +2,16 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { createProjectInStorage, getAllProjectsInStorage, deleteProjectInStorage } from '../../services/localForage'
 
-const customBaseQuery = (
-  args,
-  { signal, dispatch, getState },
-  extraOptions
-) => {
-  return getAllProjectsInStorage()
-    .then(data => ({data}))
-    .catch(error => ({error}))
-}
-
 // Define a service using a base URL and expected endpoints
 export const allProjectsApi = createApi({
   reducerPath: 'allProjectsApi',
   tagTypes: ['Posts'],
-  baseQuery: customBaseQuery,
+  baseQuery: () => {
+    return getAllProjectsInStorage()
+      .then(data => ({data}))
+      .catch(error => ({error}))
+  },
+  refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
     createNewProject: builder.mutation({
       queryFn: ({ project }) => {

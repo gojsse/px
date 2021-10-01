@@ -2,31 +2,26 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 
 import { readProjectInStorage, updateProjectInStorage } from '../../services/localForage'
 
-const customBaseQuery = (
-  args,
-  { signal, dispatch, getState },
-  extraOptions
-) => {
-  return readProjectInStorage(args)
-    .then(data => ({data}))
-    .catch(error => ({error}))
-}
-
 // Define a service using a base URL and expected endpoints
 export const currentProjectApi = createApi({
   reducerPath: 'currentProjectApi',
-  tagTypes: ['Posts'],
-  baseQuery: customBaseQuery,
+  tagTypes: ['Post'],
+  baseQuery: (args) => {
+    return readProjectInStorage(args)
+      .then(data => ({data}))
+      .catch(error => ({error}))
+  },
+  // refetchOnMountOrArgChange: true,
   endpoints: (builder) => ({
     readProjectById: builder.query({
       query: (projectId) => `${projectId}`,
       providesTags: (result) =>
         result
           ? [
-              ...Object.keys(result).map(({ id }) => ({ type: 'Posts', id })),
-              { type: 'Posts', id: 'LIST' },
+              ...Object.keys(result).map(({ id }) => ({ type: 'Post', id })),
+              { type: 'Post', id: 'LIST' },
             ]
-          : [{ type: 'Posts', id: 'LIST' }],
+          : [{ type: 'Post', id: 'LIST' }],
     }),
     updateProject: builder.mutation({
       queryFn: ({ projectId, updatedProject }) => {
@@ -34,9 +29,6 @@ export const currentProjectApi = createApi({
           .then(data => ({data}))
           .catch(error => ({error}))
       },
-      // TOO intensive. Do not enable cache invalidation here.
-      // invalidatesTags: ['Posts'],
-      // invalidatesTags: (result, error, { palette }) => [{ type: 'Posts', palette }],
     }),
   }),
 })

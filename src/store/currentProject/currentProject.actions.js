@@ -2,16 +2,8 @@ import { getCurrentProject, setCurrentProjectPalette } from '../currentProject/c
 
 export const updatePalette = ({ palette }) => {
   return (dispatch, getState) => {
-    const project = getCurrentProject(getState())
-
     dispatch(setCurrentProjectPalette({ palette }))
-
-    const updatedProject = {
-      ...project,
-      palette: palette,
-      updated: Date.now(),
-    }
-
-    return Promise.resolve({ projectId: project.id, updatedProject })
+    const updatedProject = getCurrentProject(getState())
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
   }
 }

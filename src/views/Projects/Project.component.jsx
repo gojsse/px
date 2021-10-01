@@ -30,7 +30,9 @@ const Project = ({ project, onConfirmDelete }) => {
           <dd className='text-gray-500 text-xs'>{project.id}</dd>
           <dt className='sr-only'>ID</dt>
           <dd className='mt-3'>
-            <Scene scene={scene} sprites={sprites} />
+            <NavLink exact to={`/projects/${project.id}/0/0`}>
+              <Scene scene={scene} sprites={sprites} />
+            </NavLink>
           </dd>
         </dl>
       </div>

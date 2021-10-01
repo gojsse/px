@@ -24,7 +24,7 @@ const PaletteSelector = (props) => {
   return (
     <div className='palette-preview'>
       <div className='flex content-center justify-between p-2 text-xs'>Palette: {selectedPalette}</div>
-      <div className={styles.grid + ' border-t border-gray-100 pt-2'}>
+      <div className={styles.grid + ' border-t border-gray-100 p-1'}>
         {PALETTE_LIST.map(palette => {
           return (
             <Cell key={palette} value={palette} isSelected={palette === selectedPalette} onClick={handlePaletteClick} >
@@ -43,4 +43,4 @@ const PaletteSelector = (props) => {
   )
 }
 
-export default PaletteSelector
+export default React.memo(PaletteSelector)

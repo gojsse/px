@@ -17,10 +17,7 @@ const Cell = ({
   const dispatch = useDispatch()
   const selectedSpriteIndex = useSelector(getCurrentSpriteIndex)
 
-  const [
-    updateProject, // This is the mutation trigger
-    // { isLoading: isUpdating }, // This is the destructured mutation result
-  ] = useUpdateProjectMutation()
+  const [ updateProject ] = useUpdateProjectMutation()
 
   const dragOverHandler = event => {
     event.preventDefault()
@@ -61,11 +58,6 @@ const Cell = ({
 
   const cellClickHandler = () => {
     if (selectedTool === SCENE_TOOLS.STAMP) {
-      // dispatch(updateScene({
-      //   row: rowIndex,
-      //   column: colIndex,
-      //   value: {id: selectedSpriteIndex},
-      // }))
       dispatch(updateScene({
         row: rowIndex,
         column: colIndex,

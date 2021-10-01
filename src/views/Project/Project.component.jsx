@@ -3,11 +3,11 @@ import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 // import ReactJson from 'react-json-view'
 
-import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
-import { getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
+import { currentProjectApi, useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
+import { resetCurrentProject, getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
-// import ScenesList from '@views/Project/ScenesList/ScenesList.component'
+import ScenesList from '@views/Project/ScenesList/ScenesList.component'
 import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component'
 import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component'
 import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component'
@@ -35,14 +35,14 @@ const Project = (props) => {
     dispatch(setCurrentProject({ project: data }))
   }, [dispatch, data])
 
-  // const { data, error, isLoading } = useGetAllPokemonQuery(undefined, {
-  //   selectFromResult: ({ data, error, isLoading }) => ({
-  //     data: data?.filter((item: Pokemon) => item.name.endsWith("saur")),
-  //     error,
-  //     isLoading
-  //   }),
-  //   pollingInterval: 3000,
-  // });
+  // Clear out the current project data from the store when component unmounts
+  useEffect(() => {
+    return () => {
+      // TODO probably should put these in the currentProjects.actions file
+      dispatch(resetCurrentProject())
+      dispatch(currentProjectApi.util.invalidateTags(['Post']))
+    }
+  }, [dispatch])
 
   return (
     <div>

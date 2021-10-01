@@ -20,6 +20,10 @@ export const currentProjectSlice = createSlice({
   name: 'currentProject',
   initialState: { ...initialState },
   reducers: {
+    resetCurrentProject() {
+      console.log('resetting current project state')
+      return initialState
+    },
     setCurrentProject(_, action) {
       const { project } = action.payload
       return project
@@ -49,6 +53,7 @@ export const currentProjectSlice = createSlice({
 
 // Actions
 export const {
+  resetCurrentProject,
   setCurrentProject,
   setCurrentProjectName,
   setCurrentProjectPalette,
