@@ -3,8 +3,12 @@ import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 // import ReactJson from 'react-json-view'
 
-import { currentProjectApi, useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
-import { resetCurrentProject, getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
+import { Menu, Transition } from '@headlessui/react'
+import { CogIcon } from '@heroicons/react/solid'
+
+import { clearThisProject } from '@store/currentProject/currentProject.actions'
+import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
+import { getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
 import ScenesList from '@views/Project/ScenesList/ScenesList.component'
@@ -19,9 +23,6 @@ import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEd
 import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component'
 import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 
-import { Menu, Transition } from '@headlessui/react'
-import { CogIcon } from '@heroicons/react/solid'
-
 const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
   const { data } = useReadProjectByIdQuery(projectId)
@@ -31,6 +32,7 @@ const Project = (props) => {
   const projectUpdatedReadable = useSelector(getCurrentProjectUpdatedReadable)
   const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
 
+  // Set current project in currentProject slice when loaded from the API
   useEffect(() => {
     dispatch(setCurrentProject({ project: data }))
   }, [dispatch, data])
@@ -38,9 +40,7 @@ const Project = (props) => {
   // Clear out the current project data from the store when component unmounts
   useEffect(() => {
     return () => {
-      // TODO probably should put these in the currentProjects.actions file
-      dispatch(resetCurrentProject())
-      dispatch(currentProjectApi.util.invalidateTags(['Post']))
+      dispatch(clearThisProject())
     }
   }, [dispatch])
 
