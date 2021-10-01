@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 
-import { DocumentAddIcon } from '@heroicons/react/solid'
-
-import NewProject from '../../data/Project'
+import NewProjectClass from '../../data/Project'
 import { useGetAllProjectsQuery } from '@store/projects/allProjects.api'
 import { useCreateNewProjectMutation, useDeleteProjectMutation } from '@store/projects/allProjects.api'
 import Project from './Project.component'
+import NewProject from './NewProject.component'
 import Modal from '@components/Modal/Modal.component'
 import Select from '@components/forms/Select.component'
 
@@ -19,21 +18,14 @@ const templates = [
 const Projects = (props) => {
   const { data = [] } = useGetAllProjectsQuery()
 
-  const [
-    createNewProject,
-    // { isLoading: isUpdating }, // This is the destructured mutation result
-  ] = useCreateNewProjectMutation()
-
-  const [
-    deleteProject,
-    // { isLoading: isUpdating }, // This is the destructured mutation result
-  ] = useDeleteProjectMutation()
+  const [createNewProject] = useCreateNewProjectMutation()
+  const [deleteProject] = useDeleteProjectMutation()
 
   const [isOpen, setIsOpen] = useState(false)
   const [newProjectName, setNewProjectName] = useState('')
 
   const handleCreateNewProjectConfirm = () => {
-    const { data } = new NewProject(newProjectName)
+    const { data } = new NewProjectClass(newProjectName)
     const project = data
     createNewProject({ project })
     setNewProjectName('')
@@ -49,16 +41,8 @@ const Projects = (props) => {
         {data.map((project) => (
           <Project key={project.id} project={project} onConfirmDelete={handleDeleteProjectConfirm} />
         ))}
+        <NewProject onClick={() => setIsOpen(true)} />
       </div>
-
-      <button
-        className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-        type='button'
-        onClick={() => setIsOpen(true)}
-      >
-        <DocumentAddIcon className='w-5 h-5 text-white mr-3' aria-hidden='true' />
-        <span>New</span>
-      </button>
 
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} confirmHandler={handleCreateNewProjectConfirm}>
         <form className='bg-white mt-5 sm:flex'>
