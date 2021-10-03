@@ -1,54 +1,54 @@
 .sceneGrid {
-    width: 100%;
+  width: 100%;
 }
 
 .sceneGridRow {
-    display: grid;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-    grid-template-columns: repeat(8, 12.5%);
+  display: grid;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-columns: repeat(8, 12.5%);
 
-    &:last-child {
+  &:last-child {
 
-        &::after {
-            display: none !important;
-        }
+    & > div::after {
+      display: none !important;
+    }
+  }
+
+  & > div {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    &:hover {
+      opacity: .8;
     }
 
-    & > div {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        position: relative;
-
-        &:hover {
-            opacity: .8;
-        }
-
-        &::after {
-            background-color: #000;
-            content: '';
-            display: block;
-            height: 1px;
-            position: absolute;
-            left: 100%;
-            top: 100%;
-            width: 1px;
-            z-index: 10;
-        }
-
-        &::before {
-            content: '';
-            display: block;
-            height: 0;
-            padding-bottom: 100%;
-        }
-
-        &:nth-child(8n) {
-
-            &::after {
-                display: none;
-            }
-        }
+    &::after {
+      background-color: #666;
+      content: '';
+      display: block;
+      height: 1px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      z-index: 10;
     }
+
+    &::before {
+      content: '';
+      display: block;
+      height: 0;
+      padding-bottom: 100%;
+    }
+
+    &:nth-child(8n) {
+
+      &::after {
+        display: none;
+      }
+    }
+  }
 }

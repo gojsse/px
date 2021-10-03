@@ -29,8 +29,7 @@ export const sceneEditorSlice = createSlice({
       const { row, column, value } = action.payload
       state.selectedScene.spriteSheet[row][column] = value
     },
-
-
+    // TODO move to actions?
     flipSceneHorizontal(state) {
       state.selectedScene.spriteSheet.forEach((row, index) => {
         state.selectedScene.spriteSheet[index] = row.reverse()

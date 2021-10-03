@@ -22,7 +22,7 @@ const SpriteInfoBar = ({ spriteIndex }) => {
 
   return (
     <div className='flex content-center justify-between p-2 text-xs'>
-      <span>[{formattedIndex()}/256]</span>
+      <span>Sprite [{formattedIndex()}/128]</span>
       <span>{selectedTool} tool</span>
     </div>
   );

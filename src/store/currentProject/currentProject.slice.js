@@ -1,17 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { EMPTY_PROJECT } from '@/App.constants.js'
+import Project from '../../data/Project'
+import Scene from '../../data/Scene'
+
+const project = new Project('initial')
 
 const initialState = {
-  ...EMPTY_PROJECT,
+  ...project.data,
+  scenes: [
+    ...project.data.scenes,
+  ],
+  sprites: [
+    ...project.data.sprites,
+  ],
   // id: null,
   // name: 'DefaultText',
   // palette: 'default',
   // dateCreated: null,
   // updated: null,
   // dateLastOpened: null,
-  // sprites: [], //1-128|256
-  // scenes: [], //1-128|256
+  // sprites: [], //1-128
+  // scenes: [], //1-128
   // // redoHistory: [], //in steps
   // // undoHistory: [], //in steps
 }
@@ -21,7 +30,6 @@ export const currentProjectSlice = createSlice({
   initialState: { ...initialState },
   reducers: {
     resetCurrentProject() {
-      console.log('resetting current project state')
       return initialState
     },
     setCurrentProject(_, action) {
@@ -31,22 +39,25 @@ export const currentProjectSlice = createSlice({
     setCurrentProjectName(state, action) {
       const { value } = action.payload
       state.name = value
-      state.updated = Date.now()
     },
     setCurrentProjectPalette(state, action) {
       const { palette } = action.payload
       state.palette = palette
-      state.updated = Date.now()
     },
     updateCurrentProjectSprite(state, action) {
       const { index, sprite } = action.payload
       state.sprites[index] = sprite
-      state.updated = Date.now()
+    },
+    createCurrentProjectScene(state) {
+      state.scenes.push(new Scene('A New Scene!'))
     },
     updateCurrentProjectScene(state, action) {
       const { index, scene } = action.payload
       state.scenes[index] = scene
-      state.updated = Date.now()
+    },
+    updateCurrentProjectSceneCell(state, action) {
+      const { sceneIndex, row, column, value } = action.payload
+      state.scenes[sceneIndex].spriteSheet[row][column] = value
     },
   },
 })
@@ -58,7 +69,9 @@ export const {
   setCurrentProjectName,
   setCurrentProjectPalette,
   updateCurrentProjectSprite,
+  createCurrentProjectScene,
   updateCurrentProjectScene,
+  updateCurrentProjectSceneCell,
 } = currentProjectSlice.actions
 
 // Selectors
@@ -75,12 +88,6 @@ export const getCurrentProjectScenes = (state) => state.currentProject.scenes
 export const getCurrentProjectScenesCount = (state) => state.currentProject.scenes.length 
 export const getCurrentProjectScene = (index) => (state) => state.currentProject.scenes[index]
 export const getCurrentProjectSprites = (state) => state.currentProject.sprites
-export const getCurrentProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index]
-export const getCurrentProjectSpritesPaged = (page = 1, amount = 16) => (state) => {
-  return state.currentProject.sprites
-    .filter((_, index) => {
-      return index >= 0 && index <= (page * amount) - 1
-    })
-}
+export const getCurrentProjectSpriteByIndex = (index) => (state) =>  state.currentProject.sprites[index]
 
 export default currentProjectSlice.reducer

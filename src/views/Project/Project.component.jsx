@@ -25,7 +25,7 @@ import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 
 const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
-  const { data } = useReadProjectByIdQuery(projectId)
+  const { data, isLoading } = useReadProjectByIdQuery(projectId)
 
   const dispatch = useDispatch()
   const projectName = useSelector(getCurrentProjectName)
@@ -34,8 +34,10 @@ const Project = (props) => {
 
   // Set current project in currentProject slice when loaded from the API
   useEffect(() => {
-    dispatch(setCurrentProject({ project: data }))
-  }, [dispatch, data])
+    if (isLoading === false) {
+      dispatch(setCurrentProject({ project: data }))
+    }
+  }, [dispatch, data, isLoading])
 
   // Clear out the current project data from the store when component unmounts
   useEffect(() => {
@@ -80,9 +82,13 @@ const Project = (props) => {
       </div>
 
       <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-        <div className='bg-white hidden lg:block'>
-          <PaletteSelector />
-          {/* <ScenesList /> */}
+        <div className='hidden lg:block'>
+          <div className={`bg-white shadow mb-2 ${projectPaletteClass}`}>
+            <ScenesList spriteIndex={spriteIndex} />
+          </div>
+          <div className='bg-white shadow mb-2'>
+            <PaletteSelector />
+          </div>
         </div>
         <div className={`flex flex-col bg-white ${projectPaletteClass}`}>
           <div className='shadow'>
@@ -92,7 +98,10 @@ const Project = (props) => {
               <SceneEditorActionbar />
             </div>
           </div>
-          <SceneEditor sceneIndex={sceneIndex} />
+          <div className='shadow'>
+            <SceneEditor sceneIndex={sceneIndex} />
+          </div>
+          <div className='bg-indigo-100 bg-stripes bg-stripes-white p-1'></div>
           <SpriteList />
         </div>
         <div className={`flex flex-col bg-white ${projectPaletteClass}`}>
@@ -103,7 +112,10 @@ const Project = (props) => {
               <SpriteEditorActionbar />
             </div>
           </div>
-          <SpriteEditor spriteIndex={spriteIndex} />
+          <div className='shadow'>
+            <SpriteEditor spriteIndex={spriteIndex} />
+          </div>
+          <div className='bg-indigo-100 bg-stripes bg-stripes-white p-1'></div>
           <ColorSelector />
         </div>
       </div>

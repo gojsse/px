@@ -1,23 +1,17 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router'
 
 import { SCENE_TOOLS } from '@/App.constants'
-import { updateScene } from '@store/sceneEditor/sceneEditor.actions'
-import { getCurrentSpriteIndex } from '@store/spriteEditor/spriteEditor.slice'
 import Sprite from '@views/Project/Sprite/Sprite.component'
-
-import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
 
 const Cell = ({
   sprite,
   rowIndex,
   colIndex,
   selectedTool,
+  onDrop
 }) => {
-  const dispatch = useDispatch()
-  const selectedSpriteIndex = useSelector(getCurrentSpriteIndex)
-
-  const [ updateProject ] = useUpdateProjectMutation()
+  const { spriteIndex } = useParams()
 
   const dragOverHandler = event => {
     event.preventDefault()
@@ -27,12 +21,10 @@ const Cell = ({
     event.preventDefault()
     const passedData = JSON.parse(event.dataTransfer.getData('text'))
 
-    dispatch(updateScene({
+    onDrop({
       row: rowIndex,
       column: colIndex,
       value: {id: passedData.spritePoolIndex},
-    })).then(({ projectId, updatedProject }) => {
-      updateProject({ projectId, updatedProject })
     })
 
     const hasValidRow = passedData.rowIndex !== null && passedData.rowIndex >= 0
@@ -41,12 +33,10 @@ const Cell = ({
     // Remove sprite from grid
     if (hasValidRow && hasValidColumn) {
       if (rowIndex !== passedData.rowIndex || colIndex !== passedData.colIndex) {
-        dispatch(updateScene({
+        onDrop({
           row: passedData.rowIndex,
           column: passedData.colIndex,
           value: null,
-        })).then(({ projectId, updatedProject }) => {
-          updateProject({ projectId, updatedProject })
         })
       }
     }
@@ -58,12 +48,10 @@ const Cell = ({
 
   const cellClickHandler = () => {
     if (selectedTool === SCENE_TOOLS.STAMP) {
-      dispatch(updateScene({
+      onDrop({
         row: rowIndex,
         column: colIndex,
-        value: {id:selectedSpriteIndex},
-      })).then(({ projectId, updatedProject }) => {
-        updateProject({ projectId, updatedProject })
+        value: {id: spriteIndex},
       })
     }
   }

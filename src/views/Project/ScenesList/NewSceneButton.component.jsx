@@ -1,22 +1,25 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-import { insertProjectScene } from '@store/projects/projects.slice'
+import { DocumentAddIcon } from '@heroicons/react/outline'
+
+import { addNewScene } from '@store/currentProject/currentProject.actions'
 
 const NewSceneButton = ({ projectId }) => {
   const dispatch = useDispatch()
 
   const handleClick = () => {
-    dispatch(insertProjectScene({ projectId }))
+    dispatch(addNewScene({ projectId }))
   }
 
   return (
     <button
-      onClick={handleClick}
       type='button'
-      className='inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+      className='relative flex column-column justify-center items-center w-full border-2 border-gray-300 border-dashed p-2 text-center hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+      onClick={handleClick}
     >
-      New
+      <DocumentAddIcon className='block h-5 w-5 mr-2' />
+      <span className='block text-sm font-medium text-gray-900'>New Scene</span>
     </button>
   )
 }

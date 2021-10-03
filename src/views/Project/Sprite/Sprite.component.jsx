@@ -11,7 +11,6 @@ const Sprite = props => {
     isSelected = false,
     isDraggable = true,
     onClick = () => {},
-    onDoubleClick = () => {},
     cursor = 'default',
     rowIndex,
     colIndex,
@@ -37,15 +36,6 @@ const Sprite = props => {
     event.preventDefault()
   }
 
-  const spriteHtml = sprite
-    .map((row, rowIndex) => (
-      <div key={rowIndex} className={styles.spriteRow}>
-        {row.map((cell, colIndex) => (
-          <div key={colIndex} className={`color color--${cell}`} onClick={() => onClick(spriteIndex)} />
-        ))}
-      </div>
-    ))
-
   return (
     <div
       className={styles.sprite + (isSelected ? ' ' + styles.spriteSelected : '')}
@@ -54,10 +44,15 @@ const Sprite = props => {
       onDragStart={dragStartHandler}
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
-      onDoubleClick={onDoubleClick}
       onClick={onClick}
     >
-      {spriteHtml}
+      {sprite.map((row, rowIndex) => (
+        <div key={rowIndex} className={styles.spriteRow}>
+          {row.map((cell, colIndex) => (
+            <div key={colIndex} className={`color color--${cell}`} onClick={() => onClick(spriteIndex)} />
+          ))}
+        </div>
+      ))}
     </div>
   )
 }

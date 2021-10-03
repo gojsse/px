@@ -17,10 +17,10 @@ class Project {
     this.palette = PALETTE_LIST[0]
 
     this.scenes = [
-      { ...new Scene('init scene') }
+      { ...new Scene('init scene').data }
     ]
 
-    this.sprites = new Array(256)
+    this.sprites = new Array(128)
       .fill(null)
       .map(() => [ ...new Sprite().data ])
   }

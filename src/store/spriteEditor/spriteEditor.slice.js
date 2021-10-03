@@ -22,14 +22,14 @@ export const spriteEditorSlice = createSlice({
       const { color } = action.payload
       state.selectedColor = color
     },
-    setCurrentSprite(state, action) {
-      const { sprite } = action.payload
-      state.selectedSprite = sprite
-    },
-    setCurrentSpriteIndex(state, action) {
-      const { spriteIndex } = action.payload
-      state.selectedSpriteIndex = spriteIndex
-    },
+    // setCurrentSprite(state, action) {
+    //   const { sprite } = action.payload
+    //   state.selectedSprite = sprite
+    // },
+    // setCurrentSpriteIndex(state, action) {
+    //   const { spriteIndex } = action.payload
+    //   state.selectedSpriteIndex = spriteIndex
+    // },
     flipSpriteHorizontal(state) {
       state.selectedSprite.forEach((row, index) => {
         state.selectedSprite[index] = row.reverse()
@@ -93,8 +93,8 @@ export const spriteEditorSlice = createSlice({
 export const {
   setCurrentTool,
   setCurrentColor,
-  setCurrentSprite,
-  setCurrentSpriteIndex,
+  // setCurrentSprite,
+  // setCurrentSpriteIndex,
   flipSpriteHorizontal,
   flipSpriteVertical,
   moveSpriteLeft,

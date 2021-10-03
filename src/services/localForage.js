@@ -18,10 +18,8 @@ export const createProjectInStorage = async (project) => {
 
   try {
     const response = await projectsTable.setItem(project.id, project)
-    // console.log('setItem > createProjectInStorage', value, response)
     return response
   } catch (err) {
-    // console.log(err)
     return err
   }
 }
@@ -32,10 +30,8 @@ export const readProjectInStorage = async (projectKey) => {
   try {
     const projectResponse = await projectsTable.getItem(projectKey)
     response = projectResponse
-    // console.log('getSingleProjectInStorage', response)
   } catch (err) {
     response = err
-    // console.log('getSingleProjectInStorage error', response)
   }
 
   return response
@@ -44,12 +40,9 @@ export const readProjectInStorage = async (projectKey) => {
 export const updateProjectInStorage = async (projectId, value) => {
 
   try {
-    // console.log('updateProjectInStorage executing... ', projectId, value)
     const response = await projectsTable.setItem(projectId, value)
-    // console.log('setItem > updateProjectInStorage', projectId, value, response)
     return response
   } catch (err) {
-    // console.log(err)
     return err
   }
 }
@@ -88,10 +81,8 @@ export const getAllProjectsInStorage = async () => {
       projectResponse.key = projectKeys[index]
       response.push(projectResponse)
     }
-    // console.log('getAllProjectsInStorage', response)
   } catch (err) {
     response = err
-    // console.log('getAllProjectsInStorage error', response)
   }
 
   return response

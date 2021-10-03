@@ -11,7 +11,7 @@ const SceneInfoBar = ({ sceneIndex }) => {
 
   return (
     <div className='flex content-center justify-between p-2 text-xs'>
-      <span>[{parseInt(sceneIndex) + 1}/{projectSceneCount}] {sceneName}</span>
+      <span>Scene [{parseInt(sceneIndex) + 1}/{projectSceneCount}] {sceneName}</span>
       <span>{selectedTool} tool</span>
     </div>
   )

@@ -6,14 +6,14 @@ import { useCreateNewProjectMutation, useDeleteProjectMutation } from '@store/pr
 import Project from './Project.component'
 import NewProject from './NewProject.component'
 import Modal from '@components/Modal/Modal.component'
-import Select from '@components/forms/Select.component'
+// import Select from '@components/forms/Select.component'
 
-const templates = [
-  {name: 'Empty', id: '001'},
-  {name: 'Basic', id: '002'},
-  {name: 'Faces', id: '003'},
-  {name: 'Board', id: '004'},
-]
+// const templates = [
+//   {name: 'Empty', id: '001'},
+//   {name: 'Basic', id: '002'},
+//   {name: 'Faces', id: '003'},
+//   {name: 'Board', id: '004'},
+// ]
 
 const Projects = (props) => {
   const { data = [] } = useGetAllProjectsQuery()
@@ -41,12 +41,13 @@ const Projects = (props) => {
         {data.map((project) => (
           <Project key={project.id} project={project} onConfirmDelete={handleDeleteProjectConfirm} />
         ))}
-        <NewProject onClick={() => setIsOpen(true)} />
       </div>
 
+      <NewProject onClick={() => setIsOpen(true)} />
+
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} confirmHandler={handleCreateNewProjectConfirm}>
-        <form className='bg-white mt-5 sm:flex'>
-          <div className='w-full sm:max-w-xs'>
+        <form className='bg-white mt-5 w-full flex'>
+          <div className='w-full'>
             <label htmlFor='new-project-name' className='block text-sm font-medium text-gray-700'>
               New Project Name
             </label>
@@ -58,7 +59,7 @@ const Projects = (props) => {
               value={newProjectName}
               onChange={(e) => setNewProjectName(e.target.value)}
             />
-            <Select label={'New Project Template'} items={templates} onChange={() => {console.log('changed')}} />
+            {/* <Select label={'New Project Template'} items={templates} onChange={() => {console.log('changed')}} /> */}
           </div>
         </form>
       </Modal>

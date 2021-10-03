@@ -19,8 +19,15 @@ class Scene {
     ]
   }
 
-
-
+  get data() {
+    return {
+      name: this.name,
+      id: this.id,
+      height: this.height,
+      width: this.width,
+      spriteSheet: this.spriteSheet,
+    }
+  }
 }
 
 export default Scene
