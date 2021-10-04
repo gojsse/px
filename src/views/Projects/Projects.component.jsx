@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 // TODO move to actions maybe to keep this component cleaner
 import EmptyProject from '../../data/Project'
-import BasicProject from '../../data/project-templates/BasicProject'
+// import BasicProject from '../../data/project-templates/BasicProject'
 import FacesProject from '../../data/project-templates/FacesProject'
-import BoardProject from '../../data/project-templates/BoardProject'
+// import BoardProject from '../../data/project-templates/BoardProject'
 
 import { useGetAllProjectsQuery } from '@store/projects/allProjects.api'
 import { useCreateNewProjectMutation, useDeleteProjectMutation } from '@store/projects/allProjects.api'

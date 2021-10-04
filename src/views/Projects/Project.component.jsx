@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { PencilAltIcon, DocumentRemoveIcon, DocumentDuplicateIcon } from '@heroicons/react/outline'
+import { PencilAltIcon, DocumentRemoveIcon } from '@heroicons/react/outline'
+// DocumentDuplicateIcon
 
 import Scene from '@components/Scene/Scene.component'
 import Modal from '@components/Modal/Modal.component'
