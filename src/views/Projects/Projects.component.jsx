@@ -15,9 +15,9 @@ import Select from '@components/forms/Select.component'
 
 const templates = [
   {name: 'Empty', id: '001', class: EmptyProject},
-  {name: 'Basic', id: '002', class: BasicProject},
+  // {name: 'Basic', id: '002', class: BasicProject},
   {name: 'Faces', id: '003', class: FacesProject},
-  {name: 'Board', id: '004', class: BoardProject},
+  // {name: 'Board', id: '004', class: BoardProject},
 ]
 
 const Projects = (props) => {

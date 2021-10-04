@@ -48,7 +48,7 @@ const Project = ({ project, onConfirmDelete }) => {
               <span>Open</span>
             </NavLink>
           </div>
-          <div className='w-0 flex-1 flex'>
+          {/* <div className='w-0 flex-1 flex'>
             <button
               className={buttonClass + ' text-gray-400 cursor-not-allowed'}
               onClick={() => console.log('add dupe function')}
@@ -56,7 +56,7 @@ const Project = ({ project, onConfirmDelete }) => {
               <DocumentDuplicateIcon className={iconClass + ' text-gray-400'} aria-hidden='true' />
               <span>Clone</span>
             </button>
-          </div>
+          </div> */}
           <div className='w-0 flex-1 flex'>
             <button
               className={buttonClass + ' text-gray-700'}
