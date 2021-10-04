@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
@@ -9,16 +9,12 @@ function classNames(...classes) {
 const Select = ({
   label,
   items,
+  selected,
   onChange,
 }) => {
-  const [selected, setCurrent] = useState(items[0])
-
-  useEffect(() => {
-    // console.log('selected changed', selected)
-  }, [selected])
 
   return (
-    <Listbox value={selected} onChange={setCurrent}>
+    <Listbox value={selected} onChange={(value) => onChange(value)}>
       <Listbox.Label className='block text-sm font-medium text-gray-700'>{label}</Listbox.Label>
       <div className='mt-1 relative'>
         <Listbox.Button className='bg-white relative w-full border border-gray-300 shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'>

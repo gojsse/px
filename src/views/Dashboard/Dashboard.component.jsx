@@ -7,8 +7,8 @@ const Dashboard = (props) => {
   const { data = [], isLoading } = useGetAllProjectsQuery()
 
   return (
-    <div>
-      {isLoading || data.length === 0 && <div>Dashboard...</div>}
+    <div className='overflow-hidden'>
+      {(isLoading || data.length === 0) && <div>Dashboard...</div>}
       {!isLoading && <ScenePreview project={data[0]} />}
     </div>
   )

@@ -1,1 +1,0 @@
-// ladders, ropes, holes, etc.

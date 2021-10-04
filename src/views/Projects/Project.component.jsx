@@ -71,7 +71,7 @@ const Project = ({ project, onConfirmDelete }) => {
 
       <Modal isOpen={isDeleteOpen} setIsOpen={setIsDeleteOpen} confirmHandler={confirmClickHandler}>
         <form className='bg-white mt-5 sm:flex'>
-          <div className='w-full sm:max-w-xs'>
+          <div className='w-full'>
             Are you sure you want to delete {project.id}?
           </div>
         </form>

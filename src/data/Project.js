@@ -2,9 +2,10 @@ import { ID } from "./data.helpers"
 import { PALETTE_LIST } from '../App.constants'
 import Scene from './Scene'
 import Sprite from './Sprite'
+
 class Project {
 
-  constructor(name) {
+  constructor({ name, template }) {
     this.name = name
     this.initializeData()
   }
@@ -15,14 +16,19 @@ class Project {
     this.created = Date.now()
     this.updated = Date.now()
     this.palette = PALETTE_LIST[0]
+    this.version = '0.1.0'
 
     this.scenes = [
-      { ...new Scene('init scene').data }
+      { ...new Scene({ name: '🦴' }).data }
     ]
 
     this.sprites = new Array(128)
       .fill(null)
       .map(() => [ ...new Sprite().data ])
+  }
+
+  setUpdated() {
+    this.updated = Date.now()
   }
 
   get data() {

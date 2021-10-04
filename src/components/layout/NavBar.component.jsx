@@ -2,7 +2,9 @@ import React from 'react'
 import { NavLink } from "react-router-dom"
 
 import { Disclosure } from '@headlessui/react'
-import { AdjustmentsIcon, ViewGridIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { AdjustmentsIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+
+import { ReactComponent as PXLogo } from '../../logo.svg'
 
 const navigation = [
   { name: 'Dashboard', href: ''},
@@ -35,7 +37,7 @@ const SiteMenu = (props) => {
                     activeClassName='text-indigo-500'
                     className='text-gray-500'
                   >
-                    <ViewGridIcon className="block h-6 w-6" />
+                    <PXLogo className="block h-10 w-10" />
                   </NavLink>
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">

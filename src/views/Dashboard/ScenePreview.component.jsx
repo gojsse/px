@@ -8,10 +8,8 @@ const ScenePreview = ({ project }) => {
   const paletteClass = `palette palette--${!project.palette ? 'default' : project.palette}`
 
   return (
-    <div className={`${paletteClass}`}>
-      <div className='flex-1 flex flex-col'>
-        <Scene scene={scene} sprites={sprites} />
-      </div>
+    <div className={`${paletteClass} animate-pulse`}>
+      <Scene scene={scene} sprites={sprites} />
     </div>
   )
 }

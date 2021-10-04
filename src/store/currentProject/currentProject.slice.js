@@ -5,7 +5,7 @@ import Scene from '../../data/Scene'
 import { sceneReducers } from './scene.reducers'
 import { spriteReducers } from './sprite.reducers'
 
-const project = new Project('initial')
+const project = new Project({ name: 'initial' })
 
 const initialState = {
   ...project.data,
@@ -45,7 +45,7 @@ export const currentProjectSlice = createSlice({
       state.sprites[index] = sprite
     },
     createCurrentProjectScene(state) {
-      state.scenes.push(new Scene('A New Scene!'))
+      state.scenes.push(new Scene({ name: 'A New Scene!' }).data)
     },
     updateCurrentProjectScene(state, action) {
       const { index, scene } = action.payload
@@ -89,20 +89,29 @@ export const {
   rotateSpriteLeft,
 } = currentProjectSlice.actions
 
-// Selectors
+const getPaletteClass = (state) => {
+  const palette = state.currentProject.palette
+  return `palette palette--${!palette ? 'default' : palette}`
+}
+
+// Project selectors
 export const getCurrentProject = (state) => state.currentProject
 export const getCurrentProjectId = (state) => state.currentProject.id
 export const getCurrentProjectName = (state) => state.currentProject.name
 export const getCurrentProjectUpdated = (state) => state.currentProject.updated
 export const getCurrentProjectUpdatedReadable = (state) => new Date(state.currentProject.updated).toLocaleDateString('en-US')
+
+// Palette selectors
 export const getCurrentProjectPalette = (state) => state.currentProject.palette
-export const getCurrentProjectPaletteClass = (state) => {
-  return `palette palette--${!state.currentProject.palette ? 'default' : state.currentProject.palette}`
-}
+export const getCurrentProjectPaletteClass = (state) => getPaletteClass(state)
+
+// Scene selectors
 export const getCurrentProjectScenes = (state) => state.currentProject.scenes
 export const getCurrentProjectScenesCount = (state) => state.currentProject.scenes.length 
 export const getCurrentProjectScene = (index) => (state) => state.currentProject.scenes[index]
 export const getCurrentProjectSceneName = (index) => (state) => state.currentProject.scenes[index].name
+
+// Sprite selectors
 export const getCurrentProjectSprites = (state) => state.currentProject.sprites
 export const getCurrentProjectSpriteByIndex = (index) => (state) =>  state.currentProject.sprites[index]
 
