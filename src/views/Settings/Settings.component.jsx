@@ -3,7 +3,7 @@ import React from 'react'
 const Settings = (props) => {
 
   return (
-    <div className='class'>Settings...</div>
+    <div>Settings...</div>
   )
 }
 
