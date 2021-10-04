@@ -1,21 +1,21 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { updateScene } from '@store/sceneEditor/sceneEditor.actions'
-import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice';
 import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
-import Cell from './Cell.component';
+import { updateScene } from '@store/currentProject/currentProject.actions'
+import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
+import Cell from './Cell.component'
 
-import styles from './SceneEditor.module.scss';
+import styles from './SceneEditor.module.scss'
 
-const Grid = ({ scene }) => {
+const Grid = ({ scene, sceneIndex }) => {
   const dispatch = useDispatch()
-  const selectedTool = useSelector(getCurrentTool);
+  const selectedTool = useSelector(getCurrentTool)
 
   const [ updateProject ] = useUpdateProjectMutation()
 
   const handleDrop = ({ row, column, value }) => {
-    dispatch(updateScene({ row, column, value }))
+    dispatch(updateScene({ sceneIndex, row, column, value }))
       .then(({ projectId, updatedProject }) => {
         updateProject({ projectId, updatedProject })
       })
@@ -38,7 +38,7 @@ const Grid = ({ scene }) => {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default Grid;
+export default Grid

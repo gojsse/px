@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { getCurrentProjectScenesCount } from '@store/currentProject/currentProject.slice'
-import { getCurrentTool, getCurrentSceneName } from '@store/sceneEditor/sceneEditor.slice'
+import { getCurrentProjectSceneName, getCurrentProjectScenesCount } from '@store/currentProject/currentProject.slice'
+import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
 
 const SceneInfoBar = ({ sceneIndex }) => {
-  const selectedTool = useSelector(getCurrentTool);
-  const sceneName = useSelector(getCurrentSceneName);
+  const selectedTool = useSelector(getCurrentTool)
+  const sceneName = useSelector(getCurrentProjectSceneName(sceneIndex))
   const projectSceneCount = useSelector(getCurrentProjectScenesCount)
 
   return (

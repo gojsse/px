@@ -29,12 +29,9 @@ const SpriteList = (props) => {
   const history = useHistory()
   const { projectId, sceneIndex, spriteIndex } = useParams()
 
-  // TODO left off here...is doing 0/32?
   const [currentPage, setCurrentPage] = useState(Math.ceil((parseInt(spriteIndex) + 1) / perPage))
   const currentPageStart = ((currentPage - 1) * perPage) + 1
   const currentPageEnd = currentPage * perPage
-
-  console.log(Math.ceil((parseInt(spriteIndex) + 1) / perPage), currentPageStart, currentPageEnd)
 
   const selectedTool = useSelector(getCurrentTool)
 
@@ -49,7 +46,6 @@ const SpriteList = (props) => {
       <div className={styles.spriteList}>
         <div className={styles.spriteListRow}>
           {getPagedIndexes(currentPage, perPage).map((index) => (
-            // <div>{index}</div>
             <Sprite
               key={index}
               spriteIndex={index}

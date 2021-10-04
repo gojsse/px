@@ -84,7 +84,7 @@ const Project = (props) => {
       <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
         <div className='hidden lg:block'>
           <div className={`bg-white shadow mb-2 ${projectPaletteClass}`}>
-            <ScenesList spriteIndex={spriteIndex} />
+            <ScenesList sceneIndex={sceneIndex} spriteIndex={spriteIndex} />
           </div>
           <div className='bg-white shadow mb-2'>
             <PaletteSelector />
@@ -95,7 +95,7 @@ const Project = (props) => {
             <SceneInfoBar sceneIndex={sceneIndex} />
             <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
               <SceneEditorToolbar />
-              <SceneEditorActionbar />
+              <SceneEditorActionbar sceneIndex={sceneIndex} />
             </div>
           </div>
           <div className='shadow'>
@@ -109,7 +109,7 @@ const Project = (props) => {
             <SpriteInfoBar spriteIndex={spriteIndex} />
             <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
               <SpriteEditorToolbar />
-              <SpriteEditorActionbar />
+              <SpriteEditorActionbar spriteIndex={spriteIndex} />
             </div>
           </div>
           <div className='shadow'>

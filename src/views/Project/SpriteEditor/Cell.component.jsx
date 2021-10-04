@@ -1,8 +1,8 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react'
+import { useDispatch } from 'react-redux'
 
-import { SPRITE_TOOLS } from '@/App.constants';
-import { setCurrentColor } from '@store/spriteEditor/spriteEditor.slice';
+import { SPRITE_TOOLS } from '@/App.constants'
+import { setCurrentColor } from '@store/spriteEditor/spriteEditor.slice'
 
 const Cell = (props) => {
   const {
@@ -12,25 +12,25 @@ const Cell = (props) => {
     selectedTool,
     mouseIsDown,
     clickHandler,
-  } = props;
+  } = props
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const cellClickHandler = () => {
     if (selectedTool === SPRITE_TOOLS.COLOR_SAMPLE) {
-      dispatch(setCurrentColor({color: colorKey}));
-      return;
+      dispatch(setCurrentColor({color: colorKey}))
+      return
     }
-    clickHandler(rowIndex, colIndex);
+    clickHandler(rowIndex, colIndex)
   }
 
   const mouseEnterHandler = () => {
     if (selectedTool === SPRITE_TOOLS.COLOR_SAMPLE && mouseIsDown) {
-      dispatch(setCurrentColor({color: colorKey}));
-      return;
+      dispatch(setCurrentColor({color: colorKey}))
+      return
     }
     if (mouseIsDown) {
-      clickHandler(rowIndex, colIndex);
+      clickHandler(rowIndex, colIndex)
     }
   }
 
@@ -40,7 +40,7 @@ const Cell = (props) => {
       onMouseDown={() => cellClickHandler()}
       onMouseEnter={() => mouseEnterHandler()}
     />
-  );
+  )
 }
 
-export default React.memo(Cell);
+export default React.memo(Cell)

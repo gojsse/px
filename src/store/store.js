@@ -5,7 +5,6 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { allProjectsApi } from './projects/allProjects.api'
 import { currentProjectApi } from './currentProject/currentProject.api'
 
-import projectsSlice from '@store/projects/projects.slice'
 import currentProjectSlice from '@store/currentProject/currentProject.slice'
 import sceneEditorSlice from '@store/sceneEditor/sceneEditor.slice'
 import spriteEditorSlice from '@store/spriteEditor/spriteEditor.slice'
@@ -18,7 +17,6 @@ export const store = configureStore({
   reducer: {
     [allProjectsApi.reducerPath]: allProjectsApi.reducer,
     [currentProjectApi.reducerPath]: currentProjectApi.reducer,
-    projects: projectsSlice,
     currentProject: currentProjectSlice,
     sceneEditor: sceneEditorSlice,
     spriteEditor: spriteEditorSlice,

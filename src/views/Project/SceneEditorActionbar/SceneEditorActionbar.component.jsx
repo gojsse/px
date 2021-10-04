@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 
 import { SwitchHorizontalIcon, SwitchVerticalIcon, ArrowSmUpIcon, ArrowSmRightIcon, ArrowSmDownIcon, ArrowSmLeftIcon, LightningBoltIcon } from '@heroicons/react/outline'
 
-import { moveSceneUp, moveSceneRight, moveSceneDown, moveSceneLeft, flipSceneVertical, flipSceneHorizontal, clearSceneSprites } from '@store/sceneEditor/sceneEditor.slice'
-import { handleSceneActionButton } from '@store/sceneEditor/sceneEditor.actions'
 import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
+import { handleSceneActionButton } from '@store/currentProject/currentProject.actions'
+import { shiftSceneUp, shiftSceneRight, shiftSceneDown, shiftSceneLeft, flipSceneVertical, flipSceneHorizontal, clearSceneSprites } from '@store/currentProject/currentProject.slice'
 
 import styles from './SceneEditorActionbar.module.scss'
 
@@ -18,12 +18,12 @@ const buttonAttributes = {
   className: buttonClasses,
 }
 
-const SceneEditorActionbar = (props) => {
+const SceneEditorActionbar = ({ sceneIndex }) => {
   const dispatch = useDispatch()
   const [ updateProject ] = useUpdateProjectMutation()
 
   const handleClick = (buttonAction) => {
-    dispatch(handleSceneActionButton(buttonAction))
+    dispatch(handleSceneActionButton({ sceneIndex, buttonAction }))
       .then(({ projectId, updatedProject }) => {
         updateProject({ projectId, updatedProject })
       })
@@ -31,16 +31,16 @@ const SceneEditorActionbar = (props) => {
 
   return (
     <div className={styles.sceneEditorActionbar + ' mb-2 w-full'}>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSceneLeft)}>
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSceneLeft)}>
         <ArrowSmLeftIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSceneRight)}>
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSceneRight)}>
         <ArrowSmRightIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSceneUp)} >
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSceneUp)} >
         <ArrowSmUpIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSceneDown)}>
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSceneDown)}>
         <ArrowSmDownIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(flipSceneHorizontal)}>

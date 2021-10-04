@@ -1,6 +1,12 @@
-import { currentProjectApi } from '@store/currentProject/currentProject.api'
-import { resetCurrentProject } from '@store/currentProject/currentProject.slice'
-import { getCurrentProject, createCurrentProjectScene, setCurrentProjectPalette } from './currentProject.slice'
+import { currentProjectApi } from './currentProject.api'
+import {
+  getCurrentProject,
+  resetCurrentProject,
+  setCurrentProjectPalette,
+  createCurrentProjectScene,
+  updateCurrentProjectSceneCell,
+  updateCurrentProjectSprite,
+} from './currentProject.slice'
 
 export const updatePalette = ({ palette }) => {
   return (dispatch, getState) => {
@@ -27,5 +33,39 @@ export const addNewScene = () => {
     // dispatch(currentProjectApi.util.invalidateTags(['Post']))
     // TODO update local storage when done... 
     return Promise.resolve()
+  }
+}
+
+export const updateScene = ({ sceneIndex, row, column, value }) => {
+  return (dispatch, getState) => {
+    dispatch(updateCurrentProjectSceneCell({ sceneIndex, row, column, value }))
+    const updatedProject = getCurrentProject(getState())
+    // TODO try this instead of the resolve way...
+    // dispatch(currentProjectApi.endpoints.mutations.updateProject({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+  }
+}
+
+export const handleSceneActionButton = ({ sceneIndex, buttonAction }) => {
+  return (dispatch, getState) => {
+    dispatch(buttonAction({ sceneIndex }))
+    const updatedProject = getCurrentProject(getState())
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+  }
+}
+
+export const updateSprite = ({ index, sprite }) => {
+  return (dispatch, getState) => {
+    dispatch(updateCurrentProjectSprite({ index, sprite }))
+    const updatedProject = getCurrentProject(getState())
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+  }
+}
+
+export const handleSpriteActionButton = ({ spriteIndex, buttonAction }) => {
+  return (dispatch, getState) => {
+    dispatch(buttonAction({ spriteIndex }))
+    const updatedProject = getCurrentProject(getState())
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
   }
 }

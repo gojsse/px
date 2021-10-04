@@ -41,7 +41,8 @@ const Cell = ({
       }
     }
 
-    // TODO Remove sprite from grid if dropped outside of grid
+    // TODO Remove sprite from grid if dropped outside of grid, currently there
+    // is no way to delete a sprite from the grid. other option, make drag to trash can to delete.
     // setShowDeleteZone(false)
     event.dataTransfer.clearData()
   }

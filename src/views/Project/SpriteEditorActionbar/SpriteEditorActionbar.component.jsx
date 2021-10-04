@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux'
 
 import { SwitchHorizontalIcon, SwitchVerticalIcon, ArrowSmUpIcon, ArrowSmRightIcon, ArrowSmDownIcon, ArrowSmLeftIcon, ReplyIcon } from '@heroicons/react/outline'
 
-import { moveSpriteUp,moveSpriteRight, moveSpriteDown, moveSpriteLeft, flipSpriteVertical, flipSpriteHorizontal, rotateSpriteRight, rotateSpriteLeft } from '@store/spriteEditor/spriteEditor.slice'
-import { handleSpriteActionButton } from '@store/spriteEditor/spriteEditor.actions'
 import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
+import { handleSpriteActionButton } from '@store/currentProject/currentProject.actions'
+import { shiftSpriteUp, shiftSpriteRight, shiftSpriteDown, shiftSpriteLeft, flipSpriteVertical, flipSpriteHorizontal, rotateSpriteRight, rotateSpriteLeft } from '@store/currentProject/currentProject.slice'
 
 import styles from './SpriteEditorActionbar.module.scss'
 
@@ -18,12 +18,12 @@ const buttonAttributes = {
   className: buttonClasses
 }
 
-const SpriteEditorActionbar = (props) => {
+const SpriteEditorActionbar = ({ spriteIndex }) => {
   const dispatch = useDispatch()
   const [ updateProject ] = useUpdateProjectMutation()
 
   const handleClick = (buttonAction) => {
-    dispatch(handleSpriteActionButton(buttonAction))
+    dispatch(handleSpriteActionButton({ spriteIndex, buttonAction }))
       .then(({ projectId, updatedProject }) => {
         updateProject({ projectId, updatedProject })
       })
@@ -31,16 +31,16 @@ const SpriteEditorActionbar = (props) => {
 
   return (
     <div className={styles.spriteEditorActionbar + ' w-full mb-2'}>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteLeft)}>
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSpriteLeft)}>
         <ArrowSmLeftIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteRight)}>
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSpriteRight)}>
         <ArrowSmRightIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteUp)} >
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSpriteUp)}>
         <ArrowSmUpIcon className={iconClasses} />
       </button>
-      <button {...buttonAttributes} onClick={() => handleClick(moveSpriteDown)}>
+      <button {...buttonAttributes} onClick={() => handleClick(shiftSpriteDown)}>
         <ArrowSmDownIcon className={iconClasses} />
       </button>
       <button {...buttonAttributes} onClick={() => handleClick(flipSpriteHorizontal)}>

@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { getCurrentProjectId, getCurrentProjectScenes, getCurrentProjectSprites } from '@store/currentProject/currentProject.slice'
-import { getCurrentSceneIndex } from '@store/sceneEditor/sceneEditor.slice'
 import Cell from './Cell.component'
 import Scene from '@components/Scene/Scene.component'
 // import NewSceneButton from './NewSceneButton.component'
@@ -14,11 +13,10 @@ const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-1 text-xs f
 const defaultClass = buttonBase + ' bg-white text-gray-700 hover:bg-gray-50'
 const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
 
-const ScenesList = ({ spriteIndex }) => {
+const ScenesList = ({ sceneIndex, spriteIndex }) => {
   const projectId = useSelector(getCurrentProjectId)
   const scenes = useSelector(getCurrentProjectScenes)
   const sprites = useSelector(getCurrentProjectSprites)
-  const currentSceneIndex = useSelector(getCurrentSceneIndex)
 
   const [gridSize, setGridSize] = useState(2)
 
@@ -45,8 +43,8 @@ const ScenesList = ({ spriteIndex }) => {
       </div>
       <div className={styles.grid + ' ' + styles[`grid${gridSize}w`] + ' border-t border-gray-100 p-1'}>
         {scenes.map((scene, index) => (
-          <Cell key={index} isSelected={parseInt(index) === parseInt(currentSceneIndex)}>
-            {parseInt(index) === parseInt(currentSceneIndex) ? (
+          <Cell key={index} isSelected={parseInt(index) === parseInt(sceneIndex)}>
+            {parseInt(index) === parseInt(sceneIndex) ? (
               <Scene scene={scene} sprites={sprites} />
             ) : (
               <NavLink exact to={`/projects/${projectId}/${index}/${spriteIndex}`}>

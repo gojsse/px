@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { SPRITE_TOOLS } from '@/App.constants'
-import { updateSprite } from '@store/spriteEditor/spriteEditor.actions'
 import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
+import { updateSprite } from '@store/currentProject/currentProject.actions'
 import { getCurrentProjectSpriteByIndex } from '@store/currentProject/currentProject.slice'
 import { getCurrentTool, getCurrentColor } from '@store/spriteEditor/spriteEditor.slice'
 import Cell from './Cell.component'
@@ -11,9 +11,6 @@ import Cell from './Cell.component'
 import styles from './SpriteEditor.module.scss'
 
 const SpriteEditor = ({ spriteIndex }) => {
-
-  // TODO use query states here?
-
   const dispatch = useDispatch()
   const selectedSprite = useSelector(getCurrentProjectSpriteByIndex(spriteIndex))
   const selectedTool = useSelector(getCurrentTool)
@@ -116,11 +113,6 @@ const SpriteEditor = ({ spriteIndex }) => {
 
   const handleMouseLeave = () => {
     setMouseDown(false)
-  }
-
-  if (Array.isArray(selectedSprite) === false) {
-    // TODO this exists due to race condition bug I have to figure out
-    return <div>...</div>
   }
 
   return (

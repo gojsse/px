@@ -1,28 +1,28 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { HandIcon, ArrowCircleDownIcon } from '@heroicons/react/outline';
+import { HandIcon, ArrowCircleDownIcon } from '@heroicons/react/outline'
 
-import { SCENE_TOOLS } from '@/App.constants';
-import { getCurrentTool, setCurrentTool } from '@store/sceneEditor/sceneEditor.slice';
+import { SCENE_TOOLS } from '@/App.constants'
+import { getCurrentTool, setCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
 
-import styles from './SceneEditorToolbar.module.scss';
+import styles from './SceneEditorToolbar.module.scss'
 
-const buttonClassesBase = 'relative inline-flex items-center px-4 py-2 text-sm font-medium';
-const buttonClasses = `${buttonClassesBase} text-gray-800 bg-white hover:bg-gray-50`;
-const buttonActiveClasses = `${buttonClassesBase} text-gray-50 bg-indigo-500 hover:bg-indigo-500 focus:z-10`;
-const iconClasses = 'block h-5 w-5';
+const buttonClassesBase = 'relative inline-flex items-center px-4 py-2 text-sm font-medium'
+const buttonClasses = `${buttonClassesBase} text-gray-800 bg-white hover:bg-gray-50`
+const buttonActiveClasses = `${buttonClassesBase} text-gray-50 bg-indigo-500 hover:bg-indigo-500 focus:z-10`
+const iconClasses = 'block h-5 w-5'
 
 const SceneEditorToolbar = (props) => {
-  const dispatch = useDispatch();
-  const selectedTool = useSelector(getCurrentTool);
+  const dispatch = useDispatch()
+  const selectedTool = useSelector(getCurrentTool)
 
   const buttons = [
     {tool: SCENE_TOOLS.MOVE, icon: <HandIcon className={iconClasses} />},
     {tool: SCENE_TOOLS.STAMP, icon: <ArrowCircleDownIcon className={iconClasses} />},
-  ];
+  ]
 
-  const handleToolClick = tool => dispatch(setCurrentTool({tool}));
+  const handleToolClick = tool => dispatch(setCurrentTool({tool}))
 
   return (
     <div className={styles.sceneEditorToolbar + ' w-full'}>
@@ -39,7 +39,7 @@ const SceneEditorToolbar = (props) => {
         )
       })}
     </div>
-  );
+  )
 }
 
-export default SceneEditorToolbar;
+export default SceneEditorToolbar

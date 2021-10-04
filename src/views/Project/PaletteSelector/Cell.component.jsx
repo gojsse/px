@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import styles from './Cell.module.scss';
+import styles from './Cell.module.scss'
 
 const Cell = (props) => {
   const {
@@ -8,7 +8,7 @@ const Cell = (props) => {
     isSelected = false,
     children,
     onClick,
-  } = props;
+  } = props
 
   return (
     <button
@@ -17,7 +17,7 @@ const Cell = (props) => {
     >
       {children}
     </button>
-  );
+  )
 }
 
-export default Cell;
+export default Cell

@@ -1,27 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
-import chroma from 'chroma-js';
+import React, { useEffect, useRef, useState } from 'react'
+import chroma from 'chroma-js'
 
-import { ColorSwatchIcon } from '@heroicons/react/outline';
+import { ColorSwatchIcon } from '@heroicons/react/outline'
 
 const InfoBar = ({ selectedColor, selectedPalette }) => {
-  const cellRef = useRef(null);
-  const [colorHex, setColorHex] = useState('');
-  const [colorRgb, setColorRgb] = useState('');
-  const [isDarkColor, setIsDarkColor] = useState(false);
+  const cellRef = useRef(null)
+  const [colorHex, setColorHex] = useState('')
+  const [colorRgb, setColorRgb] = useState('')
+  const [isDarkColor, setIsDarkColor] = useState(false)
 
   useEffect(() => {
-    const style = window.getComputedStyle(cellRef.current);
-    const rgbColor = style.backgroundColor;
-    const hex = chroma(rgbColor).hex();
-    const rgb = chroma(rgbColor).css();
-    const lum = chroma(rgbColor).luminance();
+    const style = window.getComputedStyle(cellRef.current)
+    const rgbColor = style.backgroundColor
+    const hex = chroma(rgbColor).hex()
+    const rgb = chroma(rgbColor).css()
+    const lum = chroma(rgbColor).luminance()
 
-    setColorHex(hex);
-    setColorRgb(rgb);
-    setIsDarkColor(lum < .45);
-  }, [selectedColor, selectedPalette]);
+    setColorHex(hex)
+    setColorRgb(rgb)
+    setIsDarkColor(lum < .45)
+  }, [selectedColor, selectedPalette])
 
-  const textColorClass = isDarkColor ? 'text-white' : 'text-black';
+  const textColorClass = isDarkColor ? 'text-white' : 'text-black'
 
   return (
     <div
@@ -30,7 +30,7 @@ const InfoBar = ({ selectedColor, selectedPalette }) => {
     >
       <ColorSwatchIcon className='block h-5 w-5 mr-2' /> c{selectedColor} | {colorHex} | {colorRgb}
     </div>
-  );
+  )
 }
 
-export default InfoBar;
+export default InfoBar

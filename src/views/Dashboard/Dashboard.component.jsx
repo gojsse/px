@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
 const Dashboard = (props) => {
 
   return (
     <div className='class'>Dashboard...</div>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

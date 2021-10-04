@@ -2,17 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import Project from '../../data/Project'
 import Scene from '../../data/Scene'
+import { sceneReducers } from './scene.reducers'
+import { spriteReducers } from './sprite.reducers'
 
 const project = new Project('initial')
 
 const initialState = {
   ...project.data,
-  scenes: [
-    ...project.data.scenes,
-  ],
-  sprites: [
-    ...project.data.sprites,
-  ],
   // id: null,
   // name: 'DefaultText',
   // palette: 'default',
@@ -59,6 +55,8 @@ export const currentProjectSlice = createSlice({
       const { sceneIndex, row, column, value } = action.payload
       state.scenes[sceneIndex].spriteSheet[row][column] = value
     },
+    ...sceneReducers,
+    ...spriteReducers,
   },
 })
 
@@ -72,6 +70,23 @@ export const {
   createCurrentProjectScene,
   updateCurrentProjectScene,
   updateCurrentProjectSceneCell,
+  // Manipulate a scene
+  shiftSceneLeft,
+  shiftSceneUp,
+  shiftSceneRight,
+  shiftSceneDown,
+  flipSceneHorizontal,
+  flipSceneVertical,
+  clearSceneSprites,
+  // Manipulate a sprite
+  shiftSpriteLeft,
+  shiftSpriteUp,
+  shiftSpriteRight,
+  shiftSpriteDown,
+  flipSpriteHorizontal,
+  flipSpriteVertical,
+  rotateSpriteRight,
+  rotateSpriteLeft,
 } = currentProjectSlice.actions
 
 // Selectors
@@ -87,6 +102,7 @@ export const getCurrentProjectPaletteClass = (state) => {
 export const getCurrentProjectScenes = (state) => state.currentProject.scenes
 export const getCurrentProjectScenesCount = (state) => state.currentProject.scenes.length 
 export const getCurrentProjectScene = (index) => (state) => state.currentProject.scenes[index]
+export const getCurrentProjectSceneName = (index) => (state) => state.currentProject.scenes[index].name
 export const getCurrentProjectSprites = (state) => state.currentProject.sprites
 export const getCurrentProjectSpriteByIndex = (index) => (state) =>  state.currentProject.sprites[index]
 
