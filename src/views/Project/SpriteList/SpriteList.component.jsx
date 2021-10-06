@@ -28,7 +28,7 @@ const getPagedIndexes = (page = 1, perPage = 32) => {
   return spriteIndexes
 }
 
-const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-1 text-xs font-medium focus:z-10'
+const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-1 text-xs font-medium focus:z-16'
 const defaultClass = buttonBase + ' bg-white text-gray-700 hover:bg-gray-50'
 const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
 
@@ -74,7 +74,7 @@ const SpriteList = (props) => {
 
   return (
     <div>
-      <div className={styles.spriteList + ' bg-white relative z-12'}>
+      <div className={styles.spriteList + ' bg-white relative z-16'}>
         <div className={styles.spriteListRow}>
           {getPagedIndexes(currentPage, perPage).map((index) => (
             <Sprite
@@ -88,7 +88,7 @@ const SpriteList = (props) => {
           ))}
         </div>
       </div>
-      <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-11'>
+      <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-17'>
         <div>Sprites [{currentPageStart}-{currentPageEnd}]</div>
         <div className='divide-x divide-gray-200'>
           {pages.map((page) => {
@@ -113,7 +113,7 @@ const SpriteList = (props) => {
       </div>
 
       <div
-        className={`bg-indigo-700 absolute w-full h-full left-0 top-0 z-10 transition duration-500 ease-in-out ${cloneSpriteMode ? ' visible opacity-75' : ' invisible opacity-0'}`}
+        className={`bg-indigo-700 absolute w-full h-full left-0 top-0 z-15 transition duration-500 ease-in-out ${cloneSpriteMode ? ' visible opacity-75' : ' invisible opacity-0'}`}
         onClick={() => setCloneSpriteMode(false)}
       />
 

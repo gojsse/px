@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
+import undoable from 'redux-undo'
 // import logger from 'redux-logger'
 
 import { allProjectsApi } from './projects/allProjects.api'
@@ -17,7 +18,9 @@ export const store = configureStore({
   reducer: {
     [allProjectsApi.reducerPath]: allProjectsApi.reducer,
     [currentProjectApi.reducerPath]: currentProjectApi.reducer,
-    currentProject: currentProjectSlice,
+    currentProject:  undoable(currentProjectSlice, {
+      limit: 20
+    }),
     sceneEditor: sceneEditorSlice,
     spriteEditor: spriteEditorSlice,
   },

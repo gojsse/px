@@ -1,3 +1,5 @@
+import { ActionCreators } from 'redux-undo'
+
 import { currentProjectApi } from './currentProject.api'
 import {
   getCurrentProject,
@@ -24,7 +26,7 @@ export const clearThisProject = () => {
   }
 }
 
-// TODO there is a bug in here somewhere...
+// TODO implement adding a new scene
 export const addNewScene = () => {
   return (dispatch) => {
     dispatch(createCurrentProjectScene())
@@ -40,8 +42,6 @@ export const updateScene = ({ sceneIndex, row, column, value }) => {
   return (dispatch, getState) => {
     dispatch(updateCurrentProjectSceneCell({ sceneIndex, row, column, value }))
     const updatedProject = getCurrentProject(getState())
-    // TODO try this instead of the resolve way...
-    // dispatch(currentProjectApi.endpoints.mutations.updateProject({ projectId: updatedProject.id, updatedProject }))
     return Promise.resolve({ projectId: updatedProject.id, updatedProject })
   }
 }
@@ -54,9 +54,9 @@ export const handleSceneActionButton = ({ sceneIndex, buttonAction }) => {
   }
 }
 
-export const copyAndPasteSprite = ({ sceneIndex, sourceIndex, targetIndex }) => {
+export const copyAndPasteSprite = ({ sourceIndex, targetIndex }) => {
   return (dispatch, getState) => {
-    const sourceSprite = getState().currentProject.sprites[sourceIndex]
+    const sourceSprite = getState().currentProject.present.sprites[sourceIndex]
     dispatch(updateCurrentProjectSprite({ index: targetIndex, sprite: sourceSprite }))
     const updatedProject = getCurrentProject(getState())
     return Promise.resolve({ projectId: updatedProject.id, updatedProject })
@@ -76,5 +76,21 @@ export const handleSpriteActionButton = ({ spriteIndex, buttonAction }) => {
     dispatch(buttonAction({ spriteIndex }))
     const updatedProject = getCurrentProject(getState())
     return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+  }
+}
+
+export const undoLastChange = () => {
+  return (dispatch, getState) => {
+    dispatch(ActionCreators.undo())
+    const updatedProject = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+  }
+}
+
+export const redoLastChange = () => {
+  return (dispatch, getState) => {
+    dispatch(ActionCreators.redo())
+    const updatedProject = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
   }
 }

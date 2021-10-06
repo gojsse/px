@@ -1,14 +1,22 @@
 import React, { Fragment, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
+import { ActionCreators } from 'redux-undo'
 // import ReactJson from 'react-json-view'
 
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
 
-import { clearThisProject } from '@store/currentProject/currentProject.actions'
+import { clearThisProject, undoLastChange, redoLastChange } from '@store/currentProject/currentProject.actions'
 import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
-import { getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
+import {
+  getCurrentProjectName,
+  getCurrentProjectUpdatedReadable,
+  getCurrentProjectPaletteClass,
+  setCurrentProject,
+  canUndoCurrentProject,
+  canRedoCurrentProject
+} from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
 import ScenesList from '@views/Project/ScenesList/ScenesList.component'
@@ -26,16 +34,22 @@ import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
   const { data, isLoading } = useReadProjectByIdQuery(projectId)
+  // const [ updateProject ] = useUpdateProjectMutation()
 
   const dispatch = useDispatch()
   const projectName = useSelector(getCurrentProjectName)
   const projectUpdatedReadable = useSelector(getCurrentProjectUpdatedReadable)
   const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
+  const canUndo = useSelector(canUndoCurrentProject)
+  const canRedo = useSelector(canRedoCurrentProject)
+
+  const disabledClass = ' opacity-50 cursor-not-allowed'
 
   // Set current project in currentProject slice when loaded from the API
   useEffect(() => {
     if (isLoading === false) {
       dispatch(setCurrentProject({ project: data }))
+      dispatch(ActionCreators.clearHistory())
     }
   }, [dispatch, data, isLoading])
 
@@ -43,15 +57,47 @@ const Project = (props) => {
   useEffect(() => {
     return () => {
       dispatch(clearThisProject())
+      dispatch(ActionCreators.clearHistory())
     }
   }, [dispatch])
+
+  const undoClickHandler = () => {
+    if (canUndo) {
+      dispatch(undoLastChange())
+    }
+  }
+
+  const redoClickHandler = () => {
+    if (canRedo) {
+      dispatch(redoLastChange())
+    }
+  }
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10">
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
         <div className='bg-white shadow flex justify-between items-center'>
-          <div className='bg-gray-50 px-5 py-3'>
-            NAME: {projectName} / ID: {projectId} / Updated: {projectUpdatedReadable}
+          <div className='flex items-center justify-center h-full divide-x divide-gray-200 bg-gray-50 px-5 py-3'>
+            <div className='h-full px-5 y-3'>{projectName}</div>
+            <div className='h-full px-5 y-3'>{projectId}</div>
+            <div className='h-full px-5 y-3'>{projectUpdatedReadable}</div>
+          </div>
+
+          <div className='flex items-center justify-center h-full divide-x divide-gray-200 border-l text-xs'>
+            <button
+              className={`h-full px-5 y-3 border-b-4 ${!canUndo ? disabledClass : ''}`}
+              onClick={() => undoClickHandler()}
+              disabled={!canUndo}
+            >
+              undo
+            </button>
+            <button
+              className={`h-full px-5 y-3 border-b-4 ${!canRedo ? disabledClass : ''}`}
+              onClick={() => redoClickHandler()}
+              disabled={!canRedo}
+            >
+              redo
+            </button>
           </div>
 
           <Menu as='div' className='inline-block lg:hidden  text-left h-full'>

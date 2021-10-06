@@ -12,10 +12,10 @@ const ScenePreview = ({ project }) => {
       className={`${paletteClass} animate-pulse animate-wiggle`}
       style={{
         'width': '120%',
-        'margin-top': '-10%',
-        'margin-right': '-10%',
-        'margin-bottom': '-10%',
-        'margin-left': '-10%',
+        'marginTop': '-10%',
+        'marginRight': '-10%',
+        'marginBottom': '-10%',
+        'marginLeft': '-10%',
       }}
     >
       <Scene scene={scene} sprites={sprites} />
