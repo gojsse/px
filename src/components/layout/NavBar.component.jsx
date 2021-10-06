@@ -37,7 +37,7 @@ const SiteMenu = (props) => {
                     activeClassName='text-indigo-500'
                     className='text-gray-500'
                   >
-                    <PXLogo className="block h-10 w-10" />
+                    <PXLogo className="block h-6 w-6" />
                   </NavLink>
                 </div>
                 <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">

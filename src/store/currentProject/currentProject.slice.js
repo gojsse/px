@@ -113,6 +113,6 @@ export const getCurrentProjectSceneName = (index) => (state) => state.currentPro
 
 // Sprite selectors
 export const getCurrentProjectSprites = (state) => state.currentProject.sprites
-export const getCurrentProjectSpriteByIndex = (index) => (state) =>  state.currentProject.sprites[index]
+export const getCurrentProjectSpriteByIndex = (index) => (state) => state.currentProject.sprites[index]
 
 export default currentProjectSlice.reducer

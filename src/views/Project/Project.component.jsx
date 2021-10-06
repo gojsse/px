@@ -47,7 +47,7 @@ const Project = (props) => {
   }, [dispatch])
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10">
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
         <div className='bg-white shadow flex justify-between items-center'>
           <div className='bg-gray-50 px-5 py-3'>

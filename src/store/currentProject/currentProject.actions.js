@@ -54,6 +54,15 @@ export const handleSceneActionButton = ({ sceneIndex, buttonAction }) => {
   }
 }
 
+export const copyAndPasteSprite = ({ sceneIndex, sourceIndex, targetIndex }) => {
+  return (dispatch, getState) => {
+    const sourceSprite = getState().currentProject.sprites[sourceIndex]
+    dispatch(updateCurrentProjectSprite({ index: targetIndex, sprite: sourceSprite }))
+    const updatedProject = getCurrentProject(getState())
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+  }
+}
+
 export const updateSprite = ({ index, sprite }) => {
   return (dispatch, getState) => {
     dispatch(updateCurrentProjectSprite({ index, sprite }))

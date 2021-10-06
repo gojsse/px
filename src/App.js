@@ -36,23 +36,17 @@ function App() {
     <div className="App bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300">
       <div className="min-h-screen">
         <SiteMenu />
-        <div className="py-10">
-          <main>
-            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-              <div className="px-4 sm:px-0">
-                <Switch>
-                  {routes.map(route => (
-                    <Route
-                      key={route.path}
-                      path={route.path}
-                      component={route.component}
-                    />
-                  ))}
-                </Switch>
-              </div>
-            </div>
-          </main>
-        </div>
+        <main>
+          <Switch>
+            {routes.map(route => (
+              <Route
+                key={route.path}
+                path={route.path}
+                component={route.component}
+              />
+            ))}
+          </Switch>
+        </main>
       </div>
     </div>
   )

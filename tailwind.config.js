@@ -52,6 +52,37 @@ module.exports = {
       '6xl': '4rem',
       '7xl': '5rem',
     },
+    keyframes: {
+      wiggle: {
+        '0%, 100%': {
+          transform: 'rotate(-3deg)'
+        },
+        '50%': {
+          transform: 'rotate(3deg)'
+        }
+      }
+    },
+    animation: {
+      wiggle: 'wiggle 20s ease-in-out infinite',
+    },
+    zIndex: {
+      '0': 0,
+      '10': 10,
+      '11': 11,
+      '12': 12,
+      '13': 13,
+      '14': 14,
+      '15': 15,
+      '20': 20,
+      '30': 30,
+      '40': 40,
+      '50': 50,
+      '25': 25,
+      '50': 50,
+      '75': 75,
+      '100': 100,
+      'auto': 'auto',
+    }
   },
   variants: {
     extend: {},

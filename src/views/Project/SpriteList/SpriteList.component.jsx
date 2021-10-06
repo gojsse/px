@@ -1,10 +1,17 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { DocumentDuplicateIcon } from '@heroicons/react/outline'
 
 import { SCENE_TOOLS } from '@/App.constants'
+import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
+import { getCurrentProjectPaletteClass } from '@store/currentProject/currentProject.slice'
+import { copyAndPasteSprite } from '@store/currentProject/currentProject.actions'
 import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
 import Sprite from '@views/Project/Sprite/Sprite.component'
+import Modal from '@components/Modal/Modal.component'
+import SpritePreview from '@components/Sprite/Sprite.component'
 
 import styles from './SpriteList.module.scss'
 
@@ -27,23 +34,47 @@ const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-
 
 const SpriteList = (props) => {
   const history = useHistory()
+  const dispatch = useDispatch()
+  const [ updateProject ] = useUpdateProjectMutation()
+
   const { projectId, sceneIndex, spriteIndex } = useParams()
+  const [cloneSpriteMode, setCloneSpriteMode] = useState(false)
+  const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false)
+  const [targetCellIndex, setTargetCellIndex] = useState(null)
 
   const [currentPage, setCurrentPage] = useState(Math.ceil((parseInt(spriteIndex) + 1) / perPage))
   const currentPageStart = ((currentPage - 1) * perPage) + 1
   const currentPageEnd = currentPage * perPage
 
   const selectedTool = useSelector(getCurrentTool)
+  const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
 
-  const handleClick = useCallback(
-    (spriteIndex) => {
-      history.push(`/projects/${projectId}/${sceneIndex}/${spriteIndex}`)
-    }, [history, sceneIndex, projectId]
-  )
+  const handleClick = (targetIndex) => {
+    if (cloneSpriteMode === true) {
+      setTargetCellIndex(targetIndex)
+      if (parseInt(targetIndex) !== parseInt(spriteIndex)) {
+        setConfirmModalIsOpen(true)
+      }
+    } else {
+      history.push(`/projects/${projectId}/${sceneIndex}/${targetIndex}`)
+    }
+  }
+
+  const handleConfirmStamp = () => {
+    setConfirmModalIsOpen(false)
+    dispatch(copyAndPasteSprite({ 
+      sceneIndex,
+      sourceIndex: spriteIndex,
+      targetIndex: targetCellIndex,
+    }))
+      .then(({ projectId, updatedProject }) => {
+        updateProject({ projectId, updatedProject })
+      })
+  }
 
   return (
     <div>
-      <div className={styles.spriteList}>
+      <div className={styles.spriteList + ' bg-white relative z-12'}>
         <div className={styles.spriteListRow}>
           {getPagedIndexes(currentPage, perPage).map((index) => (
             <Sprite
@@ -51,13 +82,13 @@ const SpriteList = (props) => {
               spriteIndex={index}
               cursor='pointer'
               isSelected={parseInt(index) === parseInt(spriteIndex)}
-              isDraggable={selectedTool === SCENE_TOOLS.MOVE}
+              isDraggable={selectedTool === SCENE_TOOLS.MOVE && !cloneSpriteMode}
               onClick={() => handleClick(index)}
             />
           ))}
         </div>
       </div>
-      <div className='flex items-center justify-between text-xs border-t border-gray-100 p-2'>
+      <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-11'>
         <div>Sprites [{currentPageStart}-{currentPageEnd}]</div>
         <div className='divide-x divide-gray-200'>
           {pages.map((page) => {
@@ -73,7 +104,36 @@ const SpriteList = (props) => {
             )
           })}
         </div>
+        <button
+          className={defaultClass + (cloneSpriteMode ? ' text-indigo-500' : '')}
+          onClick={() => setCloneSpriteMode(!cloneSpriteMode)}
+        >
+          <DocumentDuplicateIcon className='h-5 w-5 block' />
+        </button>
       </div>
+
+      <div
+        className={`bg-indigo-700 absolute w-full h-full left-0 top-0 z-10 transition duration-500 ease-in-out ${cloneSpriteMode ? ' visible opacity-75' : ' invisible opacity-0'}`}
+        onClick={() => setCloneSpriteMode(false)}
+      />
+
+      <Modal
+        isOpen={confirmModalIsOpen}
+        setIsOpen={setConfirmModalIsOpen}
+        confirmHandler={handleConfirmStamp}
+      >
+        <div className={`bg-white w-full flex flex-col ${projectPaletteClass}`}>
+          <div className='py-2'>Sprite {spriteIndex + 1}</div>
+          <div className='block h-20 w-20 border-solid border-4 border-black'>
+            <SpritePreview spriteIndex={spriteIndex} />
+          </div>
+          <div className='py-2'>will overwrite sprite {targetCellIndex + 1}</div>
+          <div className='block h-20 w-20 border-solid border-4 border-black'>
+            <SpritePreview spriteIndex={targetCellIndex} />
+          </div>
+          <div className='py-2'>Are you sure?</div>
+        </div>
+      </Modal>
     </div>
   )
 }

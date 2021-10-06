@@ -8,8 +8,7 @@ const Dashboard = (props) => {
 
   return (
     <div className='overflow-hidden'>
-      {(isLoading || data.length === 0) && <div>Dashboard...</div>}
-      {!isLoading && <ScenePreview project={data[0]} />}
+      {!isLoading && data.length > 0 && <ScenePreview project={data[0]} />}
     </div>
   )
 }

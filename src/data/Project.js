@@ -16,7 +16,7 @@ class Project {
     this.created = Date.now()
     this.updated = Date.now()
     this.palette = PALETTE_LIST[0]
-    this.version = '0.1.0'
+    this.version = '0.1.1'
 
     this.scenes = [
       { ...new Scene({ name: '🦴' }).data }

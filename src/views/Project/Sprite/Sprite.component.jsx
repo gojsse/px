@@ -38,7 +38,7 @@ const Sprite = props => {
 
   return (
     <div
-      className={styles.sprite + (isSelected ? ' ' + styles.spriteSelected : '')}
+      className={styles.sprite + (isSelected ? ' ' + styles.spriteSelected : '') + (isDraggable ? '' : ' cursor-not-allowed')}
       style={{ cursor: cursor }}
       draggable={isDraggable}
       onDragStart={dragStartHandler}

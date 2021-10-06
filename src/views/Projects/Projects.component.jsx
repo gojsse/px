@@ -21,7 +21,7 @@ const templates = [
 ]
 
 const Projects = (props) => {
-  const { data = [] } = useGetAllProjectsQuery()
+  const { data = [], isLoading } = useGetAllProjectsQuery()
 
   const [createNewProject] = useCreateNewProjectMutation()
   const [deleteProject] = useDeleteProjectMutation()
@@ -42,11 +42,19 @@ const Projects = (props) => {
   }
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10">
       <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mb-10'>
-        {data.map((project) => (
-          <Project key={project.id} project={project} onConfirmDelete={handleDeleteProjectConfirm} />
-        ))}
+        {isLoading && (
+          <div>Looking for your fine art...</div>
+        )}
+        {!isLoading && data.length > 0 && (
+          data.map((project) => (
+            <Project key={project.id} project={project} onConfirmDelete={handleDeleteProjectConfirm} />
+          ))
+        )}
+        {!isLoading && data.length === 0 && (
+          <div>No projects yet. Please add one with the button below.</div>
+        )}
       </div>
 
       <NewProject onClick={() => setIsOpen(true)} />
