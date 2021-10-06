@@ -1,4 +1,4 @@
-import { ID } from ''./data.helpers'
+import { ID } from './data.helpers'
 import { PALETTE_LIST } from '../App.constants'
 import Scene from './Scene'
 import Sprite from './Sprite'
