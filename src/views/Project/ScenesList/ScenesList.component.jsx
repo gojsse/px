@@ -9,7 +9,7 @@ import Scene from '@components/Scene/Scene.component'
 
 import styles from './ScenesList.module.scss'
 
-const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-1 text-xs font-medium focus:z-10'
+const buttonBase = 'relative inline-flex -ml-px px-3 py-1 text-xs font-medium focus:z-10'
 const defaultClass = buttonBase + ' bg-white text-gray-700 hover:bg-gray-50'
 const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
 

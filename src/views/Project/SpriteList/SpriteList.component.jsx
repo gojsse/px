@@ -11,6 +11,8 @@ import { copyAndPasteSprite } from '@store/currentProject/currentProject.actions
 import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
 import Sprite from '@views/Project/Sprite/Sprite.component'
 import Modal from '@components/Modal/Modal.component'
+import Overlay from '@components/Overlay/Overlay.component'
+import HelpBox from '@components/HelpBox/HelpBox.component'
 import SpritePreview from '@components/Sprite/Sprite.component'
 
 import styles from './SpriteList.module.scss'
@@ -28,7 +30,7 @@ const getPagedIndexes = (page = 1, perPage = 32) => {
   return spriteIndexes
 }
 
-const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-1 text-xs font-medium focus:z-16'
+const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-2 text-xs font-medium focus:z-16'
 const defaultClass = buttonBase + ' bg-white text-gray-700 hover:bg-gray-50'
 const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
 
@@ -73,7 +75,10 @@ const SpriteList = (props) => {
   }
 
   return (
-    <div>
+    <div className='relative'>
+      <HelpBox isShowing={cloneSpriteMode} zIndex={'z-16'} bgClass={'bg-gray-800'} textClass={'text-white'}>
+        Click a cell below to copy the selected sprite to it
+      </HelpBox>
       <div className={styles.spriteList + ' bg-white relative z-16'}>
         <div className={styles.spriteListRow}>
           {getPagedIndexes(currentPage, perPage).map((index) => (
@@ -90,30 +95,32 @@ const SpriteList = (props) => {
       </div>
       <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-17'>
         <div>Sprites [{currentPageStart}-{currentPageEnd}]</div>
-        <div className='divide-x divide-gray-200'>
+        <div className='flex border-l divide-x divide-gray-200'>
           {pages.map((page) => {
             const buttonClass = page === currentPage ? selectedClass : defaultClass
             return (
               <button
                 key={page}
-                className={`${buttonClass}`}
+                className={`${buttonClass} w-8`}
                 onClick={() => setCurrentPage(page)}
               >
                 {page}
               </button>
             )
           })}
+          <button
+            className={defaultClass + (cloneSpriteMode ? ' text-indigo-500' : '') + ' w-12'}
+            onClick={() => setCloneSpriteMode(!cloneSpriteMode)}
+          >
+            <DocumentDuplicateIcon className='h-5 w-5 block' />
+          </button>
         </div>
-        <button
-          className={defaultClass + (cloneSpriteMode ? ' text-indigo-500' : '')}
-          onClick={() => setCloneSpriteMode(!cloneSpriteMode)}
-        >
-          <DocumentDuplicateIcon className='h-5 w-5 block' />
-        </button>
       </div>
 
-      <div
-        className={`bg-indigo-700 absolute w-full h-full left-0 top-0 z-15 transition duration-500 ease-in-out ${cloneSpriteMode ? ' visible opacity-75' : ' invisible opacity-0'}`}
+      <Overlay
+        bgClass={'bg-indigo-700'}
+        zIndex={'z-15'}
+        isOpen={cloneSpriteMode}
         onClick={() => setCloneSpriteMode(false)}
       />
 

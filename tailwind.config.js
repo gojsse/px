@@ -55,15 +55,15 @@ module.exports = {
     keyframes: {
       wiggle: {
         '0%, 100%': {
-          transform: 'rotate(-3deg)'
+          transform: 'rotate(-1deg)'
         },
         '50%': {
-          transform: 'rotate(3deg)'
+          transform: 'rotate(1deg)'
         }
       }
     },
     animation: {
-      wiggle: 'wiggle 20s ease-in-out infinite',
+      wiggle: 'wiggle 20s ease-in-out infinite'
     },
     zIndex: {
       '0': 0,
@@ -87,7 +87,9 @@ module.exports = {
     }
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ['group-hover'],
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

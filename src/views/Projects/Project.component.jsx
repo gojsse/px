@@ -7,7 +7,7 @@ import { PencilAltIcon, DocumentRemoveIcon } from '@heroicons/react/outline'
 import Scene from '@components/Scene/Scene.component'
 import Modal from '@components/Modal/Modal.component'
 
-const buttonClass = 'relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-2 text-1xs font-medium border border-transparent hover:text-gray-500'
+const buttonClass = 'relative -mr-px w-0 flex-1 inline-flex items-center justify-center py-3 text-1xs font-medium border border-transparent hover:text-gray-500'
 const iconClass = 'w-5 h-5 mr-2'
 
 const Project = ({ project, onConfirmDelete }) => {
@@ -27,10 +27,9 @@ const Project = ({ project, onConfirmDelete }) => {
       <div className='flex-1 flex flex-col'>
         <h3 className='mt-6 text-gray-900 text-sm font-medium'>{project.name}</h3>
         <dl className='mt-1 flex-grow flex flex-col justify-between'>
-          <dt className='sr-only'>Project Name</dt>
-          <dd className='text-gray-500 text-xs'>{project.id}</dd>
-          <dt className='sr-only'>ID</dt>
-          <dd className='mt-3'>
+          <dt className='sr-only'>Project Name {project.name}</dt>
+          <dt className='sr-only'>ID {project.id}</dt>
+          <dd className='mt-4'>
             <NavLink exact to={`/projects/${project.id}/0/0`}>
               <Scene scene={scene} sprites={sprites} />
             </NavLink>
