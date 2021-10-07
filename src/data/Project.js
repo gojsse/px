@@ -3,9 +3,10 @@ import { PALETTE_LIST } from '../App.constants'
 import Scene from './Scene'
 import Sprite from './Sprite'
 
+import packageJson from '@root/package.json'
 class Project {
 
-  constructor({ name, template }) {
+  constructor({ name }) {
     this.name = name
     this.initializeData()
   }
@@ -16,7 +17,7 @@ class Project {
     this.created = Date.now()
     this.updated = Date.now()
     this.palette = PALETTE_LIST[0]
-    this.version = '0.1.1'
+    this.version = packageJson.version
 
     this.scenes = [
       { ...new Scene({ name: '🦴' }).data }

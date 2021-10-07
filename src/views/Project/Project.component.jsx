@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActionCreators } from 'redux-undo'
-// import ReactJson from 'react-json-view'
 
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
@@ -34,7 +33,6 @@ import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 const Project = (props) => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
   const { data, isLoading } = useReadProjectByIdQuery(projectId)
-  // const [ updateProject ] = useUpdateProjectMutation()
 
   const dispatch = useDispatch()
   const projectName = useSelector(getCurrentProjectName)
@@ -100,10 +98,9 @@ const Project = (props) => {
             </button>
           </div>
 
-          <Menu as='div' className='inline-block lg:hidden  text-left h-full'>
-            <Menu.Button className='h-full inline-flex justify-center items-center w-32 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'>
-              Settings
-              <CogIcon className='-mr-1 ml-2 h-5 w-5' aria-hidden='true' />
+          <Menu as='div' className='inline-block lg:hidden text-left h-full'>
+            <Menu.Button className='h-full inline-flex justify-center items-center px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'>
+              <CogIcon className='h-5 w-5' aria-hidden='true' />
             </Menu.Button>
 
             <Transition
@@ -168,7 +165,6 @@ const Project = (props) => {
 
       {!isLoading && (
         <div className='mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-          {/* <ReactJson src={JSON.parse(JSON.stringify(data))} /> */}
           {/* {JSON.stringify(data)} */}
         </div>
       )}
