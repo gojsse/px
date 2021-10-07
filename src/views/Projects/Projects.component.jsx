@@ -5,6 +5,7 @@ import EmptyProject from '../../data/Project'
 // import BasicProject from '../../data/project-templates/BasicProject'
 import FacesProject from '../../data/project-templates/FacesProject'
 // import BoardProject from '../../data/project-templates/BoardProject'
+// import RandomizedProject from '../../data/project-templates/RandomizedProject'
 
 import { useGetAllProjectsQuery } from '@store/projects/allProjects.api'
 import { useCreateNewProjectMutation, useDeleteProjectMutation } from '@store/projects/allProjects.api'
@@ -18,6 +19,7 @@ const templates = [
   // {name: 'Basic', id: '002', class: BasicProject},
   {name: 'Faces', id: '003', class: FacesProject},
   // {name: 'Board', id: '004', class: BoardProject},
+  // {name: 'Randomized', id: '099', class: RandomizedProject},
 ]
 
 const Projects = (props) => {

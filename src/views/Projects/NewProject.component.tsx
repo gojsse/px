@@ -1,8 +1,10 @@
-import React from 'react'
-
 import { DocumentAddIcon } from '@heroicons/react/outline'
 
-const NewProject = ({ onClick }) => {
+type ComponentProps = {
+  onClick: () => void
+}
+
+const NewProject = ({ onClick }: ComponentProps) => {
 
   return (
     <button
