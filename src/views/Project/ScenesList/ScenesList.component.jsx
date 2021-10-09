@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import { getCurrentProjectId, getCurrentProjectScenes, getCurrentProjectSprites } from '@store/currentProject/currentProject.slice'
 import Cell from './Cell.component'
 import Scene from '@components/Scene/Scene.component'
-// import NewSceneButton from './NewSceneButton.component'
+import NewSceneButton from './NewSceneButton.component'
 
 import styles from './ScenesList.module.scss'
 
@@ -41,7 +41,7 @@ const ScenesList = ({ sceneIndex, spriteIndex }) => {
           })}
         </div>
       </div>
-      <div className={styles.grid + ' ' + styles[`grid${gridSize}w`] + ' border-t border-gray-100 p-1'}>
+      <div className={styles.grid + ' ' + styles[`grid${gridSize}w`] + ' border-t border-gray-100'}>
         {scenes.map((scene, index) => (
           <Cell key={index} isSelected={parseInt(index) === parseInt(sceneIndex)}>
             {parseInt(index) === parseInt(sceneIndex) ? (
@@ -54,7 +54,7 @@ const ScenesList = ({ sceneIndex, spriteIndex }) => {
           </Cell>
         ))}
       </div>
-      {/* <NewSceneButton projectId={projectId} /> */}
+      <NewSceneButton projectId={projectId} />
     </div>
   )
 }

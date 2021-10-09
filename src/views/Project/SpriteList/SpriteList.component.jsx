@@ -34,7 +34,7 @@ const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-2 text-xs f
 const defaultClass = buttonBase + ' bg-white text-gray-700 hover:bg-gray-50'
 const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
 
-const SpriteList = (props) => {
+const SpriteList = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [ updateProject ] = useUpdateProjectMutation()

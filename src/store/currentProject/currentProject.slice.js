@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import Project from '../../data/Project'
-import Scene from '../../data/Scene'
 import { sceneReducers } from './scene.reducers'
 import { spriteReducers } from './sprite.reducers'
 
@@ -44,8 +43,9 @@ export const currentProjectSlice = createSlice({
       const { index, sprite } = action.payload
       state.sprites[index] = sprite
     },
-    createCurrentProjectScene(state) {
-      state.scenes.push(new Scene({ name: 'A New Scene!' }).data)
+    createCurrentProjectScene(state, action) {
+      const { scene } = action.payload
+      state.scenes.push(scene)
     },
     updateCurrentProjectScene(state, action) {
       const { index, scene } = action.payload
@@ -112,8 +112,8 @@ export const getCurrentProjectPaletteClass = (state) => getPaletteClass(state)
 // Scene selectors
 export const getCurrentProjectScenes = (state) => state.currentProject.present.scenes
 export const getCurrentProjectScenesCount = (state) => state.currentProject.present.scenes.length 
-export const getCurrentProjectScene = (index) => (state) => state.currentProject.present.scenes[index]
-export const getCurrentProjectSceneName = (index) => (state) => state.currentProject.present.scenes[index].name
+export const getCurrentProjectScene = (index) => (state) => state.currentProject.present.scenes[index] ?? {spriteSheet: []}
+export const getCurrentProjectSceneName = (index) => (state) => state.currentProject.present.scenes[index]?.name
 
 // Sprite selectors
 export const getCurrentProjectSprites = (state) => state.currentProject.present.sprites

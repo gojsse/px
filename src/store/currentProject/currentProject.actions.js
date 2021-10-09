@@ -1,7 +1,10 @@
 import { ActionCreators } from 'redux-undo'
 
+import Scene from '../../data/Scene'
+
 import { currentProjectApi } from './currentProject.api'
 import {
+  setCurrentProjectName,
   getCurrentProject,
   resetCurrentProject,
   setCurrentProjectPalette,
@@ -9,14 +12,6 @@ import {
   updateCurrentProjectSceneCell,
   updateCurrentProjectSprite,
 } from './currentProject.slice'
-
-export const updatePalette = ({ palette }) => {
-  return (dispatch, getState) => {
-    dispatch(setCurrentProjectPalette({ palette }))
-    const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
-  }
-}
 
 export const clearThisProject = () => {
   return (dispatch) => {
@@ -26,15 +21,30 @@ export const clearThisProject = () => {
   }
 }
 
+export const updateProjectName = ({ value }) => {
+  return (dispatch, getState) => {
+    dispatch(setCurrentProjectName({ value }))
+    const updatedProject = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+  }
+}
+
+export const updatePalette = ({ palette }) => {
+  return (dispatch, getState) => {
+    dispatch(setCurrentProjectPalette({ palette }))
+    const updatedProject = getCurrentProject(getState())
+    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+  }
+}
+
 // TODO implement adding a new scene
 export const addNewScene = () => {
-  return (dispatch) => {
-    dispatch(createCurrentProjectScene())
-    // dispatch(resetCurrentProject())
-    // TODO try dispatch currentProjectApi.endpoints.fetch...(id)
-    // dispatch(currentProjectApi.util.invalidateTags(['Post']))
-    // TODO update local storage when done... 
-    return Promise.resolve()
+  return (dispatch, getState) => {
+    const scene = new Scene({ name: 'A New Scene!' }).data
+    dispatch(createCurrentProjectScene({ scene }))
+    const updatedProject = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve({ newSceneIndex: updatedProject.scenes.length - 1 })
   }
 }
 
@@ -91,6 +101,7 @@ export const redoLastChange = () => {
   return (dispatch, getState) => {
     dispatch(ActionCreators.redo())
     const updatedProject = getCurrentProject(getState())
+    // updates via query api outside component
     dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
   }
 }

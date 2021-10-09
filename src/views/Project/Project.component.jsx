@@ -6,7 +6,7 @@ import { ActionCreators } from 'redux-undo'
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
 
-import { clearThisProject, undoLastChange, redoLastChange } from '@store/currentProject/currentProject.actions'
+import { clearThisProject, updateProjectName, undoLastChange, redoLastChange } from '@store/currentProject/currentProject.actions'
 import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
 import {
   getCurrentProjectName,
@@ -29,8 +29,9 @@ import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditor
 import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEditorActionbar.component'
 import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component'
 import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
+import TextInput from '@components/forms/TextInput.component'
 
-const Project = (props) => {
+const Project = () => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
   const { data, isLoading } = useReadProjectByIdQuery(projectId)
 
@@ -75,10 +76,15 @@ const Project = (props) => {
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10">
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
         <div className='bg-white shadow flex justify-between items-center'>
-          <div className='flex items-center justify-center h-full divide-x divide-gray-200 bg-gray-50 px-5 py-3'>
-            <div className='h-full px-5 y-3'>{projectName}</div>
-            <div className='h-full px-5 y-3'>{projectId}</div>
-            <div className='h-full px-5 y-3'>{projectUpdatedReadable}</div>
+          <div className='flex items-center justify-center h-full divide-x divide-gray-200 bg-gray-50'>
+            <div className='h-full'>
+              <TextInput
+                value={projectName}
+                onChange={(value) => dispatch(updateProjectName({ value }))}
+              />
+            </div>
+            <div className='flex items-center text-xs h-full px-5 y-3'>{projectId}</div>
+            <div className='flex items-center text-xs h-full px-5 y-3'>{projectUpdatedReadable}</div>
           </div>
 
           <div className='flex items-center justify-center h-full divide-x divide-gray-200 border-l text-xs'>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory, useParams } from 'react-router'
 import { useDispatch } from 'react-redux'
 
 import { DocumentAddIcon } from '@heroicons/react/outline'
@@ -7,9 +8,14 @@ import { addNewScene } from '@store/currentProject/currentProject.actions'
 
 const NewSceneButton = ({ projectId }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
+  const { spriteIndex } = useParams()
 
   const handleClick = () => {
     dispatch(addNewScene({ projectId }))
+      .then(({ newSceneIndex }) => {
+        history.push(`/projects/${projectId}/${newSceneIndex}/${spriteIndex}`)
+      })
   }
 
   return (

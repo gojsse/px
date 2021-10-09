@@ -25,7 +25,7 @@ const Project = ({ project, onConfirmDelete }) => {
   return (
     <div className={`${paletteClass} col-span-1 flex flex-col text-center bg-white shadow overflow-hidden divide-y divide-gray-200`}>
       <div className='flex-1 flex flex-col'>
-        <h3 className='mt-6 text-gray-900 text-sm font-medium'>{project.name}</h3>
+        <h3 className='mt-6 text-gray-900 text-sm font-bold'>{project.name}</h3>
         <dl className='mt-1 flex-grow flex flex-col justify-between'>
           <dt className='sr-only'>Project Name {project.name}</dt>
           <dt className='sr-only'>ID {project.id}</dt>
