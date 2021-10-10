@@ -79,7 +79,7 @@ const SpriteList = () => {
       <HelpBox isShowing={cloneSpriteMode} zIndex={'z-16'} bgClass={'bg-gray-800'} textClass={'text-white'}>
         Click a cell below to copy the selected sprite to it
       </HelpBox>
-      <div className={styles.spriteList + ' bg-white relative z-16'}>
+      <div className={styles.spriteList + ' bg-white relative z-17'}>
         <div className={styles.spriteListRow}>
           {getPagedIndexes(currentPage, perPage).map((index) => (
             <Sprite
@@ -93,7 +93,7 @@ const SpriteList = () => {
           ))}
         </div>
       </div>
-      <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-17'>
+      <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-16'>
         <div>Sprites [{currentPageStart}-{currentPageEnd}]</div>
         <div className='flex border-l divide-x divide-gray-200'>
           {pages.map((page) => {

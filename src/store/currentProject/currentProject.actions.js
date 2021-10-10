@@ -9,6 +9,8 @@ import {
   resetCurrentProject,
   setCurrentProjectPalette,
   createCurrentProjectScene,
+  cloneCurrentProjectScene,
+  deleteCurrentProjectScene,
   updateCurrentProjectSceneCell,
   updateCurrentProjectSprite,
 } from './currentProject.slice'
@@ -37,7 +39,6 @@ export const updatePalette = ({ palette }) => {
   }
 }
 
-// TODO implement adding a new scene
 export const addNewScene = () => {
   return (dispatch, getState) => {
     const scene = new Scene({ name: 'A New Scene!' }).data
@@ -45,6 +46,24 @@ export const addNewScene = () => {
     const updatedProject = getCurrentProject(getState())
     dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
     return Promise.resolve({ newSceneIndex: updatedProject.scenes.length - 1 })
+  }
+}
+
+export const cloneScene = ({ sceneIndex }) => {
+  return (dispatch, getState) => {
+    dispatch(cloneCurrentProjectScene({ sceneIndex }))
+    const updatedProject = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve()
+  }
+}
+
+export const deleteScene = ({ sceneIndex }) => {
+  return (dispatch, getState) => {
+    dispatch(deleteCurrentProjectScene({ sceneIndex }))
+    const updatedProject = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve()
   }
 }
 

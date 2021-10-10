@@ -47,6 +47,14 @@ export const currentProjectSlice = createSlice({
       const { scene } = action.payload
       state.scenes.push(scene)
     },
+    cloneCurrentProjectScene(state, action) {
+      const { sceneIndex } = action.payload
+      state.scenes.splice(sceneIndex + 1, 0, state.scenes[sceneIndex])
+    },
+    deleteCurrentProjectScene(state, action) {
+      const { sceneIndex } = action.payload
+      state.scenes.splice(sceneIndex, 1)
+    },
     updateCurrentProjectScene(state, action) {
       const { index, scene } = action.payload
       state.scenes[index] = scene
@@ -68,6 +76,8 @@ export const {
   setCurrentProjectPalette,
   updateCurrentProjectSprite,
   createCurrentProjectScene,
+  cloneCurrentProjectScene,
+  deleteCurrentProjectScene,
   updateCurrentProjectScene,
   updateCurrentProjectSceneCell,
   // Manipulate a scene

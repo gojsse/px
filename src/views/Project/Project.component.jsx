@@ -74,17 +74,23 @@ const Project = () => {
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10">
+      <div className='mt-2'>
+        <div className='flex items-center justify-end divide-x text-gray-500 divide-gray-500'>
+          <div className='flex items-center text-xs h-full px-5 y-3'>{projectId}</div>
+          <div className='flex items-center text-xs h-full px-5 y-3'>{projectUpdatedReadable}</div>
+        </div>
+      </div>
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
         <div className='bg-white shadow flex justify-between items-center'>
           <div className='flex items-center justify-center h-full divide-x divide-gray-200 bg-gray-50'>
             <div className='h-full'>
               <TextInput
                 value={projectName}
+                minLength={1}
+                maxLength={40}
                 onChange={(value) => dispatch(updateProjectName({ value }))}
               />
             </div>
-            <div className='flex items-center text-xs h-full px-5 y-3'>{projectId}</div>
-            <div className='flex items-center text-xs h-full px-5 y-3'>{projectUpdatedReadable}</div>
           </div>
 
           <div className='flex items-center justify-center h-full divide-x divide-gray-200 border-l text-xs'>

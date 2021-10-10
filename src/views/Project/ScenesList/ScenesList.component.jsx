@@ -6,6 +6,8 @@ import { getCurrentProjectId, getCurrentProjectScenes, getCurrentProjectSprites 
 import Cell from './Cell.component'
 import Scene from '@components/Scene/Scene.component'
 import NewSceneButton from './NewSceneButton.component'
+import DeleteSceneButton from './DeleteSceneButton.component'
+import CloneSceneButton from './CloneSceneButton.component'
 
 import styles from './ScenesList.module.scss'
 
@@ -41,9 +43,14 @@ const ScenesList = ({ sceneIndex, spriteIndex }) => {
           })}
         </div>
       </div>
+
       <div className={styles.grid + ' ' + styles[`grid${gridSize}w`] + ' border-t border-gray-100'}>
         {scenes.map((scene, index) => (
           <Cell key={index} isSelected={parseInt(index) === parseInt(sceneIndex)}>
+            <div className='absolute flex justify-start bg-indigo-700 bg-opacity-80 top-0 left-0 z-15 w-full divide-x divide-gray-200'>
+              {scenes.length < 4 && <CloneSceneButton sceneIndex={index} />}
+              {parseInt(index) !== parseInt(sceneIndex) && <DeleteSceneButton sceneIndex={index} />}
+            </div>
             {parseInt(index) === parseInt(sceneIndex) ? (
               <Scene scene={scene} sprites={sprites} />
             ) : (
@@ -54,7 +61,7 @@ const ScenesList = ({ sceneIndex, spriteIndex }) => {
           </Cell>
         ))}
       </div>
-      <NewSceneButton projectId={projectId} />
+      {scenes.length < 4 && <NewSceneButton projectId={projectId} />}
     </div>
   )
 }
