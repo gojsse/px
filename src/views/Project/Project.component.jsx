@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActionCreators } from 'redux-undo'
@@ -72,8 +72,33 @@ const Project = () => {
     }
   }
 
+  const keyPress = useCallback((event) => {
+    // REDO
+    if (event.keyCode === 89) {
+      if ((event.ctrlKey && event.shiftKey) || (event.metaKey && event.shiftKey)) {
+        dispatch(redoLastChange())
+        return
+      }
+    // UNDO
+    } else if (event.keyCode === 90) {
+      if (event.ctrlKey || event.metaKey) {
+        dispatch(undoLastChange())
+        return
+      }
+    }
+  }, [dispatch])
+
+  // Keypress
+  useEffect(() => {
+    document.addEventListener('keydown', keyPress, false)
+
+    return () => {
+      document.removeEventListener('keydown', keyPress, false)
+    }
+  }, [keyPress])
+
   return (
-    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10">
+    <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10'>
       <div className='mt-2'>
         <div className='flex items-center justify-end divide-x text-gray-500 divide-gray-500'>
           <div className='flex items-center text-xs h-full px-5 y-3'>{projectId}</div>
