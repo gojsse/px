@@ -88,7 +88,7 @@ const Project = () => {
     }
   }, [dispatch])
 
-  // Keypress
+  // Keypress listener
   useEffect(() => {
     document.addEventListener('keydown', keyPress, false)
 

@@ -71,7 +71,8 @@ export const updateScene = ({ sceneIndex, row, column, value }) => {
   return (dispatch, getState) => {
     dispatch(updateCurrentProjectSceneCell({ sceneIndex, row, column, value }))
     const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve()
   }
 }
 
@@ -96,7 +97,8 @@ export const updateSprite = ({ index, sprite }) => {
   return (dispatch, getState) => {
     dispatch(updateCurrentProjectSprite({ index, sprite }))
     const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve()
   }
 }
 
@@ -113,6 +115,7 @@ export const undoLastChange = () => {
     dispatch(ActionCreators.undo())
     const updatedProject = getCurrentProject(getState())
     dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve()
   }
 }
 
@@ -122,5 +125,6 @@ export const redoLastChange = () => {
     const updatedProject = getCurrentProject(getState())
     // updates via query api outside component
     dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return Promise.resolve()
   }
 }

@@ -37,8 +37,8 @@ const Cell = (props) => {
   return (
     <button
       className={`color color--${colorKey}`}
-      onMouseDown={() => cellClickHandler()}
-      onMouseEnter={() => mouseEnterHandler()}
+      onMouseDown={cellClickHandler}
+      onMouseEnter={mouseEnterHandler}
     />
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ExclamationCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
 
 type ComponentProps = {
@@ -35,10 +35,20 @@ const TextInput = ({
 }: ComponentProps) => {
   const [inputValue, setInputValue] = useState('')
   const [isEditMode, setIsEditMode] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setInputValue(value)
   }, [value])
+
+  const handleSetVisible = () => {
+    setIsEditMode(true)
+    console.log('inputRef.current', inputRef.current)
+    if (isEditMode) {
+      console.log('focused?')
+      inputRef.current?.focus()
+    }
+  }
 
   const optionalProps = {
     ...(label && {label}),
@@ -61,6 +71,7 @@ const TextInput = ({
       <div className='relative'>
         {isEditMode ? (
           <input
+            ref={inputRef}
             type={type}
             name={name}
             id={name}
@@ -76,7 +87,7 @@ const TextInput = ({
         ) : (
           <div
             className={'font-bold ' + readOnlyClass}
-            onClick={() => setIsEditMode(true)}
+            onClick={handleSetVisible}
           >
             {value}
           </div>

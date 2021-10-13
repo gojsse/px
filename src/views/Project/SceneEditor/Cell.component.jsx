@@ -9,7 +9,8 @@ const Cell = ({
   rowIndex,
   colIndex,
   selectedTool,
-  onDrop
+  mouseIsDown,
+  onChange
 }) => {
   const { spriteIndex } = useParams()
 
@@ -21,7 +22,7 @@ const Cell = ({
     event.preventDefault()
     const passedData = JSON.parse(event.dataTransfer.getData('text'))
 
-    onDrop({
+    onChange({
       row: rowIndex,
       column: colIndex,
       value: {id: passedData.spritePoolIndex},
@@ -33,7 +34,7 @@ const Cell = ({
     // Remove sprite from grid
     if (hasValidRow && hasValidColumn) {
       if (rowIndex !== passedData.rowIndex || colIndex !== passedData.colIndex) {
-        onDrop({
+        onChange({
           row: passedData.rowIndex,
           column: passedData.colIndex,
           value: null,
@@ -49,7 +50,17 @@ const Cell = ({
 
   const cellClickHandler = () => {
     if (selectedTool === SCENE_TOOLS.STAMP) {
-      onDrop({
+      onChange({
+        row: rowIndex,
+        column: colIndex,
+        value: {id: spriteIndex},
+      })
+    }
+  }
+
+  const mouseEnterHandler = () => {
+    if (mouseIsDown) {
+      onChange({
         row: rowIndex,
         column: colIndex,
         value: {id: spriteIndex},
@@ -72,6 +83,7 @@ const Cell = ({
       onDragOver={dragOverHandler}
       onDrop={dropHandler}
       onMouseDown={cellClickHandler}
+      onMouseEnter={mouseEnterHandler}
     >
       {sprite !== null && (
         <Sprite
