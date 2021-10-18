@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { DocumentDuplicateIcon } from '@heroicons/react/outline'
 
 import { SCENE_TOOLS } from '@/App.constants'
-import { useUpdateProjectMutation } from '@store/currentProject/currentProject.api'
 import { getCurrentProjectPaletteClass } from '@store/currentProject/currentProject.slice'
 import { copyAndPasteSprite } from '@store/currentProject/currentProject.actions'
 import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
@@ -26,26 +25,29 @@ const pages = new Array(totalSprites / perPage)
 const getPagedIndexes = (page = 1, perPage = 32) => {
   const spriteIndexes = new Array(perPage)
     .fill(null)
-    .map((_, index) => page === 1 ? index : index + (page - 1) * perPage)
+    .map((_, index) => (page === 1 ? index : index + (page - 1) * perPage))
   return spriteIndexes
 }
 
-const buttonBase = 'relative inline-flex items-center -ml-px px-3 py-2 text-xs font-medium focus:z-16'
+const buttonBase =
+  'relative inline-flex items-center -ml-px px-3 py-2 text-xs font-medium focus:z-16'
 const defaultClass = buttonBase + ' bg-white text-gray-700 hover:bg-gray-50'
-const selectedClass = buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
+const selectedClass =
+  buttonBase + ' bg-indigo-500 text-gray-50 hover:bg-indigo-500'
 
 const SpriteList = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [ updateProject ] = useUpdateProjectMutation()
 
   const { projectId, sceneIndex, spriteIndex } = useParams()
   const [cloneSpriteMode, setCloneSpriteMode] = useState(false)
   const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false)
   const [targetCellIndex, setTargetCellIndex] = useState(null)
 
-  const [currentPage, setCurrentPage] = useState(Math.ceil((parseInt(spriteIndex) + 1) / perPage))
-  const currentPageStart = ((currentPage - 1) * perPage) + 1
+  const [currentPage, setCurrentPage] = useState(
+    Math.ceil((parseInt(spriteIndex) + 1) / perPage)
+  )
+  const currentPageStart = (currentPage - 1) * perPage + 1
   const currentPageEnd = currentPage * perPage
 
   const selectedTool = useSelector(getCurrentTool)
@@ -64,19 +66,23 @@ const SpriteList = () => {
 
   const handleConfirmStamp = () => {
     setConfirmModalIsOpen(false)
-    dispatch(copyAndPasteSprite({ 
-      sceneIndex,
-      sourceIndex: spriteIndex,
-      targetIndex: targetCellIndex,
-    }))
-      .then(({ projectId, updatedProject }) => {
-        updateProject({ projectId, updatedProject })
+    dispatch(
+      copyAndPasteSprite({
+        sceneIndex,
+        sourceIndex: spriteIndex,
+        targetIndex: targetCellIndex
       })
+    )
   }
 
   return (
-    <div className='relative'>
-      <HelpBox isShowing={cloneSpriteMode} zIndex={'z-16'} bgClass={'bg-gray-800'} textClass={'text-white'}>
+    <div className="relative">
+      <HelpBox
+        isShowing={cloneSpriteMode}
+        zIndex={'z-16'}
+        bgClass={'bg-gray-800'}
+        textClass={'text-white'}
+      >
         Click a cell below to copy the selected sprite to it
       </HelpBox>
       <div className={styles.spriteList + ' bg-white relative z-17'}>
@@ -85,19 +91,24 @@ const SpriteList = () => {
             <Sprite
               key={index}
               spriteIndex={index}
-              cursor='pointer'
+              cursor="pointer"
               isSelected={parseInt(index) === parseInt(spriteIndex)}
-              isDraggable={selectedTool === SCENE_TOOLS.MOVE && !cloneSpriteMode}
+              isDraggable={
+                selectedTool === SCENE_TOOLS.MOVE && !cloneSpriteMode
+              }
               onClick={() => handleClick(index)}
             />
           ))}
         </div>
       </div>
-      <div className='flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-16'>
-        <div>Sprites [{currentPageStart}-{currentPageEnd}]</div>
-        <div className='flex border-l divide-x divide-gray-200'>
+      <div className="flex items-center justify-between text-xs border-t border-gray-100 bg-white pl-2 relative z-16">
+        <div>
+          Sprites [{currentPageStart}-{currentPageEnd}]
+        </div>
+        <div className="flex border-l divide-x divide-gray-200">
           {pages.map((page) => {
-            const buttonClass = page === currentPage ? selectedClass : defaultClass
+            const buttonClass =
+              page === currentPage ? selectedClass : defaultClass
             return (
               <button
                 key={page}
@@ -109,10 +120,14 @@ const SpriteList = () => {
             )
           })}
           <button
-            className={defaultClass + (cloneSpriteMode ? ' text-indigo-500' : '') + ' w-12'}
+            className={
+              defaultClass +
+              (cloneSpriteMode ? ' text-indigo-500' : '') +
+              ' w-12'
+            }
             onClick={() => setCloneSpriteMode(!cloneSpriteMode)}
           >
-            <DocumentDuplicateIcon className='h-5 w-5 block' />
+            <DocumentDuplicateIcon className="h-5 w-5 block" />
           </button>
         </div>
       </div>
@@ -130,15 +145,17 @@ const SpriteList = () => {
         confirmHandler={handleConfirmStamp}
       >
         <div className={`bg-white w-full flex flex-col ${projectPaletteClass}`}>
-          <div className='py-2'>Sprite {spriteIndex + 1}</div>
-          <div className='block h-20 w-20 border-solid border-4 border-black'>
+          <div className="py-2">Sprite {spriteIndex + 1}</div>
+          <div className="block h-20 w-20 border-solid border-4 border-black">
             <SpritePreview spriteIndex={spriteIndex} />
           </div>
-          <div className='py-2'>will overwrite sprite {targetCellIndex + 1}</div>
-          <div className='block h-20 w-20 border-solid border-4 border-black'>
+          <div className="py-2">
+            will overwrite sprite {targetCellIndex + 1}
+          </div>
+          <div className="block h-20 w-20 border-solid border-4 border-black">
             <SpritePreview spriteIndex={targetCellIndex} />
           </div>
-          <div className='py-2'>Are you sure?</div>
+          <div className="py-2">Are you sure?</div>
         </div>
       </Modal>
     </div>

@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { ExclamationCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
+
+const editClass = 'border-1 border-white block w-full w-80 focus:outline-none sm:text-sm rounded-md'
+const readOnlyClass = 'border-1 border-white block w-full pl-2 py-3 pr-10 focus:outline-none sm:text-sm'
+const errorClass = 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
+
 
 type ComponentProps = {
   name: string
@@ -16,10 +22,6 @@ type ComponentProps = {
   }[],
   onChange: (value?: string) => void
 }
-
-const editClass = 'border-1 border-white block w-full w-80 focus:outline-none sm:text-sm rounded-md'
-const readOnlyClass = 'border-1 border-white block w-full pl-2 py-3 pr-10 focus:outline-none sm:text-sm'
-const errorClass = 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
 
 const TextInput = ({
   name = 'field',

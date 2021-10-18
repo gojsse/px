@@ -1,6 +1,6 @@
 {
   "name": "px",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": false,
   "homepage": "http://gojsse.github.io/px",
   "dependencies": {
@@ -34,7 +34,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "craco start",
+    "start": "nvm i craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

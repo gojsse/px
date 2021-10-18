@@ -1,18 +1,18 @@
 import { SPRITE_TOOLS } from '@/App.constants'
 import { updateSprite } from '@store/currentProject/currentProject.actions'
 
-export const updateGrid = ({ grid, labeledGrid, spriteIndex, row, col }) => {
+export const updateGrid = ({ grid, labeledGrid, spriteIndex, row, column }) => {
   return (dispatch, getState) => {
     const updatedGrid = grid.map(row => ([ ...row.map(cell => cell) ]))
     const selectedTool = getState().spriteEditor.selectedTool
     const selectedColor = getState().spriteEditor.selectedColor
 
     if (selectedTool === SPRITE_TOOLS.PENCIL) {
-      updatedGrid[row][col] = selectedColor
+      updatedGrid[row][column] = selectedColor
     } else if (selectedTool === SPRITE_TOOLS.ERASER) {
-      updatedGrid[row][col] = null
+      updatedGrid[row][column] = null
     } else if (selectedTool === SPRITE_TOOLS.FILL) {
-      const cellLabelValue = labeledGrid[row][col]
+      const cellLabelValue = labeledGrid[row][column]
       labeledGrid.forEach((row, labeledRowIndex) => {
         row.forEach((colValue, labeledColIndex) => {                   
           if (colValue === cellLabelValue) {

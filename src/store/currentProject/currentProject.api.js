@@ -24,8 +24,8 @@ export const currentProjectApi = createApi({
           : [{ type: 'Post', id: 'LIST' }],
     }),
     updateProject: builder.mutation({
-      queryFn: ({ projectId, updatedProject }) => {
-        return updateProjectInStorage(projectId, { ...updatedProject, updated: Date.now() })
+      queryFn: ({ project }) => {
+        return updateProjectInStorage(project)
           .then(data => ({data}))
           .catch(error => ({error}))
       },

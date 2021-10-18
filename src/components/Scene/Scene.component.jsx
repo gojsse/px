@@ -11,7 +11,7 @@ const Scene = ({ scene, sprites }) => {
       {scene.spriteSheet.map((row, rowIndex) => (
         <div key={`${rowIndex}`} className={styles.row}>
           {row.map((cell, cellIndex) => {
-            const sprite = cell === null ? null : sprites[cell.id]
+            const sprite = cell === null ? null : sprites[cell]
             return <Sprite key={`${rowIndex}_${cellIndex}`} sprite={sprite} />
           })}
         </div>

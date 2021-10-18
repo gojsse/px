@@ -37,10 +37,10 @@ export const readProjectInStorage = async (projectKey) => {
   return response
 }
 
-export const updateProjectInStorage = async (projectId, value) => {
+export const updateProjectInStorage = async (project) => {
 
   try {
-    const response = await projectsTable.setItem(projectId, value)
+    const response = await projectsTable.setItem(project.id, project)
     return response
   } catch (err) {
     return err

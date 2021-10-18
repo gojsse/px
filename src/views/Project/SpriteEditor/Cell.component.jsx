@@ -6,8 +6,8 @@ import { setCurrentColor } from '@store/spriteEditor/spriteEditor.slice'
 
 const Cell = (props) => {
   const {
-    rowIndex,
-    colIndex,
+    row,
+    column,
     colorKey,
     selectedTool,
     mouseIsDown,
@@ -21,7 +21,7 @@ const Cell = (props) => {
       dispatch(setCurrentColor({color: colorKey}))
       return
     }
-    clickHandler(rowIndex, colIndex)
+    clickHandler({ row, column })
   }
 
   const mouseEnterHandler = () => {
@@ -30,7 +30,7 @@ const Cell = (props) => {
       return
     }
     if (mouseIsDown) {
-      clickHandler(rowIndex, colIndex)
+      clickHandler({ row, column })
     }
   }
 

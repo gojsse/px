@@ -18,18 +18,20 @@ const SpriteEditor = ({ spriteIndex }) => {
   const [mouseDown, setMouseDown] = useState(false)
   const [labeledGrid, updateLabeledGrid] = useState([])
 
-  const cellClickHandler = (rowIndex, colIndex) => dispatch(updateGrid({
-    grid: selectedSprite,
-    labeledGrid: labeledGrid,
-    spriteIndex: spriteIndex,
-    row: rowIndex,
-    col: colIndex,
-  }))
+  const cellClickHandler = ({ row, column }) => {
+    dispatch(updateGrid({
+      grid: selectedSprite,
+      labeledGrid,
+      spriteIndex,
+      row,
+      column
+    }))
+  }
 
   useEffect(() => {
     const processedGrid = scanForGridRegions(selectedSprite)
     updateLabeledGrid(processedGrid)
-  }, [scanForGridRegions, selectedSprite])
+  }, [selectedSprite])
 
   return (
     <div
@@ -44,13 +46,13 @@ const SpriteEditor = ({ spriteIndex }) => {
             return (
               <Cell
                 key={`r${rowIndex}-c${colIndex}`}
-                rowIndex={rowIndex}
-                colIndex={colIndex}
+                row={rowIndex}
+                column={colIndex}
                 colorKey={cellValue}
                 selectedColorKey={selectedColor}
                 selectedTool={selectedTool}
                 mouseIsDown={mouseDown}
-                clickHandler={() => cellClickHandler(rowIndex, colIndex)} 
+                clickHandler={cellClickHandler}
               />
             )
           })}

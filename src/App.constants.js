@@ -3,16 +3,32 @@ export const PALETTE_LIST = [
   'ff-nes',
   'sky-high',
   'brinstar',
-  'brinstar-2',
+  'brinstar-2'
 ]
 
 export const COLOR_KEYS = [
-  '00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15',
+'00',
+'01',
+'02',
+'03',
+'04',
+'05',
+'06',
+'07',
+'08',
+'09',
+'10',
+'11',
+'12',
+'13',
+'14',
+'15'
 ]
 
 export const SCENE_TOOLS = {
-  MOVE: 'move',
-  STAMP: 'stamp',
+  PENCIL: 'pencil',
+  ERASER: 'eraser',
+  MOVE: 'move'
 }
 
 export const SCENE_ACTIONS = {
@@ -20,14 +36,14 @@ export const SCENE_ACTIONS = {
   MOVE_UP: 'move-up',
   MOVE_RIGHT: 'move-right',
   MOVE_DOWN: 'move-down',
-  CLEAR_SCENE: 'clear-scene',
+  CLEAR_SCENE: 'clear-scene'
 }
 
 export const SPRITE_TOOLS = {
   PENCIL: 'pencil',
   ERASER: 'eraser',
   FILL: 'fill',
-  COLOR_SAMPLE: 'color-sample',
+  COLOR_SAMPLE: 'color-sample'
 }
 
 export const SPRITE_ACTIONS = {
@@ -38,7 +54,7 @@ export const SPRITE_ACTIONS = {
   MOVE_LEFT: 'move-left',
   MOVE_UP: 'move-up',
   MOVE_RIGHT: 'move-right',
-  MOVE_DOWN: 'move-down',
+  MOVE_DOWN: 'move-down'
 }
 
 export const EMPTY_SCENE = {
@@ -53,8 +69,8 @@ export const EMPTY_SCENE = {
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
-    [null, null, null, null, null, null, null, null],
-  ],
+    [null, null, null, null, null, null, null, null]
+  ]
 }
 
 export const EMPTY_SPRITE = [
@@ -65,31 +81,29 @@ export const EMPTY_SPRITE = [
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null],
+  [null, null, null, null, null, null, null, null]
 ]
 
 export const SPRITE_LIST = new Array(128)
   .fill(null)
   .map(() => [
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
-    ["00", "00", "00", "00", "00", "00", "00", "00"],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00'],
+    ['00', '00', '00', '00', '00', '00', '00', '00']
   ])
 
 export const EMPTY_PROJECT = {
   id: 'init',
   name: 'init',
   author: 'init',
-  createdDate: 'date1',//new Date(),
-  updatedDate: 'date2',//new Date(),
+  createdDate: 'date1', //new Date(),
+  updatedDate: 'date2', //new Date(),
   palette: 'default',
-  scenes: [
-    { ...EMPTY_SCENE },
-  ],
-  sprites: SPRITE_LIST,
+  scenes: [{ ...EMPTY_SCENE }],
+  sprites: SPRITE_LIST
 }

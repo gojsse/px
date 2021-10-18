@@ -1,11 +1,13 @@
 import { useState } from 'react'
+import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getCurrentProjectScene } from '@store/currentProject/currentProject.slice'
-// import Overlay from '@components/Overlay/Overlay.component'
-import { updateScene } from '@store/currentProject/currentProject.actions'
+import { updateSceneCell } from '@store/currentProject/currentProject.actions'
 import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
+import { updateGrid } from '@store/sceneEditor/sceneEditor.actions'
 import Cell from './Cell.component'
+// import Overlay from '@components/Overlay/Overlay.component'
 
 import styles from './SceneEditor.module.scss'
 
@@ -13,18 +15,33 @@ const SceneEditor = ({ sceneIndex }) => {
   const dispatch = useDispatch()
   const selectedTool = useSelector(getCurrentTool)
   const projectScene = useSelector(getCurrentProjectScene(sceneIndex))
+  const { spriteIndex } = useParams()
 
   const [mouseDown, setMouseDown] = useState(false)
 
-  const handleChangeCell = (lastValue) => ({ row, column, value }) => {
-    if (lastValue.id !== value.id) {
-      dispatch(updateScene({ sceneIndex, row, column, value }))
+  const handleDrop = (lastValue) => ({ row, column, value }) => {
+    if (lastValue !== value) {
+      dispatch(updateSceneCell({ sceneIndex, row, column, value }))
     }
+  }
+
+  const handleRemove = ({ row, column }) => {
+    dispatch(updateSceneCell({ sceneIndex, row, column, value: null }))
+  }
+
+  const handleCellClick = ({ row, column }) => {
+    dispatch(updateGrid({
+      grid: projectScene.spriteSheet,
+      sceneIndex,
+      spriteIndex,
+      row,
+      column
+    }))
   }
 
   return (
     <div
-      className='w-full'
+      className="w-full"
       onMouseDown={() => setMouseDown(true)}
       onMouseUp={() => setMouseDown(false)}
       onMouseLeave={() => setMouseDown(false)}
@@ -35,12 +52,14 @@ const SceneEditor = ({ sceneIndex }) => {
             {row.map((cellValue, colIndex) => (
               <Cell
                 key={colIndex}
-                rowIndex={rowIndex}
-                colIndex={colIndex}
-                sprite={cellValue}
+                row={rowIndex}
+                column={colIndex}
+                spriteIndex={cellValue}
                 selectedTool={selectedTool}
                 mouseIsDown={mouseDown}
-                onChange={handleChangeCell(cellValue)}
+                onClick={handleCellClick}
+                onDrop={handleDrop(cellValue)}
+                onRemove={handleRemove}
               />
             ))}
           </div>

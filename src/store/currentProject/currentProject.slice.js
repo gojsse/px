@@ -11,13 +11,10 @@ const initialState = {
   // id: null,
   // name: 'DefaultText',
   // palette: 'default',
-  // dateCreated: null,
+  // created: null,
   // updated: null,
-  // dateLastOpened: null,
   // sprites: [], //1-128
   // scenes: [], //1-128
-  // // redoHistory: [], //in steps
-  // // undoHistory: [], //in steps
 }
 
 export const currentProjectSlice = createSlice({
@@ -34,38 +31,59 @@ export const currentProjectSlice = createSlice({
     setCurrentProjectName(state, action) {
       const { value } = action.payload
       state.name = value
+      state.updated = Date.now()
     },
     setCurrentProjectPalette(state, action) {
       const { palette } = action.payload
       state.palette = palette
+      state.updated = Date.now()
     },
     updateCurrentProjectSprite(state, action) {
       const { index, sprite } = action.payload
       state.sprites[index] = sprite
+      state.updated = Date.now()
     },
     createCurrentProjectScene(state, action) {
       const { scene } = action.payload
-      state.scenes.push(scene)
+      state.scenes.push({ ...scene, updated: Date.now() })
+      state.updated = Date.now()
     },
     cloneCurrentProjectScene(state, action) {
       const { sceneIndex } = action.payload
-      state.scenes.splice(sceneIndex + 1, 0, state.scenes[sceneIndex])
+      state.scenes.splice(sceneIndex + 1, 0, { ...state.scenes[sceneIndex], updated: Date.now() })
+      state.updated = Date.now()
     },
     deleteCurrentProjectScene(state, action) {
       const { sceneIndex } = action.payload
       state.scenes.splice(sceneIndex, 1)
+      state.updated = Date.now()
     },
     updateCurrentProjectScene(state, action) {
-      const { index, scene } = action.payload
-      state.scenes[index] = scene
+      const { sceneIndex, scene } = action.payload
+      state.scenes[sceneIndex] = { ...scene, updated: Date.now() }
+      state.updated = Date.now()
+    },
+    updateCurrentProjectSceneGrid(state, action) {
+      const { sceneIndex, grid } = action.payload
+      state.scenes[sceneIndex] = {
+        ...state.scenes[sceneIndex],
+        spriteSheet: grid,
+        updated: Date.now()
+      }
+      state.updated = Date.now()
     },
     updateCurrentProjectSceneCell(state, action) {
       const { sceneIndex, row, column, value } = action.payload
       state.scenes[sceneIndex].spriteSheet[row][column] = value
+      state.scenes[sceneIndex].updated = Date.now()
+      state.updated = Date.now()
     },
     ...sceneReducers,
     ...spriteReducers,
   },
+  extraReducers: {
+
+  }
 })
 
 // Actions
@@ -79,6 +97,7 @@ export const {
   cloneCurrentProjectScene,
   deleteCurrentProjectScene,
   updateCurrentProjectScene,
+  updateCurrentProjectSceneGrid,
   updateCurrentProjectSceneCell,
   // Manipulate a scene
   shiftSceneLeft,

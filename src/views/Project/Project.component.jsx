@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect } from 'react'
+import { Fragment, useCallback, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActionCreators } from 'redux-undo'
@@ -6,15 +6,20 @@ import { ActionCreators } from 'redux-undo'
 import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
 
-import { clearThisProject, updateProjectName, undoLastChange, redoLastChange } from '@store/currentProject/currentProject.actions'
 import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
+import {
+  clearThisProject,
+  updateProjectName,
+  undoLastChange,
+  redoLastChange,
+} from '@store/currentProject/currentProject.actions'
 import {
   getCurrentProjectName,
   getCurrentProjectUpdatedReadable,
   getCurrentProjectPaletteClass,
   setCurrentProject,
   canUndoCurrentProject,
-  canRedoCurrentProject
+  canRedoCurrentProject,
 } from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
@@ -72,21 +77,27 @@ const Project = () => {
     }
   }
 
-  const keyPress = useCallback((event) => {
-    // REDO
-    if (event.keyCode === 89) {
-      if ((event.ctrlKey && event.shiftKey) || (event.metaKey && event.shiftKey)) {
-        dispatch(redoLastChange())
-        return
+  const keyPress = useCallback(
+    (event) => {
+      // REDO
+      if (event.keyCode === 89) {
+        if (
+          (event.ctrlKey && event.shiftKey) ||
+          (event.metaKey && event.shiftKey)
+        ) {
+          dispatch(redoLastChange())
+          return
+        }
+        // UNDO
+      } else if (event.keyCode === 90) {
+        if (event.ctrlKey || event.metaKey) {
+          dispatch(undoLastChange())
+          return
+        }
       }
-    // UNDO
-    } else if (event.keyCode === 90) {
-      if (event.ctrlKey || event.metaKey) {
-        dispatch(undoLastChange())
-        return
-      }
-    }
-  }, [dispatch])
+    },
+    [dispatch]
+  )
 
   // Keypress listener
   useEffect(() => {
@@ -101,8 +112,12 @@ const Project = () => {
     <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10'>
       <div className='mt-2'>
         <div className='flex items-center justify-end divide-x text-gray-500 divide-gray-500'>
-          <div className='flex items-center text-xs h-full px-5 y-3'>{projectId}</div>
-          <div className='flex items-center text-xs h-full px-5 y-3'>{projectUpdatedReadable}</div>
+          <div className='flex items-center text-xs h-full px-5 y-3'>
+            {projectId}
+          </div>
+          <div className='flex items-center text-xs h-full px-5 y-3'>
+            {projectUpdatedReadable}
+          </div>
         </div>
       </div>
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
@@ -120,14 +135,18 @@ const Project = () => {
 
           <div className='flex items-center justify-center h-full divide-x divide-gray-200 border-l text-xs'>
             <button
-              className={`h-full px-5 y-3 border-b-4 ${!canUndo ? disabledClass : ''}`}
+              className={`h-full px-5 y-3 border-b-4 ${
+                !canUndo ? disabledClass : ''
+              }`}
               onClick={() => undoClickHandler()}
               disabled={!canUndo}
             >
               undo
             </button>
             <button
-              className={`h-full px-5 y-3 border-b-4 ${!canRedo ? disabledClass : ''}`}
+              className={`h-full px-5 y-3 border-b-4 ${
+                !canRedo ? disabledClass : ''
+              }`}
               onClick={() => redoClickHandler()}
               disabled={!canRedo}
             >

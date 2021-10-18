@@ -1,31 +1,30 @@
 import React from 'react'
-import { useParams } from 'react-router'
 
 import { SCENE_TOOLS } from '@/App.constants'
 import Sprite from '@views/Project/Sprite/Sprite.component'
 
 const Cell = ({
-  sprite,
-  rowIndex,
-  colIndex,
+  spriteIndex,
+  row,
+  column,
   selectedTool,
   mouseIsDown,
-  onChange
+  onClick,
+  onDrop,
+  onRemove
 }) => {
-  const { spriteIndex } = useParams()
-
-  const dragOverHandler = event => {
+  const dragOverHandler = (event) => {
     event.preventDefault()
   }
 
-  const dropHandler = event => {
+  const dropHandler = (event) => {
     event.preventDefault()
     const passedData = JSON.parse(event.dataTransfer.getData('text'))
 
-    onChange({
-      row: rowIndex,
-      column: colIndex,
-      value: {id: passedData.spritePoolIndex},
+    onDrop({
+      row,
+      column,
+      value: passedData.spritePoolIndex
     })
 
     const hasValidRow = passedData.rowIndex !== null && passedData.rowIndex >= 0
@@ -33,11 +32,10 @@ const Cell = ({
 
     // Remove sprite from grid
     if (hasValidRow && hasValidColumn) {
-      if (rowIndex !== passedData.rowIndex || colIndex !== passedData.colIndex) {
-        onChange({
+      if (row !== passedData.rowIndex || column !== passedData.colIndex) {
+        onRemove({
           row: passedData.rowIndex,
-          column: passedData.colIndex,
-          value: null,
+          column: passedData.colIndex
         })
       }
     }
@@ -49,21 +47,21 @@ const Cell = ({
   }
 
   const cellClickHandler = () => {
-    if (selectedTool === SCENE_TOOLS.STAMP) {
-      onChange({
-        row: rowIndex,
-        column: colIndex,
-        value: {id: spriteIndex},
+    if (selectedTool === SCENE_TOOLS.PENCIL) {
+      onClick({
+        row,
+        column,
+        value: spriteIndex
       })
     }
   }
 
   const mouseEnterHandler = () => {
     if (mouseIsDown) {
-      onChange({
-        row: rowIndex,
-        column: colIndex,
-        value: {id: spriteIndex},
+      onClick({
+        row,
+        column,
+        value: spriteIndex
       })
     }
   }
@@ -72,7 +70,7 @@ const Cell = ({
     let cursorType = 'default'
     if (selectedTool === SCENE_TOOLS.MOVE) {
       cursorType = 'grab'
-    } else if (selectedTool === SCENE_TOOLS.STAMP) {
+    } else if (selectedTool === SCENE_TOOLS.PENCIL) {
       cursorType = 'cell'
     }
     return cursorType
@@ -85,12 +83,11 @@ const Cell = ({
       onMouseDown={cellClickHandler}
       onMouseEnter={mouseEnterHandler}
     >
-      {sprite !== null && (
+      {spriteIndex !== null && (
         <Sprite
-          key={sprite.id}
-          spriteIndex={sprite.id}
-          rowIndex={rowIndex}
-          colIndex={colIndex}
+          spriteIndex={spriteIndex}
+          rowIndex={row}
+          colIndex={column}
           cursor={cursor()}
           isDraggable={selectedTool === SCENE_TOOLS.MOVE}
         />

@@ -11,9 +11,18 @@ import {
   createCurrentProjectScene,
   cloneCurrentProjectScene,
   deleteCurrentProjectScene,
+  updateCurrentProjectSceneGrid,
   updateCurrentProjectSceneCell,
-  updateCurrentProjectSprite,
+  updateCurrentProjectSprite
 } from './currentProject.slice'
+
+const updateLocalProject = () => {
+  return (dispatch, getState) => {
+    const project = getCurrentProject(getState())
+    dispatch(currentProjectApi.endpoints.updateProject.initiate({ project }))
+    return Promise.resolve()
+  }
+}
 
 export const clearThisProject = () => {
   return (dispatch) => {
@@ -24,18 +33,16 @@ export const clearThisProject = () => {
 }
 
 export const updateProjectName = ({ value }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(setCurrentProjectName({ value }))
-    const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
+    return dispatch(updateLocalProject())
   }
 }
 
 export const updatePalette = ({ palette }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(setCurrentProjectPalette({ palette }))
-    const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+    return dispatch(updateLocalProject())
   }
 }
 
@@ -43,44 +50,44 @@ export const addNewScene = () => {
   return (dispatch, getState) => {
     const scene = new Scene({ name: 'A New Scene!' }).data
     dispatch(createCurrentProjectScene({ scene }))
+    dispatch(updateLocalProject())
     const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
     return Promise.resolve({ newSceneIndex: updatedProject.scenes.length - 1 })
   }
 }
 
 export const cloneScene = ({ sceneIndex }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(cloneCurrentProjectScene({ sceneIndex }))
-    const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
-    return Promise.resolve()
+    return dispatch(updateLocalProject())
   }
 }
 
 export const deleteScene = ({ sceneIndex }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(deleteCurrentProjectScene({ sceneIndex }))
-    const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
-    return Promise.resolve()
+    return dispatch(updateLocalProject())
   }
 }
 
-export const updateScene = ({ sceneIndex, row, column, value }) => {
-  return (dispatch, getState) => {
+export const updateSceneGrid = ({ sceneIndex, grid }) => {
+  return (dispatch) => {
+    dispatch(updateCurrentProjectSceneGrid({ sceneIndex, grid }))
+    return dispatch(updateLocalProject())
+  }
+}
+
+export const updateSceneCell = ({ sceneIndex, row, column, value }) => {
+  return (dispatch) => {
     dispatch(updateCurrentProjectSceneCell({ sceneIndex, row, column, value }))
-    const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
-    return Promise.resolve()
+    return dispatch(updateLocalProject())
   }
 }
 
 export const handleSceneActionButton = ({ sceneIndex, buttonAction }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(buttonAction({ sceneIndex }))
-    const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+    return dispatch(updateLocalProject())
   }
 }
 
@@ -88,43 +95,34 @@ export const copyAndPasteSprite = ({ sourceIndex, targetIndex }) => {
   return (dispatch, getState) => {
     const sourceSprite = getState().currentProject.present.sprites[sourceIndex]
     dispatch(updateCurrentProjectSprite({ index: targetIndex, sprite: sourceSprite }))
-    const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+    return dispatch(updateLocalProject())
   }
 }
 
 export const updateSprite = ({ index, sprite }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(updateCurrentProjectSprite({ index, sprite }))
-    const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
-    return Promise.resolve()
+    return dispatch(updateLocalProject())
   }
 }
 
 export const handleSpriteActionButton = ({ spriteIndex, buttonAction }) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(buttonAction({ spriteIndex }))
-    const updatedProject = getCurrentProject(getState())
-    return Promise.resolve({ projectId: updatedProject.id, updatedProject })
+    return dispatch(updateLocalProject())
   }
 }
 
 export const undoLastChange = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(ActionCreators.undo())
-    const updatedProject = getCurrentProject(getState())
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
-    return Promise.resolve()
+    return dispatch(updateLocalProject())
   }
 }
 
 export const redoLastChange = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(ActionCreators.redo())
-    const updatedProject = getCurrentProject(getState())
-    // updates via query api outside component
-    dispatch(currentProjectApi.endpoints.updateProject.initiate({ projectId: updatedProject.id, updatedProject }))
-    return Promise.resolve()
+    return dispatch(updateLocalProject())
   }
 }

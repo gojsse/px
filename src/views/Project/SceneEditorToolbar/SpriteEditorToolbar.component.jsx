@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { HandIcon, ArrowCircleDownIcon } from '@heroicons/react/outline'
+import { HandIcon, XIcon, PencilIcon } from '@heroicons/react/outline'
 
 import { SCENE_TOOLS } from '@/App.constants'
 import { getCurrentTool, setCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
@@ -18,8 +18,9 @@ const SceneEditorToolbar = (props) => {
   const selectedTool = useSelector(getCurrentTool)
 
   const buttons = [
+    {tool: SCENE_TOOLS.PENCIL, icon: <PencilIcon className={iconClasses} />},
+    {tool: SCENE_TOOLS.ERASER, icon: <XIcon className={iconClasses} />},
     {tool: SCENE_TOOLS.MOVE, icon: <HandIcon className={iconClasses} />},
-    {tool: SCENE_TOOLS.STAMP, icon: <ArrowCircleDownIcon className={iconClasses} />},
   ]
 
   const handleToolClick = tool => dispatch(setCurrentTool({tool}))
