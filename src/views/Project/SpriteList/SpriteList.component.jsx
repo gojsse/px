@@ -85,6 +85,7 @@ const SpriteList = () => {
       >
         Click a cell below to copy the selected sprite to it
       </HelpBox>
+
       <div className={styles.spriteList + ' bg-white relative z-17'}>
         <div className={styles.spriteListRow}>
           {getPagedIndexes(currentPage, perPage).map((index) => (

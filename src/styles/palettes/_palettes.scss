@@ -3,13 +3,15 @@
 @import './palette_sky-high';
 @import './palette_brinstar';
 @import './palette_brinstar-2';
+@import './palette_zx';
 
 $palettes: (
   $default,
   $ff-nes,
   $sky-high,
   $brinstar,
-  $brinstar-2
+  $brinstar-2,
+  $zx
 );
 
 $default-colors: (

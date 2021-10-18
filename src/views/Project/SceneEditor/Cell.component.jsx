@@ -44,13 +44,11 @@ const Cell = ({
   }
 
   const cellClickHandler = () => {
-    if (selectedTool === SCENE_TOOLS.PENCIL) {
-      onClick({
-        row,
-        column,
-        value: spriteIndex
-      })
-    }
+    onClick({
+      row,
+      column,
+      value: spriteIndex
+    })
   }
 
   const mouseEnterHandler = () => {

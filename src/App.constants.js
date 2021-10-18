@@ -3,7 +3,8 @@ export const PALETTE_LIST = [
   'ff-nes',
   'sky-high',
   'brinstar',
-  'brinstar-2'
+  'brinstar-2',
+  'zx'
 ]
 
 export const COLOR_KEYS = [

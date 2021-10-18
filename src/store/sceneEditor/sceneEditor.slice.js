@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { SCENE_TOOLS } from '@/App.constants'
 
 const initialState = {
-  selectedTool: SCENE_TOOLS.MOVE,
+  selectedTool: SCENE_TOOLS.PENCIL,
   isDraggingSprite: false,
 }
 
