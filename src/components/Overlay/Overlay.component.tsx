@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import { Transition } from '@headlessui/react'
 
 type ComponentProps = {
+  // children
+  children: React.ReactNode
   // background class(es)
   bgClass: string
   // z-index value
@@ -13,6 +15,7 @@ type ComponentProps = {
 }
 
 const Overlay = ({
+  children,
   bgClass = 'bg-gray-500',
   zIndex = 'z-15',
   isOpen,
@@ -32,7 +35,9 @@ const Overlay = ({
             leaveFrom='opacity-100'
             leaveTo='opacity-0'
           >
-            <div className={`fixed inset-0 bg-opacity-75 transition-opacity ${bgClass}`} />
+            <div className={`fixed inset-0 bg-opacity-75 transition-opacity ${bgClass}`}>
+              {children}
+            </div>
           </Transition.Child>
         </div>
       </div>

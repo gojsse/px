@@ -10,6 +10,7 @@ const Sprite = props => {
     spriteIndex,
     isSelected = false,
     isDraggable = true,
+    canDelete = false,
     onClick = () => {},
     cursor = 'default',
     rowIndex,
@@ -23,7 +24,8 @@ const Sprite = props => {
       rowIndex,
       colIndex,
       sprite,
-      spritePoolIndex: spriteIndex
+      spritePoolIndex: spriteIndex,
+      canDelete,
     }
     event.dataTransfer.setData('text/plain', JSON.stringify(draggingData))
   }
