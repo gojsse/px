@@ -19,7 +19,7 @@ export const store = configureStore({
     [allProjectsApi.reducerPath]: allProjectsApi.reducer,
     [currentProjectApi.reducerPath]: currentProjectApi.reducer,
     currentProject:  undoable(currentProjectSlice, {
-      limit: 20
+      limit: 10
     }),
     sceneEditor: sceneEditorSlice,
     spriteEditor: spriteEditorSlice,

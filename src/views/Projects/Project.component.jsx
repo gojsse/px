@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { PencilAltIcon, DocumentRemoveIcon } from '@heroicons/react/outline'
@@ -21,7 +21,7 @@ const Project = ({ project, onConfirmDelete }) => {
     onConfirmDelete(project.id)
     setIsDeleteOpen(false)
   }
-
+  
   return (
     <div className={`${paletteClass} col-span-1 flex flex-col text-center bg-white shadow overflow-hidden divide-y divide-gray-200`}>
       <div className='flex-1 flex flex-col'>
@@ -45,7 +45,7 @@ const Project = ({ project, onConfirmDelete }) => {
               className={buttonClass + ' text-gray-700'}
             >
               <PencilAltIcon className={iconClass + ' text-gray-700'} aria-hidden='true' />
-              <span>Open</span>
+              <span >Open</span>
             </NavLink>
           </div>
           {/* <div className='w-0 flex-1 flex'>

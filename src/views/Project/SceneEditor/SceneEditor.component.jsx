@@ -60,7 +60,7 @@ const SceneEditor = ({ sceneIndex }) => {
       </HelpBox>
 
       <div
-        className={'relative w-full bg-gray-100 bg-stripes bg-stripes-white' + (mouseDown ? ' z-21' : '')}
+        className={'relative w-full bg-gray-200 bg-stripes bg-stripes-white' + (mouseDown ? ' z-21' : '')}
         onMouseDown={() => setMouseDown(true)}
         onMouseUp={() => setMouseDown(false)}
         onMouseLeave={() => setMouseDown(false)}

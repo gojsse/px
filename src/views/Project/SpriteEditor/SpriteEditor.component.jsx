@@ -35,7 +35,7 @@ const SpriteEditor = ({ spriteIndex }) => {
 
   return (
     <div
-      className={styles.spriteGrid}
+      className={'relative w-full bg-gray-200 bg-stripes bg-stripes-white'}
       onMouseDown={() => setMouseDown(true)}
       onMouseUp={() => setMouseDown(false)}
       onMouseLeave={() => setMouseDown(false)}

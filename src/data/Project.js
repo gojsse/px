@@ -4,6 +4,7 @@ import Scene from './Scene'
 import Sprite from './Sprite'
 
 import packageJson from '@root/package.json'
+
 class Project {
 
   constructor({ name }) {
