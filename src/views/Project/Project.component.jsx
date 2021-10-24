@@ -17,11 +17,7 @@ import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorTo
 import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component'
 import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component'
 import SpriteList from '@views/Project/SpriteList/SpriteList.component'
-import SpriteInfoBar from '@views/Project/SpriteInfoBar/SpriteInfoBar.component'
-import SpriteEditorToolbar from '@views/Project/SpriteEditorToolbar/SpriteEditorToolbar.component'
-import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEditorActionbar.component'
 import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component'
-import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 import TextInput from '@components/forms/TextInput.component'
 import UndoRedo from './UndoRedo.component'
 
@@ -91,6 +87,7 @@ const Project = () => {
           </div>
         </div>
       </div>
+
       <div className='relative mt-2 grid grid-cols-1 gap-0 mb-5'>
         <div className='bg-white shadow flex justify-between items-center'>
           <div className='flex items-center justify-center h-full divide-x divide-gray-200 bg-gray-50'>
@@ -141,7 +138,7 @@ const Project = () => {
             <PaletteSelector />
           </div>
         </div>
-        <div className={`flex flex-col bg-white ${projectPaletteClass}`}>
+        <div className={`shadow flex flex-col bg-white ${projectPaletteClass}`}>
           <div className='shadow'>
             <SceneInfoBar sceneIndex={sceneIndex} />
             <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
@@ -155,7 +152,9 @@ const Project = () => {
           <div className='bg-indigo-100 bg-stripes bg-stripes-white p-1'></div>
           <SpriteList />
         </div>
-        <div className={`flex flex-col bg-white ${projectPaletteClass}`}>
+
+        <SpriteEditor spriteIndex={spriteIndex} />
+        {/* <div className={`shadow flex flex-col bg-white ${projectPaletteClass}`}>
           <div className='shadow'>
             <SpriteInfoBar spriteIndex={spriteIndex} />
             <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
@@ -168,7 +167,7 @@ const Project = () => {
           </div>
           <div className='bg-indigo-100 bg-stripes bg-stripes-white p-1'></div>
           <ColorSelector />
-        </div>
+        </div> */}
       </div>
     </div>
   )

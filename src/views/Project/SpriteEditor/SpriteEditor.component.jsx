@@ -1,63 +1,35 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
-import { scanForGridRegions } from '../../../data/data.helpers'
-import { updateGrid } from '@store/spriteEditor/spriteEditor.actions'
-import { getCurrentProjectSpriteByIndex } from '@store/currentProject/currentProject.slice'
-import { getCurrentTool, getCurrentColor } from '@store/spriteEditor/spriteEditor.slice'
-import Cell from './Cell.component'
+import { getCurrentProjectPaletteClass } from '../../../store/currentProject/currentProject.slice'
+// import { getCurrentTool, setCurrentTool } from '../../../store/spriteEditor/spriteEditor.slice'
 
-import styles from './SpriteEditor.module.scss'
+import SpriteInfoBar from './SpriteInfoBar/SpriteInfoBar.component'
+import SpriteEditorToolbar from './SpriteEditorToolbar/SpriteEditorToolbar.component'
+import SpriteEditorActionbar from './SpriteEditorActionbar/SpriteEditorActionbar.component'
+import ColorSelector from './ColorSelector/ColorSelector.component'
+import Grid from './Grid.component'
+
+
 
 const SpriteEditor = ({ spriteIndex }) => {
-  const dispatch = useDispatch()
-  const selectedSprite = useSelector(getCurrentProjectSpriteByIndex(spriteIndex))
-  const selectedTool = useSelector(getCurrentTool)
-  const selectedColor = useSelector(getCurrentColor)
-
-  const [mouseDown, setMouseDown] = useState(false)
-  const [labeledGrid, updateLabeledGrid] = useState([])
-
-  const cellClickHandler = ({ row, column }) => {
-    dispatch(updateGrid({
-      grid: selectedSprite,
-      labeledGrid,
-      spriteIndex,
-      row,
-      column
-    }))
-  }
-
-  useEffect(() => {
-    const processedGrid = scanForGridRegions(selectedSprite)
-    updateLabeledGrid(processedGrid)
-  }, [selectedSprite])
+  const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
+  // const selectedTool = useSelector(getCurrentTool)
 
   return (
-    <div
-      className={'relative w-full bg-gray-200 bg-stripes bg-stripes-white'}
-      onMouseDown={() => setMouseDown(true)}
-      onMouseUp={() => setMouseDown(false)}
-      onMouseLeave={() => setMouseDown(false)}
-    >
-      {selectedSprite.map((row, rowIndex) => (
-        <div className={styles.spriteGridRow} key={rowIndex}>
-          {row.map((cellValue, colIndex) => {
-            return (
-              <Cell
-                key={`r${rowIndex}-c${colIndex}`}
-                row={rowIndex}
-                column={colIndex}
-                colorKey={cellValue}
-                selectedColorKey={selectedColor}
-                selectedTool={selectedTool}
-                mouseIsDown={mouseDown}
-                clickHandler={cellClickHandler}
-              />
-            )
-          })}
+    <div className={`shadow flex flex-col bg-white ${projectPaletteClass}`}>
+      <div className='shadow'>
+        <SpriteInfoBar spriteIndex={spriteIndex} />
+        <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
+          <SpriteEditorToolbar />
+          <SpriteEditorActionbar spriteIndex={spriteIndex} />
         </div>
-      ))}
+      </div>
+      <div className='shadow'>
+        <Grid spriteIndex={spriteIndex} />
+      </div>
+      <div className='bg-indigo-100 bg-stripes bg-stripes-white p-1'></div>
+      <ColorSelector />
     </div>
   )
 }
