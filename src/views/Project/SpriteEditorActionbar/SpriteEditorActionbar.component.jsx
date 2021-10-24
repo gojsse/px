@@ -1,5 +1,4 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux'
 
 import {
   SwitchHorizontalIcon,
@@ -9,9 +8,9 @@ import {
   ArrowSmDownIcon,
   ArrowSmLeftIcon,
   ReplyIcon,
-} from "@heroicons/react/outline";
+} from '@heroicons/react/outline'
 
-import { handleSpriteActionButton } from "@store/currentProject/currentProject.actions";
+import { handleSpriteActionButton } from '@store/currentProject/currentProject.actions'
 import {
   shiftSpriteUp,
   shiftSpriteRight,
@@ -21,29 +20,28 @@ import {
   flipSpriteHorizontal,
   rotateSpriteRight,
   rotateSpriteLeft,
-} from "@store/currentProject/currentProject.slice";
+} from '@store/currentProject/currentProject.slice'
 
-import styles from "./SpriteEditorActionbar.module.scss";
+import styles from './SpriteEditorActionbar.module.scss'
 
-const buttonClassesBase =
-  "relative inline-flex items-center px-4 py-2 text-sm font-medium";
-const buttonClasses = `${buttonClassesBase} text-gray-800 bg-white hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500`;
-const iconClasses = "block h-5 w-5";
+const buttonClassesBase ='relative inline-flex items-center px-4 py-2 text-sm font-medium'
+const buttonClasses = `${buttonClassesBase} text-gray-800 bg-white hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500`
+const iconClasses = 'block h-5 w-5'
 
 const buttonAttributes = {
-  type: "button",
+  type: 'button',
   className: buttonClasses,
-};
+}
 
 const SpriteEditorActionbar = ({ spriteIndex }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleClick = (buttonAction) => {
-    dispatch(handleSpriteActionButton({ spriteIndex, buttonAction }));
-  };
+    dispatch(handleSpriteActionButton({ spriteIndex, buttonAction }))
+  }
 
   return (
-    <div className={styles.spriteEditorActionbar + " w-full mb-2"}>
+    <div className={styles.spriteEditorActionbar + ' w-full mb-2'}>
       <button
         {...buttonAttributes}
         onClick={() => handleClick(shiftSpriteLeft)}
@@ -89,11 +87,11 @@ const SpriteEditorActionbar = ({ spriteIndex }) => {
       >
         <ReplyIcon
           className={iconClasses}
-          style={{ transform: "scaleX(-1)" }}
+          style={{ transform: 'scaleX(-1)' }}
         />
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default SpriteEditorActionbar;
+export default SpriteEditorActionbar

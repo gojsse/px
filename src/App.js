@@ -1,7 +1,4 @@
-import React from 'react'
-import { Switch, Route } from "react-router-dom"
-
-// import { useGetAllProjectsQuery } from '@store/projects/allProjects.api'
+import { Switch, Route } from 'react-router-dom'
 
 import SiteMenu from '@components/layout/NavBar.component'
 import Dashboard from '@views/Dashboard/Dashboard.component'
@@ -33,8 +30,8 @@ function App() {
   // })
 
   return (
-    <div className="App bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300">
-      <div className="min-h-screen">
+    <div className='bg-gradient-to-r from-gray-200 via-gray-100 to-gray-300'>
+      <div className='min-h-screen'>
         <SiteMenu />
         <main>
           <Switch>

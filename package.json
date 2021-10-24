@@ -16,6 +16,7 @@
     "@types/node": "^16.10.3",
     "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.3.1",
     "chroma-js": "^2.1.2",
     "craco": "^0.0.3",
     "localforage": "^1.10.0",
@@ -29,6 +30,13 @@
     "redux-logger": "^3.0.6",
     "redux-undo": "^1.0.1",
     "typescript": "^4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9",
+    "gh-pages": "^3.2.3",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -55,12 +63,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.3",
-    "autoprefixer": "^9",
-    "gh-pages": "^3.2.3",
-    "postcss": "^7",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }
 }

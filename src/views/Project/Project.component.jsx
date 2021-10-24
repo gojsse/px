@@ -1,5 +1,5 @@
-import { Fragment, useCallback, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { Fragment, useEffect } from 'react'
+import { useHistory, useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActionCreators } from 'redux-undo'
 
@@ -7,20 +7,8 @@ import { Menu, Transition } from '@headlessui/react'
 import { CogIcon } from '@heroicons/react/solid'
 
 import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.api'
-import {
-  clearThisProject,
-  updateProjectName,
-  undoLastChange,
-  redoLastChange,
-} from '@store/currentProject/currentProject.actions'
-import {
-  getCurrentProjectName,
-  getCurrentProjectUpdatedReadable,
-  getCurrentProjectPaletteClass,
-  setCurrentProject,
-  canUndoCurrentProject,
-  canRedoCurrentProject,
-} from '@store/currentProject/currentProject.slice'
+import { clearThisProject, updateProjectName } from '@store/currentProject/currentProject.actions'
+import { getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
 
 import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
 import ScenesList from '@views/Project/ScenesList/ScenesList.component'
@@ -35,27 +23,48 @@ import SpriteEditorActionbar from '@views/Project/SpriteEditorActionbar/SpriteEd
 import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component'
 import ColorSelector from '@views/Project/ColorSelector/ColorSelector.component'
 import TextInput from '@components/forms/TextInput.component'
+import UndoRedo from './UndoRedo.component'
 
 const Project = () => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
+  const history = useHistory()
   const { data, isLoading } = useReadProjectByIdQuery(projectId)
 
   const dispatch = useDispatch()
   const projectName = useSelector(getCurrentProjectName)
   const projectUpdatedReadable = useSelector(getCurrentProjectUpdatedReadable)
   const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
-  const canUndo = useSelector(canUndoCurrentProject)
-  const canRedo = useSelector(canRedoCurrentProject)
-
-  const disabledClass = ' opacity-50 cursor-not-allowed'
 
   // Set current project in currentProject slice when loaded from the API
   useEffect(() => {
     if (isLoading === false) {
+      dispatch(ActionCreators.clearHistory())
+      // Bad or missing data
+      if (data === null || 'scenes' in data === false) {
+        history.push('/projects')
+        return
+      }
+      // Reached a valid condition
       dispatch(setCurrentProject({ project: data }))
       dispatch(ActionCreators.clearHistory())
     }
-  }, [dispatch, data, isLoading])
+  }, [dispatch, history, isLoading, data])
+
+  useEffect(() => {
+    if (isLoading === false) {
+      // Missing scenes
+      if ('scenes' in data === false) {
+        history.push('/projects')
+        return
+      }
+      // Trying to view invalid or non existent scene
+      if (sceneIndex > data.scenes.length - 1 || sceneIndex in data.scenes === false) {
+        history.push(`/projects/${projectId}/0/${spriteIndex}`)
+        dispatch(ActionCreators.clearHistory())
+        return
+      }
+    }
+  }, [dispatch, history, isLoading, data, projectId, sceneIndex, spriteIndex])
 
   // Clear out the current project data from the store when component unmounts
   useEffect(() => {
@@ -65,48 +74,10 @@ const Project = () => {
     }
   }, [dispatch])
 
-  const undoClickHandler = () => {
-    if (canUndo) {
-      dispatch(undoLastChange())
-    }
+  if (spriteIndex > 127) {
+    history.push(`/projects/${projectId}/0/0`)
+    return <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10'>😒</div>
   }
-
-  const redoClickHandler = () => {
-    if (canRedo) {
-      dispatch(redoLastChange())
-    }
-  }
-
-  const keyPress = useCallback(
-    (event) => {
-      // REDO
-      if (event.keyCode === 89) {
-        if (
-          (event.ctrlKey && event.shiftKey) ||
-          (event.metaKey && event.shiftKey)
-        ) {
-          dispatch(redoLastChange())
-          return
-        }
-        // UNDO
-      } else if (event.keyCode === 90) {
-        if (event.ctrlKey || event.metaKey) {
-          dispatch(undoLastChange())
-          return
-        }
-      }
-    },
-    [dispatch]
-  )
-
-  // Keypress listener
-  useEffect(() => {
-    document.addEventListener('keydown', keyPress, false)
-
-    return () => {
-      document.removeEventListener('keydown', keyPress, false)
-    }
-  }, [keyPress])
 
   return (
     <div className='max-w-7xl mx-auto sm:px-6 lg:px-8 pt-10'>
@@ -133,26 +104,7 @@ const Project = () => {
             </div>
           </div>
 
-          <div className='flex items-center justify-center h-full divide-x divide-gray-200 border-l text-xs'>
-            <button
-              className={`h-full px-5 y-3 border-b-4 ${
-                !canUndo ? disabledClass : ''
-              }`}
-              onClick={() => undoClickHandler()}
-              disabled={!canUndo}
-            >
-              undo
-            </button>
-            <button
-              className={`h-full px-5 y-3 border-b-4 ${
-                !canRedo ? disabledClass : ''
-              }`}
-              onClick={() => redoClickHandler()}
-              disabled={!canRedo}
-            >
-              redo
-            </button>
-          </div>
+          <UndoRedo />
 
           <Menu as='div' className='inline-block lg:hidden text-left h-full'>
             <Menu.Button className='h-full inline-flex justify-center items-center px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'>
@@ -218,12 +170,6 @@ const Project = () => {
           <ColorSelector />
         </div>
       </div>
-
-      {!isLoading && (
-        <div className='mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
-          {/* {JSON.stringify(data)} */}
-        </div>
-      )}
     </div>
   )
 }
