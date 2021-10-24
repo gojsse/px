@@ -4,6 +4,8 @@
 @import './palette_brinstar';
 @import './palette_brinstar-2';
 @import './palette_zx';
+@import './palette_generic';
+@import './palette_pico-8';
 
 $palettes: (
   $default,
@@ -11,7 +13,9 @@ $palettes: (
   $sky-high,
   $brinstar,
   $brinstar-2,
-  $zx
+  $zx,
+  $generic,
+  $pico-8,
 );
 
 $default-colors: (

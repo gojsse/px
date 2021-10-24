@@ -4,7 +4,9 @@ export const PALETTE_LIST = [
   'sky-high',
   'brinstar',
   'brinstar-2',
-  'zx'
+  'zx',
+  'generic',
+  'pico-8',
 ]
 
 export const COLOR_KEYS = [
