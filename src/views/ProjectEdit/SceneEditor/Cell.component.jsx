@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { SCENE_TOOLS } from '@/App.constants'
-import Sprite from '@views/Project/Sprite/Sprite.component'
+import Sprite from '../Sprite/Sprite.component'
 
 const Cell = ({
   spriteIndex,

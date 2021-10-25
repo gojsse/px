@@ -2,7 +2,6 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { getCurrentProjectPaletteClass } from '../../../store/currentProject/currentProject.slice'
-// import { getCurrentTool, setCurrentTool } from '../../../store/spriteEditor/spriteEditor.slice'
 
 import SpriteInfoBar from './SpriteInfoBar/SpriteInfoBar.component'
 import SpriteEditorToolbar from './SpriteEditorToolbar/SpriteEditorToolbar.component'
@@ -10,11 +9,8 @@ import SpriteEditorActionbar from './SpriteEditorActionbar/SpriteEditorActionbar
 import ColorSelector from './ColorSelector/ColorSelector.component'
 import Grid from './Grid.component'
 
-
-
 const SpriteEditor = ({ spriteIndex }) => {
   const projectPaletteClass = useSelector(getCurrentProjectPaletteClass)
-  // const selectedTool = useSelector(getCurrentTool)
 
   return (
     <div className={`shadow flex flex-col bg-white ${projectPaletteClass}`}>

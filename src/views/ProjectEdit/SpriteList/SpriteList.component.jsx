@@ -8,11 +8,11 @@ import { SCENE_TOOLS } from '@/App.constants'
 import { getCurrentProjectPaletteClass } from '@store/currentProject/currentProject.slice'
 import { copyAndPasteSprite } from '@store/currentProject/currentProject.actions'
 import { getCurrentTool } from '@store/sceneEditor/sceneEditor.slice'
-import Sprite from '@views/Project/Sprite/Sprite.component'
 import Modal from '@components/Modal/Modal.component'
 import Overlay from '@components/Overlay/Overlay.component'
 import HelpBox from '@components/HelpBox/HelpBox.component'
 import SpritePreview from '@components/Sprite/Sprite.component'
+import Sprite from '../Sprite/Sprite.component'
 
 import styles from './SpriteList.module.scss'
 

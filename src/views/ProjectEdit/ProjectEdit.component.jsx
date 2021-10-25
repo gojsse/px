@@ -10,18 +10,18 @@ import { useReadProjectByIdQuery } from '@store/currentProject/currentProject.ap
 import { clearThisProject, updateProjectName } from '@store/currentProject/currentProject.actions'
 import { getCurrentProjectName, getCurrentProjectUpdatedReadable, getCurrentProjectPaletteClass, setCurrentProject } from '@store/currentProject/currentProject.slice'
 
-import PaletteSelector from '@views/Project/PaletteSelector/PaletteSelector.component'
-import ScenesList from '@views/Project/ScenesList/ScenesList.component'
-import SceneInfoBar from '@views/Project/SceneInfoBar/SceneInfoBar.component'
-import SceneEditorToolbar from '@views/Project/SceneEditorToolbar/SpriteEditorToolbar.component'
-import SceneEditorActionbar from '@views/Project/SceneEditorActionbar/SceneEditorActionbar.component'
-import SceneEditor from '@views/Project/SceneEditor/SceneEditor.component'
-import SpriteList from '@views/Project/SpriteList/SpriteList.component'
-import SpriteEditor from '@views/Project/SpriteEditor/SpriteEditor.component'
 import TextInput from '@components/forms/TextInput.component'
+import PaletteSelector from './PaletteSelector/PaletteSelector.component'
+// import ScenesList from './ScenesList/ScenesList.component'
+import SceneInfoBar from './SceneInfoBar/SceneInfoBar.component'
+import SceneEditorToolbar from './SceneEditorToolbar/SpriteEditorToolbar.component'
+import SceneEditorActionbar from './SceneEditorActionbar/SceneEditorActionbar.component'
+import SceneEditor from './SceneEditor/SceneEditor.component'
+import SpriteList from './SpriteList/SpriteList.component'
+import SpriteEditor from './SpriteEditor/SpriteEditor.component'
 import UndoRedo from './UndoRedo.component'
 
-const Project = () => {
+const ProjectEdit = () => {
   const { projectId, sceneIndex = 0, spriteIndex = 0 } = useParams()
   const history = useHistory()
   const { data, isLoading } = useReadProjectByIdQuery(projectId)
@@ -40,7 +40,6 @@ const Project = () => {
         history.push('/projects')
         return
       }
-      // Reached a valid condition
       dispatch(setCurrentProject({ project: data }))
       dispatch(ActionCreators.clearHistory())
     }
@@ -131,9 +130,10 @@ const Project = () => {
 
       <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
         <div className='hidden lg:block'>
-          <div className={`bg-white shadow mb-2 ${projectPaletteClass}`}>
+          {/* MOVE to project/id */}
+          {/* <div className={`bg-white shadow mb-2 ${projectPaletteClass}`}>
             <ScenesList sceneIndex={sceneIndex} spriteIndex={spriteIndex} />
-          </div>
+          </div> */}
           <div className='bg-white shadow mb-2'>
             <PaletteSelector />
           </div>
@@ -154,23 +154,9 @@ const Project = () => {
         </div>
 
         <SpriteEditor spriteIndex={spriteIndex} />
-        {/* <div className={`shadow flex flex-col bg-white ${projectPaletteClass}`}>
-          <div className='shadow'>
-            <SpriteInfoBar spriteIndex={spriteIndex} />
-            <div className='bg-indigo-100 bg-stripes bg-stripes-white shadow-sm border-t border-gray-100'>
-              <SpriteEditorToolbar />
-              <SpriteEditorActionbar spriteIndex={spriteIndex} />
-            </div>
-          </div>
-          <div className='shadow'>
-            <SpriteEditor spriteIndex={spriteIndex} />
-          </div>
-          <div className='bg-indigo-100 bg-stripes bg-stripes-white p-1'></div>
-          <ColorSelector />
-        </div> */}
       </div>
     </div>
   )
 }
 
-export default Project
+export default ProjectEdit
